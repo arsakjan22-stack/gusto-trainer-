@@ -428,6 +428,24 @@ header,.pnav{
   body{cursor:none;}
 }
 @media(max-width:520px){
+  .pnav{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    overflow:visible;
+  }
+  .pstep{
+    min-width:0;
+    padding:10px 6px;
+    font-size:.54rem;
+    line-height:1.2;
+    white-space:normal;
+    border-right:1px solid var(--g3);
+    border-bottom:1px solid var(--g3);
+    flex-direction:column;
+    gap:3px;
+  }
+  .pstep:nth-child(3n){border-right:none;}
+  .pstep .sn{margin:0 auto;}
   .jgrid{grid-template-columns:1fr;}
   .last-g{grid-template-columns:1fr;}
   .mgrid{grid-template-columns:1fr;}
@@ -470,8 +488,8 @@ header,.pnav{
   <div class="pstep" id="ps2" onclick="navTo(2)"><span class="sn">3</span>Практика</div>
   <div class="pstep" id="ps3" onclick="navTo(3)"><span class="sn">4</span>Экзамен</div>
   <div class="pstep" id="ps4" onclick="navTo(4)"><span class="sn">5</span>Смена</div>
-  <div class="pstep" id="ps5" onclick="navTo(5)"><span class="sn">6</span>Культура</div>
-  <div class="pstep" id="ps6" onclick="navTo(6)" style="display:none"><span class="sn">7</span>Результаты</div>
+  <div class="pstep" id="ps5" onclick="navTo(5)" style="display:none"><span class="sn">6</span>Культура</div>
+  <div class="pstep" id="ps6" onclick="navTo(6)" style="display:none"><span class="sn">6</span>Результаты</div>
 </div>
 
 <!-- START -->
@@ -1937,7 +1955,7 @@ window.onload=async function(){
 
 function restorePhase(){
   if(S.phase===6 && isAdminAccess()){showPhase(6);renderAdminDashboard();}
-  else if(S.phase===5){showPhase(5);renderCulture();}
+  else if(S.phase===5){goHome();}
   else if(S.phase===4){showPhase(4);renderChecklist();}
   else if(S.examDone){showPhase(3);goExamResult();}
   else if(S.phase===3){showPhase(3);renderExamQ();}
@@ -1991,11 +2009,7 @@ function navTo(p){
     S.phase=p;save();updatePS();
     setScreen('s-checklist',true);startChecklist();return;
   }
-  if(p===5){
-    SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
-    S.phase=p;save();updatePS();
-    setScreen('s-culture',true);renderCulture();return;
-  }
+  if(p===5){goHome();return;}
   if(p===6){
     if(!isAdminAccess())return;
     SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
@@ -2154,7 +2168,6 @@ function renderHome(){
     (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
     (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
     '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
-    '<button class="btn btn-outline" onclick="navTo(5)">🧭 Культура и ценности</button>'+
     (isAdminAccess()?'<button class="btn btn-outline" onclick="navTo(6)">📊 Результаты сотрудников</button>':'')+
     '</div>';
 
@@ -2208,6 +2221,21 @@ function renderHome(){
       '</table></div></div>'+
       '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
       '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
+    '</div>'+
+  '</div>';
+
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div></div>'+
+    '<div class="lcard-body">'+
+      '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
+      '<div class="steps">'+
+        '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Гость и команда — всегда в тоне уважения, без грубости и формального отношения.</div></div></div>'+
+        '<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">Ответственность</div><div class="sdesc">Ошибку не прячем — быстро исправляем, предупреждаем риски и доводим до результата.</div></div></div>'+
+        '<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">Честность</div><div class="sdesc">Никаких ложных обещаний и махинаций. Доверие гостя дороже одной продажи.</div></div></div>'+
+        '<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">Командность</div><div class="sdesc">Сильный сотрудник усиливает смену: помогает, подхватывает, не оставляет коллегу одного.</div></div></div>'+
+        '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — шаг в мастерство: анализируем ошибки и поднимаем стандарт сервиса.</div></div></div>'+
+      '</div>'+
+      '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
     '</div>'+
   '</div>';
 
