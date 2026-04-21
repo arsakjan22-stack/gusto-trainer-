@@ -7,6 +7,7 @@
 <title>GUSTO — Академия сервиса</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--black:#07080d;--red:#ff3a2e;--red2:#d81207;--white:#f8faff;--g1:#10131c;--g2:#151a26;--g3:#232a3a;--g4:#30394f;--muted:#8c95aa;--green:#00e093;--gbg:#022118;--rbg:#230b0a;--gold:#ffbb38;--blue:#4a9eff;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -817,6 +818,11 @@ var STORAGE_PREFIX='gsto5_profile_';
 var STORAGE_LAST='gsto5_last_phone';
 var ADMIN_PHONE_RAW='89156286261';
 var activeProfilePhone='';
+var SUPABASE_URL='PASTE_SUPABASE_URL_HERE';
+var SUPABASE_ANON_KEY='PASTE_SUPABASE_ANON_KEY_HERE';
+var sbClient=null;
+var cloudReady=false;
+var cloudSaveTimer=null;
 
 function normPhone(v){
   var digits=String(v||'').replace(/\D/g,'');
@@ -836,7 +842,75 @@ function profileKey(phoneDigits){
 function isAdminAccess(){
   return normPhone(S.phone||'')===normPhone(ADMIN_PHONE_RAW);
 }
-function getAllProfiles(){
+function initCloud(){
+  try{
+    if(window.supabase && SUPABASE_URL.indexOf('PASTE_')!==0 && SUPABASE_ANON_KEY.indexOf('PASTE_')!==0){
+      sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+      cloudReady=true;
+      return true;
+    }
+  }catch(e){}
+  cloudReady=false;
+  sbClient=null;
+  return false;
+}
+function ensureStateShape(){
+  if(!S.mqAnswered)S.mqAnswered={};
+  if(!S.checklistState)S.checklistState=[];
+  if(!S.blitzQ)S.blitzQ=[];
+  if(!S.mistakes)S.mistakes=[];
+  if(typeof S.learnIdx!=='number')S.learnIdx=0;
+  if(typeof S.blitzIdx!=='number')S.blitzIdx=0;
+  if(typeof S.blitzScore!=='number')S.blitzScore=0;
+  if(typeof S.practiceIdx!=='number')S.practiceIdx=0;
+  if(typeof S.practiceScore!=='number')S.practiceScore=0;
+  if(typeof S.examIdx!=='number')S.examIdx=0;
+  if(typeof S.examScore!=='number')S.examScore=0;
+  if(typeof S.phase!=='number')S.phase=0;
+  if(typeof S.blitzDone!=='boolean')S.blitzDone=false;
+  if(typeof S.practiceDone!=='boolean')S.practiceDone=false;
+  if(typeof S.examDone!=='boolean')S.examDone=false;
+  ensureTiming();
+}
+async function cloudUpsertProfile(phoneDigits,stateObj){
+  if(!cloudReady || !phoneDigits)return false;
+  try{
+    var payload={
+      phone:phoneDigits,
+      name:stateObj.name||'',
+      data:stateObj,
+      updated_at:new Date().toISOString()
+    };
+    var r=await sbClient.from('profiles').upsert(payload,{onConflict:'phone'});
+    return !r.error;
+  }catch(e){return false;}
+}
+async function cloudFetchProfile(phoneDigits){
+  if(!cloudReady || !phoneDigits)return null;
+  try{
+    var r=await sbClient.from('profiles').select('phone,name,data,updated_at').eq('phone',phoneDigits).maybeSingle();
+    if(r.error || !r.data)return null;
+    var row=r.data;
+    var st=row.data||{};
+    st.phone=normPhone(row.phone||phoneDigits);
+    if(!st.name && row.name)st.name=row.name;
+    return st;
+  }catch(e){return null;}
+}
+async function cloudListProfiles(){
+  if(!cloudReady)return [];
+  try{
+    var r=await sbClient.from('profiles').select('phone,name,data,updated_at').order('updated_at',{ascending:false}).limit(500);
+    if(r.error || !r.data)return [];
+    return r.data.map(function(row){
+      var st=row.data||{};
+      st.phone=normPhone(row.phone||st.phone||'');
+      if(!st.name && row.name)st.name=row.name;
+      return st;
+    }).filter(function(x){return !!x.name;});
+  }catch(e){return [];}
+}
+function getAllProfilesLocal(){
   var profiles=[];
   try{
     for(var i=0;i<localStorage.length;i++){
@@ -858,6 +932,19 @@ function getAllProfiles(){
   });
   return profiles;
 }
+async function getAllProfiles(){
+  var local=getAllProfilesLocal();
+  if(!cloudReady)return local;
+  var remote=await cloudListProfiles();
+  if(!remote.length)return local;
+  var byPhone={};
+  local.forEach(function(p){byPhone[normPhone(p.phone||'')]=p;});
+  remote.forEach(function(p){byPhone[normPhone(p.phone||'')]=p;});
+  return Object.values(byPhone).filter(function(p){return !!(p&&p.name);}).sort(function(a,b){
+    var as=(a.completedAt||a.startedAt||0),bs=(b.completedAt||b.startedAt||0);
+    return bs-as;
+  });
+}
 function ensureTiming(){
   if(!S.startedAt)S.startedAt=Date.now();
 }
@@ -865,13 +952,20 @@ function save(){
   try{
     var d=normPhone(S.phone||activeProfilePhone);
     if(d){S.phone=d;activeProfilePhone=d;localStorage.setItem(STORAGE_LAST,d);}
+    ensureStateShape();
     ensureTiming();
     localStorage.setItem(profileKey(d),JSON.stringify(S));
+    if(cloudReady && d){
+      if(cloudSaveTimer)clearTimeout(cloudSaveTimer);
+      var snapshot=JSON.parse(JSON.stringify(S));
+      cloudSaveTimer=setTimeout(function(){cloudUpsertProfile(d,snapshot);},150);
+    }
   }catch(e){}
 }
-function loadByPhone(phoneDigits){
+async function loadByPhone(phoneDigits){
   var d=normPhone(phoneDigits);
   if(!d)return false;
+  var foundLocal=false;
   try{
     var r=localStorage.getItem(profileKey(d));
     if(r){
@@ -879,20 +973,32 @@ function loadByPhone(phoneDigits){
       S.phone=d;
       activeProfilePhone=d;
       localStorage.setItem(STORAGE_LAST,d);
-      ensureTiming();
-      return true;
+      ensureStateShape();
+      foundLocal=true;
     }
   }catch(e){}
-  return false;
+  if(cloudReady){
+    var remote=await cloudFetchProfile(d);
+    if(remote){
+      S=remote;
+      S.phone=d;
+      activeProfilePhone=d;
+      ensureStateShape();
+      localStorage.setItem(profileKey(d),JSON.stringify(S));
+      localStorage.setItem(STORAGE_LAST,d);
+      return true;
+    }
+  }
+  return foundLocal;
 }
-function load(){
+async function load(){
   try{
     var last=localStorage.getItem(STORAGE_LAST);
-    if(last && loadByPhone(last))return true;
+    if(last && await loadByPhone(last))return true;
     var legacy=localStorage.getItem('gsto5');
     if(legacy){
       S=JSON.parse(legacy);
-      ensureTiming();
+      ensureStateShape();
       return true;
     }
   }catch(e){}
@@ -1804,20 +1910,18 @@ var CHECKLIST=[
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
-window.onload=function(){
+window.onload=async function(){
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var btn=document.getElementById('btn-start');
-  function onStart(e){e.preventDefault();startGame();}
+  async function onStart(e){e.preventDefault();await startGame();}
   btn.addEventListener('click',onStart);
   btn.addEventListener('touchend',onStart);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){inp.blur();startGame();}});
   pinp.addEventListener('keydown',function(e){if(e.key==='Enter'){pinp.blur();startGame();}});
-  if(load()&&S.name){
-    if(!S.mqAnswered) S.mqAnswered={};
-    if(!S.checklistState) S.checklistState=[];
-    if(!S.blitzQ) S.blitzQ=[];
-    if(!S.mistakes) S.mistakes=[];
+  initCloud();
+  if(await load()&&S.name){
+    ensureStateShape();
     if(pinp && S.phone)pinp.value=phoneToLabel(S.phone);
     if(inp && S.name)inp.value=S.name;
     showHdr();
@@ -1956,7 +2060,7 @@ function renderCulture(){
   document.getElementById('culture-content').innerHTML=html;
 }
 
-function startGame(){
+async function startGame(){
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   if(inp)inp.blur();
@@ -1970,7 +2074,7 @@ function startGame(){
     setTimeout(function(){pinp.style.borderBottomColor='';pinp.placeholder='Номер телефона (без SMS)';},1500);
     return;
   }
-  var existing=loadByPhone(phone);
+  var existing=await loadByPhone(phone);
   if(existing && !v)v=S.name||'';
   if(!v){
     inp.style.borderBottomColor='#f04040';
@@ -2107,57 +2211,61 @@ function renderHome(){
 
 function renderAdminDashboard(){
   if(!isAdminAccess()){goHome();return;}
-  var data=getAllProfiles();
-  var rows=data.map(function(p,idx){
-    var total=(function(){
-      var t=0;
-      t+=Math.min(p.learnIdx||0,LEARN.length)*5;
-      t+=(p.blitzScore||0)*5;
-      t+=(p.practiceScore||0)*8;
-      t+=(p.examScore||0)*4;
-      if(p.checklistState&&p.checklistState.filter(Boolean).length===CHECKLIST.length)t+=30;
-      if(p.mqAnswered)Object.keys(p.mqAnswered).forEach(function(k){if(p.mqAnswered[k]&&p.mqAnswered[k].ok)t+=15;});
-      return t;
-    })();
-    var status=(p.examDone?'Завершил':'В процессе');
-    var elapsed=(function(){
-      var st=p.startedAt||0,en=p.completedAt||Date.now();
-      return st?fmtDuration(Math.max(0,Math.round((en-st)/1000))):'—';
-    })();
-    return '<tr style="border-bottom:1px solid var(--g3);background:'+(idx%2?'var(--g1)':'var(--g2)')+'">'+
-      '<td style="padding:8px 10px">'+(idx+1)+'</td>'+
-      '<td style="padding:8px 10px"><b>'+escHtml(p.name||'—')+'</b></td>'+
-      '<td style="padding:8px 10px">'+escHtml(phoneToLabel(p.phone||''))+'</td>'+
-      '<td style="padding:8px 10px">'+(p.examScore||0)+'/25</td>'+
-      '<td style="padding:8px 10px">'+total+'/'+MAX_POINTS()+'</td>'+
-      '<td style="padding:8px 10px">'+elapsed+'</td>'+
-      '<td style="padding:8px 10px">'+escHtml(status)+'</td>'+
-      '</tr>';
-  }).join('');
-  var done=data.filter(function(p){return !!p.examDone;}).length;
-  var avg=Math.round((data.reduce(function(s,p){return s+(p.examScore||0);},0)/(data.length||1))*10)/10;
-  var html='<div class="score-tracker">'+
-    '<div class="st-title">👑 Закрытый раздел руководителя</div>'+
-    '<div class="rule">Доступ открыт только для номера <b>'+escHtml(phoneToLabel(ADMIN_PHONE_RAW))+'</b>.</div>'+
-    '<div class="st-bars">'+
-      '<div class="st-row"><span class="st-lbl">Сотрудников</span><span class="st-val" style="width:auto;color:var(--white)">'+data.length+'</span></div>'+
-      '<div class="st-row"><span class="st-lbl">Завершили</span><span class="st-val" style="width:auto;color:var(--green)">'+done+'</span></div>'+
-      '<div class="st-row"><span class="st-lbl">Средний экзамен</span><span class="st-val" style="width:auto;color:var(--gold)">'+avg+'/25</span></div>'+
-    '</div></div>';
-  html+='<div class="lcard"><div class="lcard-body">'+
-    (data.length?'<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:.79rem">'+
-      '<tr style="background:var(--g3)">'+
-      '<td style="padding:8px 10px;font-weight:700">#</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Сотрудник</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Телефон</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Экзамен</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Общий балл</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Время</td>'+
-      '<td style="padding:8px 10px;font-weight:700">Статус</td>'+
-      '</tr>'+rows+'</table></div>'
-      :'<div class="rule">Пока нет сохранённых профилей сотрудников.</div>')+
-    '</div></div>';
-  document.getElementById('admin-content').innerHTML=html;
+  document.getElementById('admin-content').innerHTML='<div class="rule">Загружаю результаты сотрудников...</div>';
+  getAllProfiles().then(function(data){
+    var rows=data.map(function(p,idx){
+      var total=(function(){
+        var t=0;
+        t+=Math.min(p.learnIdx||0,LEARN.length)*5;
+        t+=(p.blitzScore||0)*5;
+        t+=(p.practiceScore||0)*8;
+        t+=(p.examScore||0)*4;
+        if(p.checklistState&&p.checklistState.filter(Boolean).length===CHECKLIST.length)t+=30;
+        if(p.mqAnswered)Object.keys(p.mqAnswered).forEach(function(k){if(p.mqAnswered[k]&&p.mqAnswered[k].ok)t+=15;});
+        return t;
+      })();
+      var status=(p.examDone?'Завершил':'В процессе');
+      var elapsed=(function(){
+        var st=p.startedAt||0,en=p.completedAt||Date.now();
+        return st?fmtDuration(Math.max(0,Math.round((en-st)/1000))):'—';
+      })();
+      return '<tr style="border-bottom:1px solid var(--g3);background:'+(idx%2?'var(--g1)':'var(--g2)')+'">'+
+        '<td style="padding:8px 10px">'+(idx+1)+'</td>'+
+        '<td style="padding:8px 10px"><b>'+escHtml(p.name||'—')+'</b></td>'+
+        '<td style="padding:8px 10px">'+escHtml(phoneToLabel(p.phone||''))+'</td>'+
+        '<td style="padding:8px 10px">'+(p.examScore||0)+'/25</td>'+
+        '<td style="padding:8px 10px">'+total+'/'+MAX_POINTS()+'</td>'+
+        '<td style="padding:8px 10px">'+elapsed+'</td>'+
+        '<td style="padding:8px 10px">'+escHtml(status)+'</td>'+
+        '</tr>';
+    }).join('');
+    var done=data.filter(function(p){return !!p.examDone;}).length;
+    var avg=Math.round((data.reduce(function(s,p){return s+(p.examScore||0);},0)/(data.length||1))*10)/10;
+    var html='<div class="score-tracker">'+
+      '<div class="st-title">👑 Закрытый раздел руководителя</div>'+
+      '<div class="rule">Доступ открыт только для номера <b>'+escHtml(phoneToLabel(ADMIN_PHONE_RAW))+'</b>.'+(cloudReady?' Данные подтягиваются из Supabase.':' Сейчас используется локальное хранилище браузера.')+'</div>'+
+      '<div class="st-bars">'+
+        '<div class="st-row"><span class="st-lbl">Сотрудников</span><span class="st-val" style="width:auto;color:var(--white)">'+data.length+'</span></div>'+
+        '<div class="st-row"><span class="st-lbl">Завершили</span><span class="st-val" style="width:auto;color:var(--green)">'+done+'</span></div>'+
+        '<div class="st-row"><span class="st-lbl">Средний экзамен</span><span class="st-val" style="width:auto;color:var(--gold)">'+avg+'/25</span></div>'+
+      '</div></div>';
+    html+='<div class="lcard"><div class="lcard-body">'+
+      (data.length?'<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:.79rem">'+
+        '<tr style="background:var(--g3)">'+
+        '<td style="padding:8px 10px;font-weight:700">#</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Сотрудник</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Телефон</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Экзамен</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Общий балл</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Время</td>'+
+        '<td style="padding:8px 10px;font-weight:700">Статус</td>'+
+        '</tr>'+rows+'</table></div>'
+        :'<div class="rule">Пока нет сохранённых профилей сотрудников.</div>')+
+      '</div></div>';
+    document.getElementById('admin-content').innerHTML=html;
+  }).catch(function(){
+    document.getElementById('admin-content').innerHTML='<div class="rule">Не удалось загрузить данные сотрудников.</div>';
+  });
 }
 
 function openLearnByKeyword(keyword){
