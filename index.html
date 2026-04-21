@@ -8,268 +8,283 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-:root{
-  --black:#0a0a0a;--red:#e00000;--red2:#c00000;--white:#ffffff;
-  --g1:#111111;--g2:#1a1a1a;--g3:#262626;--g4:#363636;
-  --muted:#666;--green:#00c878;--gbg:#001c0e;--rbg:#1c0000;
-  --gold:#f5a623;--blue:#4a9eff;
-}
+:root{--black:#0a0a0a;--red:#e00000;--red2:#c00000;--white:#fff;--g1:#111;--g2:#1a1a1a;--g3:#262626;--g4:#363636;--muted:#666;--green:#00c878;--gbg:#001c0e;--rbg:#1c0000;--gold:#f5a623;--blue:#4a9eff;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;}
 
-/* PARTICLES */
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .pt{position:absolute;border-radius:50%;opacity:0;animation:ptdrift linear infinite;}
 @keyframes ptdrift{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-80px) scale(1.5) rotate(720deg);opacity:0}}
 
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.45rem;letter-spacing:5px;}
-.logo-icon{animation:spin 10s linear infinite;display:inline-block;font-size:1.5rem;}
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:5px;}
+.logo-icon{animation:spin 10s linear infinite;display:inline-block;font-size:1.4rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .logo em{color:var(--red);font-style:normal;}
-.hdr-r{display:flex;align-items:center;gap:16px;}
-.hdr-name{font-size:.75rem;color:var(--muted);letter-spacing:1px;}
+.hdr-r{display:flex;align-items:center;gap:12px;}
+.hdr-name{font-size:.72rem;color:var(--muted);letter-spacing:1px;}
 .hdr-name b{color:var(--white);}
-.btn-xs{font-size:.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline;text-underline-offset:3px;}
+.btn-xs{font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline;text-underline-offset:3px;touch-action:manipulation;}
 .btn-xs:hover{color:var(--red);}
 
 /* PHASE NAV */
-.pnav{display:flex;background:var(--g1);border-bottom:1px solid var(--g3);position:sticky;top:58px;z-index:90;}
-.pstep{flex:1;padding:10px 6px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--g3);display:flex;align-items:center;justify-content:center;gap:6px;transition:all .3s;}
+.pnav{display:flex;background:var(--g1);border-bottom:1px solid var(--g3);position:sticky;top:58px;z-index:90;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.pstep{flex:1;min-width:62px;padding:9px 4px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--g3);display:flex;align-items:center;justify-content:center;gap:4px;transition:all .3s;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .pstep:last-child{border-right:none;}
-.pstep .sn{width:18px;height:18px;border-radius:50%;background:var(--g4);display:flex;align-items:center;justify-content:center;font-size:.58rem;flex-shrink:0;}
+.pstep .sn{width:16px;height:16px;border-radius:50%;background:var(--g4);display:flex;align-items:center;justify-content:center;font-size:.54rem;flex-shrink:0;}
 .pstep.active{color:var(--white);background:var(--red);}
 .pstep.active .sn{background:rgba(255,255,255,.25);}
 .pstep.done{color:var(--green);}
 .pstep.done .sn{background:var(--green);color:var(--black);}
 
 /* WRAP */
-.wrap{max-width:820px;margin:0 auto;padding:32px 20px 80px;position:relative;z-index:1;}
+.wrap{max-width:800px;margin:0 auto;padding:28px 16px 80px;position:relative;z-index:1;}
 
 /* SCREENS */
 .screen{display:none;}
-.screen.active{display:block;animation:fadeup .4s ease;}
-@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.screen.active{display:block;animation:fadeup .35s ease;}
+@keyframes fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ─── START ─── */
-.start-hero{text-align:center;padding:44px 0 36px;}
-.kicker{display:inline-block;background:var(--red);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;padding:4px 14px;margin-bottom:18px;}
-.sh1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.0;letter-spacing:2px;margin-bottom:14px;}
+/* START */
+.start-hero{text-align:center;padding:40px 0 32px;}
+.kicker{display:inline-block;background:var(--red);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;padding:4px 14px;margin-bottom:16px;}
+.sh1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(2rem,6vw,3.6rem);line-height:1.0;letter-spacing:2px;margin-bottom:12px;}
 .sh1 .l2{color:var(--red);display:block;}
-.ssub{color:var(--muted);font-size:.9rem;max-width:460px;margin:0 auto 36px;line-height:1.75;}
-.jgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:36px;}
-.jcard{background:var(--g1);border:1px solid var(--g3);border-top:3px solid var(--red);padding:20px 16px;text-align:left;position:relative;overflow:hidden;transition:transform .2s;}
-.jcard:hover{transform:translateY(-3px);}
-.jcard::after{content:attr(data-n);position:absolute;right:-6px;bottom:-12px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:4rem;color:var(--g3);line-height:1;pointer-events:none;}
-.jcard .ji{font-size:1.7rem;margin-bottom:10px;display:block;}
-.jcard h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
-.jcard p{font-size:.75rem;color:var(--muted);line-height:1.5;}
+.ssub{color:var(--muted);font-size:.88rem;max-width:460px;margin:0 auto 32px;line-height:1.75;}
+.jgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:32px;}
+.jcard{background:var(--g1);border:1px solid var(--g3);border-top:3px solid var(--red);padding:18px 14px;text-align:left;position:relative;overflow:hidden;}
+.jcard::after{content:attr(data-n);position:absolute;right:-6px;bottom:-12px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:3.5rem;color:var(--g3);line-height:1;pointer-events:none;}
+.jcard .ji{font-size:1.5rem;margin-bottom:8px;display:block;}
+.jcard h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.74rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.jcard p{font-size:.72rem;color:var(--muted);line-height:1.5;}
 .nform{display:flex;gap:10px;max-width:440px;margin:0 auto;}
-.ninp{flex:1;background:var(--g2);border:none;border-bottom:2px solid var(--red);color:var(--white);padding:14px 18px;font-family:'Inter',sans-serif;font-size:1rem;outline:none;}
+.ninp{flex:1;background:var(--g2);border:none;border-bottom:2px solid var(--red);color:var(--white);padding:13px 16px;font-family:'Inter',sans-serif;font-size:1rem;outline:none;}
 .ninp::placeholder{color:var(--muted);}
 
 /* BUTTONS */
-.btn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;padding:13px 26px;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:8px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+.btn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
 .btn:active{transform:scale(.97);}
 .btn-red{background:var(--red);color:var(--white);}
 .btn-red:hover{background:var(--red2);}
 .btn-outline{background:transparent;color:var(--white);border:1px solid var(--g4);}
 .btn-outline:hover{border-color:var(--white);}
 .btn-green{background:var(--green);color:var(--black);}
+.btn-gold{background:var(--gold);color:var(--black);}
+.btn-sm{padding:9px 18px;font-size:.68rem;}
+
+/* BACK NAV */
+.back-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.back-nav-left{display:flex;align-items:center;gap:10px;}
 
 /* PROGRESS */
-.pbar-wrap{margin-bottom:24px;}
-.pbar-meta{display:flex;justify-content:space-between;margin-bottom:8px;}
-.pbar-lbl{font-size:.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-.pbar-cnt{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;}
+.pbar-wrap{margin-bottom:20px;}
+.pbar-meta{display:flex;justify-content:space-between;margin-bottom:7px;}
+.pbar-lbl{font-size:.63rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.pbar-cnt{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.8rem;}
 .pbar-cnt b{color:var(--red);}
 .pbar-track{height:3px;background:var(--g3);}
 .pbar-fill{height:100%;background:linear-gradient(90deg,var(--red),#ff4040);transition:width .5s ease;}
 
-/* ─── LEARN CARDS ─── */
-.lcard{background:var(--g1);border:1px solid var(--g3);animation:fadeup .35s ease;margin-bottom:0;}
-.lcard-hdr{padding:20px 26px 18px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid var(--g3);position:relative;overflow:hidden;}
-.lcard-hdr::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(224,0,0,.08) 0%,transparent 60%);pointer-events:none;}
-.lcard-hdr-icon{font-size:2.2rem;flex-shrink:0;line-height:1;}
-.lcard-chapter{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px;font-family:'Montserrat',sans-serif;font-weight:700;}
-.lcard-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.2rem;line-height:1.2;}
-.lcard-body{padding:28px 26px;}
+/* XP BAR */
+.xpbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.xp-l{font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.xp-t{flex:1;height:6px;background:var(--g3);}
+.xp-f{height:100%;background:linear-gradient(90deg,var(--gold),#ffd060);transition:width .5s ease;}
+.xp-v{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.76rem;color:var(--gold);white-space:nowrap;}
 
-/* SECTIONS */
-.ls{margin-bottom:28px;}
+/* TOTAL SCORE BADGE */
+.score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--g2);border:1px solid var(--g3);padding:6px 14px;font-size:.72rem;color:var(--muted);}
+.score-badge b{color:var(--gold);font-family:'Montserrat',sans-serif;}
+
+/* SHEAD */
+.shead{margin-bottom:20px;}
+.shead h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.2rem;}
+.shead h2 em{color:var(--red);font-style:normal;}
+.shead p{color:var(--muted);font-size:.78rem;margin-top:3px;}
+
+/* LEARN CARD */
+.lcard{background:var(--g1);border:1px solid var(--g3);}
+.lcard-hdr{padding:18px 22px 16px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid var(--g3);position:relative;overflow:hidden;}
+.lcard-hdr::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(224,0,0,.07) 0%,transparent 60%);pointer-events:none;}
+.lcard-hdr-icon{font-size:2rem;flex-shrink:0;line-height:1;}
+.lcard-chapter{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:3px;font-family:'Montserrat',sans-serif;font-weight:700;}
+.lcard-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem;line-height:1.2;}
+.lcard-body{padding:24px 22px;}
+.ls{margin-bottom:24px;}
 .ls:last-child{margin-bottom:0;}
-.ls-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.ls-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.63rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .ls-title::after{content:'';flex:1;height:1px;background:var(--g3);}
-
-/* STAT COUNTERS */
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
-.stat-box{background:var(--g2);border:1px solid var(--g3);padding:16px 12px;text-align:center;}
-.stat-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;color:var(--red);line-height:1;}
-.stat-lbl{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.3;}
-
-/* TEXTS */
-.lt{font-size:.88rem;line-height:1.8;color:#ccc;}
+.lt{font-size:.87rem;line-height:1.78;color:#ccc;}
 .lt b{color:var(--white);}
 .lt .hl{color:var(--red);font-weight:600;}
 .lt .hlg{color:var(--green);font-weight:600;}
-
-/* RULE BOX */
-.rule{background:var(--g2);border-left:3px solid var(--red);padding:14px 18px;margin:12px 0;font-size:.86rem;line-height:1.65;color:#d0d0d0;}
+.rule{background:var(--g2);border-left:3px solid var(--red);padding:13px 16px;margin:10px 0;font-size:.84rem;line-height:1.65;color:#d0d0d0;}
 .rule b{color:var(--white);}
 .rule.green{border-left-color:var(--green);}
 .rule.gold{border-left-color:var(--gold);}
-
-/* COMPARE: DO / DON'T */
-.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-.cmp-col{}
-.cmp-col-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;padding:8px 12px;margin-bottom:0;}
+.hquote{border-left:4px solid var(--gold);background:rgba(245,166,35,.06);padding:14px 18px;margin:12px 0;font-style:italic;font-size:.88rem;line-height:1.7;color:#e0c070;}
+.callout{display:flex;gap:14px;background:var(--g2);border:1px solid var(--g3);padding:14px 16px;margin:10px 0;}
+.callout .co-icon{font-size:1.6rem;flex-shrink:0;line-height:1.2;}
+.callout .co-t{font-weight:700;font-size:.83rem;margin-bottom:3px;}
+.callout .co-d{font-size:.79rem;color:var(--muted);line-height:1.55;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+.stat-box{background:var(--g2);border:1px solid var(--g3);padding:14px 10px;text-align:center;}
+.stat-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--red);line-height:1;}
+.stat-lbl{font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.3;}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.cmp-col-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;padding:7px 12px;}
 .cmp-col.do .cmp-col-title{background:rgba(0,200,120,.12);color:var(--green);}
 .cmp-col.dont .cmp-col-title{background:rgba(224,0,0,.12);color:var(--red);}
-.cmp-item{padding:9px 12px;font-size:.82rem;line-height:1.45;border-bottom:1px solid var(--g3);}
-.cmp-col.do .cmp-item{color:#aaffcc;background:rgba(0,200,120,.04);}
-.cmp-col.dont .cmp-item{color:#ffaaaa;background:rgba(224,0,0,.04);}
+.cmp-item{padding:8px 12px;font-size:.8rem;line-height:1.4;border-bottom:1px solid var(--g3);}
+.cmp-col.do .cmp-item{color:#aaffcc;background:rgba(0,200,120,.03);}
+.cmp-col.dont .cmp-item{color:#ffaaaa;background:rgba(224,0,0,.03);}
 .cmp-item:last-child{border-bottom:none;}
-.cmp-item::before{margin-right:6px;}
-.cmp-col.do .cmp-item::before{content:'✓';}
-.cmp-col.dont .cmp-item::before{content:'✗';}
-
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
-.step{background:var(--g2);padding:14px 18px;display:flex;gap:14px;align-items:flex-start;}
-.sbadge{min-width:30px;height:30px;background:var(--red);font-family:'Montserrat',sans-serif;font-weight:900;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.scnt .stitle{font-weight:700;font-size:.88rem;margin-bottom:3px;}
-.scnt .sdesc{font-size:.8rem;color:#aaa;line-height:1.55;}
-
-/* PILLS */
-.pills{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
-.pill{background:var(--g2);border:1px solid var(--g4);padding:5px 12px;font-size:.77rem;color:#bbb;}
+.cmp-col.do .cmp-item::before{content:'✓ ';}
+.cmp-col.dont .cmp-item::before{content:'✗ ';}
+.steps{display:flex;flex-direction:column;gap:9px;margin:10px 0;}
+.step{background:var(--g2);padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.sbadge{min-width:28px;height:28px;background:var(--red);font-family:'Montserrat',sans-serif;font-weight:900;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.scnt .stitle{font-weight:700;font-size:.86rem;margin-bottom:2px;}
+.scnt .sdesc{font-size:.78rem;color:#aaa;line-height:1.55;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+.pill{background:var(--g2);border:1px solid var(--g4);padding:4px 11px;font-size:.74rem;color:#bbb;}
 .pill.red{border-color:var(--red);color:var(--red);background:var(--rbg);}
 .pill.green{border-color:var(--green);color:var(--green);background:var(--gbg);}
 .pill.gold{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.08);}
-
-/* DIALOG */
-.dlg{background:var(--black);border:1px solid var(--g3);padding:16px 20px;margin:14px 0;}
-.dlg .dm{margin-bottom:10px;padding-left:14px;border-left:2px solid transparent;font-size:.84rem;line-height:1.65;}
+.dlg{background:var(--black);border:1px solid var(--g3);padding:14px 18px;margin:12px 0;}
+.dlg .dm{margin-bottom:9px;padding-left:12px;border-left:2px solid transparent;font-size:.82rem;line-height:1.65;}
 .dlg .dm:last-child{margin-bottom:0;}
 .dlg .dm.cl{border-color:#ff9a9a;}.dlg .dm.cl .sp{color:#ff9a9a;}
 .dlg .dm.st{border-color:var(--green);}.dlg .dm.st .sp{color:var(--green);}
 .dlg .dm.bad{border-color:var(--red);opacity:.7;}.dlg .dm.bad .sp{color:var(--red);}
-.dlg .sp{font-weight:700;font-size:.72rem;display:block;margin-bottom:2px;}
-
-/* LAST GRID */
-.last-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-.last-c{background:var(--g2);border-top:3px solid var(--red);padding:16px;}
-.last-letter{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.2rem;color:var(--red);line-height:1;margin-bottom:4px;}
-.last-word{font-weight:700;font-size:.85rem;margin-bottom:6px;}
-.last-desc{font-size:.79rem;color:var(--muted);line-height:1.55;}
-
-/* MENU GRID */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-.mcat{background:var(--g2);padding:14px 16px;}
-.mcat-t{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.dlg .sp{font-weight:700;font-size:.7rem;display:block;margin-bottom:2px;}
+.last-g{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0;}
+.last-c{background:var(--g2);border-top:3px solid var(--red);padding:14px;}
+.last-letter{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;color:var(--red);line-height:1;margin-bottom:3px;}
+.last-word{font-weight:700;font-size:.83rem;margin-bottom:5px;}
+.last-desc{font-size:.77rem;color:var(--muted);line-height:1.55;}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0;}
+.mcat{background:var(--g2);padding:13px 14px;}
+.mcat-t{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
 .mcat ul{list-style:none;}
-.mcat ul li{font-size:.82rem;color:#bbb;padding:4px 0;border-bottom:1px solid var(--g3);display:flex;justify-content:space-between;align-items:center;}
+.mcat ul li{font-size:.8rem;color:#bbb;padding:3px 0;border-bottom:1px solid var(--g3);display:flex;justify-content:space-between;align-items:center;}
 .mcat ul li:last-child{border-bottom:none;}
-.mcat ul li::before{content:'›';color:var(--red);margin-right:6px;font-weight:700;}
-.mcat ul li span.tag{font-size:.62rem;background:var(--red);color:white;padding:1px 5px;}
+.mcat ul li::before{content:'› ';color:var(--red);font-weight:700;}
+.mcat ul li span.tag{font-size:.58rem;background:var(--red);color:white;padding:1px 5px;}
+.promos{display:flex;flex-direction:column;gap:9px;margin:10px 0;}
+.promo{background:var(--g2);border-left:4px solid var(--red);padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.promo .pi{font-size:1.7rem;flex-shrink:0;margin-top:1px;}
+.promo .pn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:3px;}
+.promo .pd{font-size:.76rem;color:var(--muted);line-height:1.4;}
+.promo .pc2{font-size:.72rem;color:#888;margin-top:4px;line-height:1.4;}
+.cost-box{background:rgba(224,0,0,.07);border:1px solid rgba(224,0,0,.25);padding:12px 15px;margin:8px 0;display:flex;gap:11px;align-items:flex-start;}
+.cost-icon{font-size:1.2rem;flex-shrink:0;line-height:1.3;}
+.cost-t{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:1px;color:var(--red);margin-bottom:2px;}
+.cost-d{font-size:.77rem;color:#cc8080;line-height:1.5;}
+.lnav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--g3);}
+.ldots{display:flex;gap:5px;}
+.ldot{width:5px;height:5px;background:var(--g4);transition:all .25s;}
+.ldot.active{background:var(--red);width:18px;}
+.ldot.done{background:var(--green);}
 
-/* PROMO */
-.promos{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
-.promo{background:var(--g2);border-left:4px solid var(--red);padding:14px 18px;display:flex;gap:14px;align-items:center;}
-.promo .pi{font-size:1.9rem;flex-shrink:0;}
-.promo .pn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:3px;}
-.promo .pd{font-size:.78rem;color:var(--muted);line-height:1.4;}
-
-/* MINI QUIZ inside learn */
-.mquiz{background:var(--g2);border:1px solid var(--g4);padding:20px;margin:16px 0;}
-.mquiz-q{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:14px;color:var(--white);}
-.mquiz-opts{display:flex;flex-direction:column;gap:7px;}
-.mquiz-opt{background:var(--g3);border:1px solid var(--g4);padding:10px 14px;cursor:pointer;font-size:.83rem;color:var(--white);text-align:left;transition:all .15s;display:flex;gap:10px;align-items:flex-start;}
+/* MINI QUIZ */
+.mquiz{background:var(--g2);border:1px solid var(--g4);padding:18px;margin:14px 0;}
+.mquiz-q{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:12px;color:var(--white);}
+.mquiz-opts{display:flex;flex-direction:column;gap:6px;}
+.mquiz-opt{background:var(--g3);border:1px solid var(--g4);padding:9px 13px;cursor:pointer;font-size:.81rem;color:var(--white);text-align:left;transition:all .15s;display:flex;gap:9px;align-items:flex-start;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .mquiz-opt:hover:not(.locked){border-color:var(--red);background:var(--rbg);}
 .mquiz-opt.correct{border-color:var(--green);background:var(--gbg);color:#80ffcc;}
 .mquiz-opt.wrong{border-color:var(--red);background:var(--rbg);color:#ffaaaa;}
 .mquiz-opt.locked{cursor:default;}
-.mq-letter{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.68rem;color:var(--red);flex-shrink:0;margin-top:1px;}
-.mquiz-fb{margin-top:12px;padding:10px 14px;font-size:.82rem;line-height:1.5;animation:fadeup .25s ease;}
+.mq-letter{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.66rem;color:var(--red);flex-shrink:0;margin-top:2px;}
+.mquiz-fb{margin-top:10px;padding:9px 13px;font-size:.8rem;line-height:1.5;}
 .mquiz-fb.ok{background:var(--gbg);border-left:3px solid var(--green);color:#80ffcc;}
 .mquiz-fb.nope{background:var(--rbg);border-left:3px solid var(--red);color:#ffaaaa;}
 
-/* CALLOUT */
-.callout{display:flex;gap:16px;background:var(--g2);border:1px solid var(--g3);padding:16px 18px;margin:12px 0;}
-.callout .co-icon{font-size:1.8rem;flex-shrink:0;line-height:1;}
-.callout .co-t{font-weight:700;font-size:.85rem;margin-bottom:4px;}
-.callout .co-d{font-size:.81rem;color:var(--muted);line-height:1.55;}
-
-/* HIGHLIGHT QUOTE */
-.hquote{border-left:4px solid var(--gold);background:rgba(245,166,35,.06);padding:16px 20px;margin:14px 0;font-style:italic;font-size:.9rem;line-height:1.7;color:#e0c070;}
-
-/* LEARN NAV */
-.lnav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--g3);}
-.ldots{display:flex;gap:5px;}
-.ldot{width:6px;height:6px;background:var(--g4);transition:all .25s;}
-.ldot.active{background:var(--red);width:22px;}
-.ldot.done{background:var(--green);}
-
-/* SCENARIO / EXAM */
+/* CARD (scenario/exam) */
 .card{background:var(--g1);border:1px solid var(--g3);animation:fadeup .3s ease;}
-.card-top{padding:20px 24px 0;display:flex;justify-content:space-between;align-items:flex-start;}
-.card-lbl{font-size:.6rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-family:'Montserrat',sans-serif;font-weight:700;}
-.card-badge{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.7rem;background:var(--g3);padding:4px 10px;color:var(--muted);}
-.card-body{padding:20px 24px 24px;}
-.scene{background:var(--black);border:1px solid var(--g3);padding:16px 20px;margin-bottom:18px;font-size:.87rem;line-height:1.75;}
-.scene .cl{color:#ff9a9a;}.scene .cln{font-weight:700;font-size:.75rem;}
-.qtext{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.03rem;line-height:1.4;margin-bottom:16px;}
-.opts{display:flex;flex-direction:column;gap:8px;}
-.opt{background:var(--g2);border:1px solid var(--g4);padding:13px 18px;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.55;color:var(--white);display:flex;gap:12px;align-items:flex-start;transition:border-color .15s,background .15s;}
-.opt:hover:not(:disabled){border-color:var(--red);background:#200808;}
+.card-top{padding:18px 22px 0;display:flex;justify-content:space-between;align-items:flex-start;}
+.card-lbl{font-size:.59rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-family:'Montserrat',sans-serif;font-weight:700;}
+.card-badge{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.68rem;background:var(--g3);padding:3px 9px;color:var(--muted);}
+.card-body{padding:18px 22px 22px;}
+.scene{background:var(--black);border:1px solid var(--g3);padding:14px 18px;margin-bottom:16px;font-size:.85rem;line-height:1.75;}
+.scene .cl{color:#ff9a9a;}.scene .cln{font-weight:700;font-size:.74rem;}
+.qtext{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;line-height:1.4;margin-bottom:14px;}
+.opts{display:flex;flex-direction:column;gap:7px;}
+.opt{background:var(--g2);border:1px solid var(--g4);padding:12px 16px;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.83rem;line-height:1.55;color:var(--white);display:flex;gap:11px;align-items:flex-start;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.opt:hover:not(:disabled){border-color:var(--red);background:#1c0606;}
 .opt:disabled{cursor:default;}
 .opt.correct{border-color:var(--green);background:var(--gbg);color:#80ffcc;}
 .opt.wrong{border-color:var(--red);background:var(--rbg);color:#ffaaaa;}
-.opt-l{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.68rem;color:var(--red);min-width:16px;flex-shrink:0;margin-top:2px;}
+.opt-l{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.66rem;color:var(--red);min-width:14px;flex-shrink:0;margin-top:2px;}
 .opt.correct .opt-l{color:var(--green);}
-.fb{margin-top:14px;padding:13px 18px;font-size:.84rem;line-height:1.6;animation:fadeup .25s ease;}
+.fb{margin-top:12px;padding:12px 16px;font-size:.83rem;line-height:1.6;}
 .fb.ok{background:var(--gbg);border-left:3px solid var(--green);color:#80ffcc;}
 .fb.nope{background:var(--rbg);border-left:3px solid var(--red);color:#ffaaaa;}
-.next-r{display:flex;justify-content:flex-end;margin-top:14px;}
+.next-r{display:flex;justify-content:flex-end;margin-top:12px;}
 
-/* XP BAR */
-.xpbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
-.xp-l{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
-.xp-t{flex:1;height:6px;background:var(--g3);}
-.xp-f{height:100%;background:linear-gradient(90deg,var(--gold),#ffd060);transition:width .5s ease;}
-.xp-v{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--gold);white-space:nowrap;}
+/* BLITZ */
+.blitz-timer-wrap{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.blitz-tbar{flex:1;height:5px;background:var(--g3);overflow:hidden;}
+.blitz-tfill{height:100%;background:var(--gold);transition:width .1s linear;}
+.blitz-tval{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.83rem;color:var(--gold);min-width:20px;text-align:right;}
 
-/* COMPLETE */
-.done-card{text-align:center;padding:52px 32px;background:var(--g1);border:1px solid var(--g3);}
-.done-icon{font-size:3.8rem;margin-bottom:14px;animation:bop .6s ease;}
+/* CHECKLIST */
+.cl-items{display:flex;flex-direction:column;gap:7px;margin:14px 0;}
+.cl-item{background:var(--g2);border:1px solid var(--g4);padding:13px 16px;display:flex;gap:13px;align-items:center;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+.cl-item.chk{background:var(--gbg);border-color:var(--green);}
+.cl-cb{width:20px;height:20px;border:2px solid var(--g4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.76rem;transition:all .2s;}
+.cl-item.chk .cl-cb{background:var(--green);border-color:var(--green);color:var(--black);}
+.cl-txt{font-size:.85rem;line-height:1.4;}
+.cl-item.chk .cl-txt{color:#80ffcc;}
+.cl-ring{display:flex;justify-content:center;margin:18px 0;}
+.cl-ring-wrap{position:relative;width:88px;height:88px;}
+.cl-ring-wrap svg{transform:rotate(-90deg);}
+.cl-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.25rem;line-height:1.1;}
+
+/* DONE CARD */
+.done-card{text-align:center;padding:44px 28px;background:var(--g1);border:1px solid var(--g3);}
+.done-icon{font-size:3.5rem;margin-bottom:12px;animation:bop .6s ease;}
 @keyframes bop{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-.done-t{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.75rem;margin-bottom:10px;}
-.done-sub{color:var(--muted);font-size:.88rem;max-width:400px;margin:0 auto 24px;line-height:1.7;}
-.big-score{font-family:'Montserrat',sans-serif;font-weight:900;font-size:5rem;line-height:1;margin:16px 0 6px;}
-.big-score sup{font-size:1.7rem;color:var(--muted);}
+.done-t{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.65rem;margin-bottom:8px;}
+.done-sub{color:var(--muted);font-size:.86rem;max-width:400px;margin:0 auto 22px;line-height:1.7;}
+.big-score{font-family:'Montserrat',sans-serif;font-weight:900;font-size:4.5rem;line-height:1;margin:14px 0 6px;}
+.big-score sup{font-size:1.5rem;color:var(--muted);}
 .score-pass{color:var(--green)!important;}
 .score-fail{color:var(--red)!important;}
-.done-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+.blitz-score-big{font-family:'Montserrat',sans-serif;font-weight:900;font-size:3.2rem;line-height:1;margin:10px 0 4px;}
+
+/* SHARE */
+.share-box{background:var(--g2);border:1px solid var(--g3);padding:16px 18px;margin-top:12px;}
+.share-lbl{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:9px;font-family:'Montserrat',sans-serif;font-weight:700;}
+.share-txt{background:var(--black);border:1px solid var(--g4);padding:11px 13px;font-size:.76rem;line-height:1.7;color:#999;white-space:pre-wrap;word-break:break-all;margin-bottom:10px;font-family:monospace;max-height:110px;overflow-y:auto;}
+.share-acts{display:flex;gap:9px;flex-wrap:wrap;}
+
+/* RESULTS DASHBOARD */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;}
+.res-box{background:var(--g2);border:1px solid var(--g3);padding:14px 10px;text-align:center;}
+.res-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.7rem;line-height:1;}
+.res-lbl{font-size:.66rem;color:var(--muted);margin-top:3px;line-height:1.3;}
 
 /* DIPLOMA */
-#dipov{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;}
+#dipov{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;}
 #dipov.show{display:flex;}
-#dip{background:#080808;border:3px solid var(--red);outline:1px solid #3a0000;outline-offset:-9px;width:700px;max-width:100%;padding:52px 58px;text-align:center;position:relative;}
+#dip{background:#080808;border:3px solid var(--red);outline:1px solid #3a0000;outline-offset:-9px;width:680px;max-width:100%;padding:48px 54px;text-align:center;position:relative;}
 #dip::before,#dip::after{content:'';position:absolute;border:1px solid rgba(224,0,0,.15);}
 #dip::before{inset:8px;}#dip::after{inset:14px;border-style:dashed;}
-.dip-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.3rem;letter-spacing:8px;margin-bottom:4px;}
+.dip-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.2rem;letter-spacing:8px;margin-bottom:4px;}
 .dip-logo em{color:var(--red);font-style:normal;}
-.dip-tag{font-size:.62rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:28px;}
-.dip-div{height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin:20px 0;}
-.dip-cert{font-size:.78rem;color:#777;margin-bottom:4px;letter-spacing:1px;}
-.dip-name{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.1rem;color:var(--white);margin:12px 0;}
-.dip-stars{font-size:1.1rem;margin:12px 0;letter-spacing:6px;color:var(--gold);}
-.dip-body{font-size:.8rem;color:#aaa;line-height:1.75;margin-bottom:8px;}
-.dip-sc b{color:var(--red);font-size:1.15rem;}
-.dip-sign{font-size:.68rem;color:var(--muted);letter-spacing:1px;margin-top:4px;}
-.dip-acts{display:flex;gap:12px;justify-content:center;margin-top:20px;}
+.dip-tag{font-size:.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:26px;}
+.dip-div{height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin:18px 0;}
+.dip-cert{font-size:.76rem;color:#777;margin-bottom:4px;letter-spacing:1px;}
+.dip-name{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;color:var(--white);margin:10px 0;}
+.dip-stars{font-size:1rem;margin:10px 0;letter-spacing:6px;color:var(--gold);}
+.dip-body{font-size:.78rem;color:#aaa;line-height:1.75;margin-bottom:7px;}
+.dip-sc b{color:var(--red);font-size:1.1rem;}
+.dip-sign{font-size:.66rem;color:var(--muted);letter-spacing:1px;margin-top:4px;}
+.dip-acts{display:flex;gap:12px;justify-content:center;margin-top:18px;}
 
 /* FLASH */
 .flash{position:fixed;inset:0;pointer-events:none;z-index:200;opacity:0;transition:opacity .2s;}
@@ -277,34 +292,27 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 .flash.r{background:rgba(224,0,0,.1);}
 .flash.show{opacity:1;}
 
-/* SECTION HEAD */
-.shead{margin-bottom:22px;}
-.shead h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.25rem;}
-.shead h2 em{color:var(--red);font-style:normal;}
-.shead p{color:var(--muted);font-size:.8rem;margin-top:4px;}
+/* SCORE TRACKER */
+.score-tracker{background:var(--g1);border:1px solid var(--g3);border-top:3px solid var(--gold);padding:14px 18px;margin-bottom:20px;}
+.st-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.st-bars{display:flex;flex-direction:column;gap:7px;}
+.st-row{display:flex;align-items:center;gap:10px;}
+.st-lbl{font-size:.72rem;color:var(--muted);width:80px;flex-shrink:0;}
+.st-bar{flex:1;height:4px;background:var(--g3);}
+.st-fill{height:100%;transition:width .5s ease;}
+.st-val{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.7rem;width:40px;text-align:right;flex-shrink:0;}
 
-/* TOPIC PICK */
-.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
-.topic-btn{background:var(--g1);border:1px solid var(--g3);border-top:3px solid transparent;padding:16px 14px;cursor:pointer;text-align:left;transition:all .2s;position:relative;}
-.topic-btn:hover{border-color:var(--red);transform:translateY(-2px);}
-.topic-btn.active-topic{border-top-color:var(--red);background:var(--g2);}
-.topic-btn.done-topic{border-top-color:var(--green);}
-.topic-btn .tb-icon{font-size:1.4rem;margin-bottom:6px;display:block;}
-.topic-btn .tb-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;}
-.topic-btn .tb-sub{font-size:.68rem;color:var(--muted);margin-top:3px;}
-.topic-btn .tb-done{position:absolute;top:8px;right:8px;color:var(--green);font-size:.8rem;}
-
-@media(max-width:540px){
+@media(max-width:520px){
   .jgrid{grid-template-columns:1fr;}
   .last-g{grid-template-columns:1fr;}
   .mgrid{grid-template-columns:1fr;}
   .cmp-grid{grid-template-columns:1fr;}
   .stat-row{grid-template-columns:1fr 1fr;}
   .nform{flex-direction:column;}
-  .topic-grid{grid-template-columns:repeat(2,1fr);}
-  #dip{padding:32px 22px;}
-  .dip-logo{font-size:1.6rem;letter-spacing:4px;}
-  .dip-name{font-size:1.4rem;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  #dip{padding:28px 20px;}
+  .dip-logo{font-size:1.5rem;letter-spacing:4px;}
+  .dip-name{font-size:1.35rem;}
 }
 </style>
 </head>
@@ -321,9 +329,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 </header>
 
 <div class="pnav" id="pnav" style="display:none">
-  <div class="pstep" id="ps0"><span class="sn">1</span>Обучение</div>
-  <div class="pstep" id="ps1"><span class="sn">2</span>Практика</div>
-  <div class="pstep" id="ps2"><span class="sn">3</span>Экзамен</div>
+  <div class="pstep" id="ps0" onclick="navTo(0)"><span class="sn">1</span>Учёба</div>
+  <div class="pstep" id="ps1" onclick="navTo(1)"><span class="sn">2</span>Блиц</div>
+  <div class="pstep" id="ps2" onclick="navTo(2)"><span class="sn">3</span>Практика</div>
+  <div class="pstep" id="ps3" onclick="navTo(3)"><span class="sn">4</span>Экзамен</div>
+  <div class="pstep" id="ps4" onclick="navTo(4)"><span class="sn">5</span>Смена</div>
 </div>
 
 <!-- START -->
@@ -332,11 +342,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 <div class="start-hero">
   <div class="kicker">🍕 Gusto · Академия сервиса · Рязань</div>
   <h1 class="sh1">СТАНЬ МАСТЕРОМ<span class="l2">СЕРВИСА</span></h1>
-  <p class="ssub">Полный курс обучения бармена-диспетчера пиццерии Gustoclub. Изучи стандарты, отработай на практике, получи именной диплом.</p>
+  <p class="ssub">Полный курс обучения бармена-диспетчера пиццерии Gusto. 5 фаз · 8 тем · 15 сценариев · именной диплом.</p>
   <div class="jgrid">
-    <div class="jcard" data-n="01"><span class="ji">📖</span><h3>Обучение</h3><p>8 насыщенных тем с живыми примерами, сравнениями и мини-квизами</p></div>
-    <div class="jcard" data-n="02"><span class="ji">🎭</span><h3>Практика</h3><p>12 реальных сценариев — живые диалоги и нестандартные ситуации</p></div>
-    <div class="jcard" data-n="03"><span class="ji">🎓</span><h3>Диплом</h3><p>Сдай экзамен 25 вопросов · нужно 22+ · именной сертификат</p></div>
+    <div class="jcard" data-n="01"><span class="ji">📖</span><h3>Обучение</h3><p>8 тем с примерами, сравнениями и мини-квизами</p></div>
+    <div class="jcard" data-n="02"><span class="ji">⚡</span><h3>Блиц</h3><p>10 вопросов с таймером — проверь знания перед практикой</p></div>
+    <div class="jcard" data-n="03"><span class="ji">🎭</span><h3>Практика</h3><p>15 реальных сценариев с живыми диалогами</p></div>
   </div>
   <div class="nform">
     <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false"/>
@@ -349,24 +359,51 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 <!-- LEARN -->
 <div class="screen" id="s-learn">
 <div class="wrap">
-  <div class="shead"><h2>Фаза 1: <em>Обучение</em></h2><p>8 тем — читай, разбирай, запоминай. В конце каждой темы — мини-тест.</p></div>
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Фаза 1: <em>Обучение</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
   <div class="pbar-wrap">
-    <div class="pbar-meta"><span class="pbar-lbl">Прогресс</span><span class="pbar-cnt"><b id="lc">1</b> / <b id="lt">8</b></span></div>
+    <div class="pbar-meta"><span class="pbar-lbl">Тема</span><span class="pbar-cnt"><b id="lc">1</b> / <b id="lt">8</b></span></div>
     <div class="pbar-track"><div class="pbar-fill" id="lfill" style="width:0%"></div></div>
   </div>
   <div id="learn-content"></div>
 </div>
 </div>
 
+<!-- BLITZ -->
+<div class="screen" id="s-blitz">
+<div class="wrap">
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Фаза 2: <em>Блиц-тест</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
+  <div class="pbar-wrap">
+    <div class="pbar-meta"><span class="pbar-lbl">Вопрос</span><span class="pbar-cnt"><b id="bc">1</b> / <b>10</b></span></div>
+    <div class="pbar-track"><div class="pbar-fill" id="bfill" style="width:0%"></div></div>
+  </div>
+  <div id="blitz-content"></div>
+</div>
+</div>
+
 <!-- PRACTICE -->
 <div class="screen" id="s-practice">
 <div class="wrap">
-  <div class="shead"><h2>Фаза 2: <em>Практика</em></h2><p>Реальные ситуации — нет правильного скрипта, есть правильный подход.</p></div>
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Фаза 3: <em>Практика</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
   <div class="pbar-wrap">
-    <div class="pbar-meta"><span class="pbar-lbl">Сценарий</span><span class="pbar-cnt"><b id="pc">1</b> / <b id="pt">12</b></span></div>
+    <div class="pbar-meta"><span class="pbar-lbl">Сценарий</span><span class="pbar-cnt"><b id="pc">1</b> / <b id="pt">15</b></span></div>
     <div class="pbar-track"><div class="pbar-fill" id="pfill" style="width:0%"></div></div>
   </div>
-  <div class="xpbar"><span class="xp-l">Очки</span><div class="xp-t"><div class="xp-f" id="xpf" style="width:0%"></div></div><span class="xp-v" id="xpv">0 / 12</span></div>
+  <div class="xpbar"><span class="xp-l">Очки</span><div class="xp-t"><div class="xp-f" id="xpf" style="width:0%"></div></div><span class="xp-v" id="xpv">0 / 15</span></div>
   <div id="practice-content"></div>
 </div>
 </div>
@@ -374,7 +411,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 <!-- EXAM -->
 <div class="screen" id="s-exam">
 <div class="wrap">
-  <div class="shead"><h2>Фаза 3: <em>Экзамен</em></h2><p>25 вопросов — нужно набрать 22 и более для получения диплома.</p></div>
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Фаза 4: <em>Экзамен</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
   <div class="pbar-wrap">
     <div class="pbar-meta"><span class="pbar-lbl">Вопрос</span><span class="pbar-cnt"><b id="ec">1</b> / <b id="et">25</b></span></div>
     <div class="pbar-track"><div class="pbar-fill" id="efill" style="width:0%"></div></div>
@@ -383,21 +425,44 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 </div>
 </div>
 
+<!-- CHECKLIST -->
+<div class="screen" id="s-checklist">
+<div class="wrap">
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Фаза 5: <em>Чек-лист смены</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
+  <div id="checklist-content"></div>
+</div>
+</div>
+
+<!-- HOME DASHBOARD (shown when clicking logo area) -->
+<div class="screen" id="s-home">
+<div class="wrap">
+  <div class="back-nav">
+    <div class="shead" style="margin:0"><h2>Мой <em>прогресс</em></h2></div>
+  </div>
+  <div id="home-content"></div>
+</div>
+</div>
+
 <!-- DIPLOMA -->
 <div id="dipov">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:16px;max-height:90vh;overflow-y:auto;width:100%">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto;width:100%">
     <div id="dip">
       <div class="dip-logo">GUST<em>O</em> 🍕</div>
-      <div class="dip-tag">gustoclub.ru · Академия сервиса · Рязань</div>
+      <div class="dip-tag">gusto.ru · Академия сервиса · Рязань</div>
       <div class="dip-div"></div>
       <div class="dip-cert">НАСТОЯЩИЙ СЕРТИФИКАТ ПОДТВЕРЖДАЕТ, ЧТО</div>
       <div class="dip-name" id="dip-nm"></div>
       <div class="dip-stars">★ ★ ★</div>
-      <div class="dip-body">успешно прошёл(а) полный курс обучения<br>и квалификационную аттестацию по стандартам<br>пиццерии <b>GUSTOCLUB</b></div>
-      <div class="dip-sc">Результат экзамена: <b id="dip-sc"></b> из 25</div>
+      <div class="dip-body">успешно прошёл(а) полный курс обучения<br>и квалификационную аттестацию по стандартам<br>пиццерии <b>GUSTO</b></div>
+      <div class="dip-sc">Результат: <b id="dip-sc-v"></b>/25 · Практика: <b id="dip-pr-v"></b>/15 · Блиц: <b id="dip-bl-v"></b>/10</div>
       <div class="dip-div"></div>
-      <div class="dip-sign">ИП Кошкарян &nbsp;·&nbsp; Пиццерия Gusto &nbsp;·&nbsp; gustoclub.ru</div>
-      <div class="dip-sign" id="dip-dt" style="margin-top:5px;"></div>
+      <div class="dip-sign">ИП Кошкарян &nbsp;·&nbsp; Пиццерия Gusto &nbsp;·&nbsp; gusto.ru</div>
+      <div class="dip-sign" id="dip-dt" style="margin-top:4px;"></div>
     </div>
     <div class="dip-acts">
       <button class="btn btn-red" onclick="dlDip()">⬇ Скачать PNG</button>
@@ -407,660 +472,729 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-
 </div>
 
 <script>
-// ─────────── PARTICLES ───────────
+// ═══════════════════════════════════════════
+// PARTICLES
+// ═══════════════════════════════════════════
 (function(){
-  const c=document.getElementById('particles');
-  for(let i=0;i<20;i++){
-    const d=document.createElement('div'); d.className='pt';
-    const s=2+Math.random()*5, r=Math.random()>.65;
-    d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${r?'#e00000':'#fff'};animation-duration:${7+Math.random()*11}s;animation-delay:${Math.random()*9}s;`;
+  var c=document.getElementById('particles');
+  for(var i=0;i<18;i++){
+    var d=document.createElement('div'); d.className='pt';
+    var s=2+Math.random()*5, r=Math.random()>.65;
+    d.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;background:'+(r?'#e00000':'#fff')+';animation-duration:'+(7+Math.random()*11)+'s;animation-delay:'+(Math.random()*9)+'s;';
     c.appendChild(d);
   }
 })();
 
-// ─────────── STATE ───────────
-let S={name:'',phase:0,learnIdx:0,practiceIdx:0,practiceScore:0,examIdx:0,examScore:0,examDone:false};
-const save=()=>{try{localStorage.setItem('gst3',JSON.stringify(S));}catch(e){}};
-const load=()=>{try{const r=localStorage.getItem('gst3');if(r){S=JSON.parse(r);return true;}}catch(e){}return false;};
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+var S={
+  name:'', phase:0,
+  learnIdx:0,
+  blitzIdx:0, blitzScore:0, blitzQ:[], blitzDone:false,
+  practiceIdx:0, practiceScore:0, practiceDone:false,
+  examIdx:0, examScore:0, examDone:false,
+  checklistState:[],
+  mqAnswered:{},
+  totalPoints:0
+};
+var MQ_EXP={};
+var blitzTimer=null;
 
-// ─────────── MINI QUIZ HELPER ───────────
-// Each learn topic can have a mq property: {id, q, opts, c, exp}
-// Rendered inside the card, answer tracked in S.mqAnswered
-S.mqAnswered = S.mqAnswered || {};
-
-// Store explanations keyed by id, populated when renderMQ is called
-const MQ_EXP = {};
-
-function renderMQ(id, q, opts, correct, exp){
-  MQ_EXP[id] = exp;
-  const done = S.mqAnswered && S.mqAnswered[id];
-  const letters = ['А','Б','В','Г'];
-  let optsHtml = '';
-  for(let i=0; i<opts.length; i++){
-    let cls = 'mquiz-opt';
-    if(done){ cls += ' locked'; if(i===correct) cls+=' correct'; else if(i===done.chose) cls+=' wrong'; }
-    optsHtml += '<button class="'+cls+'" onclick="answerMQ(\''+id+'\','+i+','+correct+')"><span class="mq-letter">'+letters[i]+'</span><span>'+opts[i]+'</span></button>';
-  }
-  let fbHtml = '';
-  if(done){ fbHtml = '<div class="mquiz-fb '+(done.ok?'ok':'nope')+'">'+(done.ok?'✅ Верно!':'❌ Неверно.')+' '+exp+'</div>'; }
-  return '<div class="mquiz" id="mq-'+id+'"><div class="mquiz-q">🤔 Проверь себя: '+q+'</div><div class="mquiz-opts" id="mqo-'+id+'">'+optsHtml+'</div><div id="mqfb-'+id+'">'+fbHtml+'</div></div>';
+function save(){try{localStorage.setItem('gsto5',JSON.stringify(S));}catch(e){}}
+function load(){
+  try{var r=localStorage.getItem('gsto5');if(r){S=JSON.parse(r);return true;}}
+  catch(e){}return false;
 }
 
-function answerMQ(id, chose, correct){
-  if(S.mqAnswered && S.mqAnswered[id]) return;
+// SCORE SYSTEM
+// Learn: 8 topics × 10pts each (mini-quiz correct = 15 pts, skip = 5 pts) → max ~120
+// Blitz: 10 × 5pts = 50
+// Practice: 15 × 8pts = 120
+// Exam: 25 × 4pts = 100
+// Checklist: all done = 30
+// Total max: ~420
+
+function calcTotal(){
+  var t=0;
+  t += S.blitzScore * 5;
+  t += S.practiceScore * 8;
+  t += S.examScore * 4;
+  if(S.checklistState && S.checklistState.filter(Boolean).length === CHECKLIST.length) t+=30;
+  // mini quizzes
+  if(S.mqAnswered){
+    Object.values(S.mqAnswered).forEach(function(v){ if(v.ok) t+=15; });
+  }
+  return t;
+}
+
+function MAX_POINTS(){ return 8*5 + 8*15 + 10*5 + 15*8 + 25*4 + 30; } // 40+120+50+120+100+30=460
+
+// ═══════════════════════════════════════════
+// MINI QUIZ
+// ═══════════════════════════════════════════
+function renderMQ(id, q, opts, correct, exp){
+  MQ_EXP[id]=exp;
+  var done=S.mqAnswered&&S.mqAnswered[id];
+  var L=['А','Б','В','Г'];
+  var html='<div class="mquiz" id="mq-'+id+'"><div class="mquiz-q">🤔 Проверь себя: '+q+'</div><div class="mquiz-opts" id="mqo-'+id+'">';
+  for(var i=0;i<opts.length;i++){
+    var cls='mquiz-opt';
+    if(done){cls+=' locked';if(i===correct)cls+=' correct';else if(i===done.chose)cls+=' wrong';}
+    html+='<button class="'+cls+'" onclick="answerMQ(\''+id+'\','+i+','+correct+')"><span class="mq-letter">'+L[i]+'</span><span>'+opts[i]+'</span></button>';
+  }
+  html+='</div><div id="mqfb-'+id+'">'+(done?'<div class="mquiz-fb '+(done.ok?'ok':'nope')+'">'+(done.ok?'✅ Верно!':'❌ Неверно.')+' '+exp+'</div>':'')+'</div></div>';
+  return html;
+}
+function answerMQ(id,chose,correct){
+  if(S.mqAnswered&&S.mqAnswered[id]) return;
   if(!S.mqAnswered) S.mqAnswered={};
-  const ok = (chose === correct);
-  S.mqAnswered[id] = {chose, ok};
+  var ok=(chose===correct);
+  S.mqAnswered[id]={chose:chose,ok:ok};
   save();
-  const container = document.getElementById('mqo-'+id);
-  if(!container) return;
-  const btns = container.querySelectorAll('.mquiz-opt');
-  btns.forEach((b,i)=>{
+  var c=document.getElementById('mqo-'+id);
+  if(!c) return;
+  c.querySelectorAll('.mquiz-opt').forEach(function(b,i){
     b.classList.add('locked');
-    if(i===correct) b.classList.add('correct');
-    else if(i===chose && !ok) b.classList.add('wrong');
+    if(i===correct)b.classList.add('correct');
+    else if(i===chose&&!ok)b.classList.add('wrong');
   });
-  const fb = document.getElementById('mqfb-'+id);
-  if(fb){ fb.innerHTML = '<div class="mquiz-fb '+(ok?'ok':'nope')+'">'+(ok?'✅ Верно!':'❌ Неверно.')+' '+(MQ_EXP[id]||'')+'</div>'; }
+  var fb=document.getElementById('mqfb-'+id);
+  if(fb)fb.innerHTML='<div class="mquiz-fb '+(ok?'ok':'nope')+'">'+(ok?'✅ Верно!':'❌ Неверно.')+' '+(MQ_EXP[id]||'')+'</div>';
   flashFx(ok);
 }
 
-// ─────────── LEARN DATA – 8 topics ───────────
-const LEARN=[
-  // ① КРЕДО И ВНЕШНИЙ ВИД
-  {icon:'🌟',chapter:'Глава 1',title:'Кредо, ценности и внешний вид',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Почему важно быть лучшим</div>
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-num" data-to="68">0</div><div class="stat-lbl">% гостей уходят из-за<br>равнодушия персонала</div></div>
-      <div class="stat-box"><div class="stat-num" data-to="7">0</div><div class="stat-lbl">из 10 вернутся, если решить<br>проблему в их пользу</div></div>
-      <div class="stat-box"><div class="stat-num" data-to="30">0</div><div class="stat-lbl">секунд — максимум<br>до приветствия гостя</div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Наше кредо Gusto</div>
-    <div class="hquote">«Гость — самый важный человек в нашем бизнесе. Приход любого гостя — это возможность предоставить сервис и доставить удовольствие.»</div>
-    <p class="lt">Мы относимся к каждому с <span class="hl">уважением, заботой и пониманием</span>. Сотрудники Gusto:</p>
-    <div class="pills" style="margin-top:10px">
-      <div class="pill green">Ответственны</div><div class="pill green">Достойны доверия</div>
-      <div class="pill green">Обязательны</div><div class="pill green">Позитивны</div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Стандарт внешнего вида</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">✅ Правильно</div>
-        <div class="cmp-item">Чёрные брюки, чистые и отглаженные</div>
-        <div class="cmp-item">Чёрная закрытая обувь, начищенная</div>
-        <div class="cmp-item">Чистый отглаженный фартук</div>
-        <div class="cmp-item">Бейджик с именем — всегда!</div>
-        <div class="cmp-item">Волосы аккуратно убраны</div>
-        <div class="cmp-item">Руки чистые, ногти ухоженные</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">❌ Недопустимо</div>
-        <div class="cmp-item">Мятая или грязная одежда</div>
-        <div class="cmp-item">Открытая обувь или кеды</div>
-        <div class="cmp-item">Без фартука в смену</div>
-        <div class="cmp-item">Работать без бейджика</div>
-        <div class="cmp-item">Распущенные волосы на кухне</div>
-        <div class="cmp-item">Сильный парфюм или украшения</div>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Правило пунктуальности</div>
-    <div class="rule gold">🕐 <b>Пришёл на 15 минут раньше — пришёл вовремя. Пришёл вовремя — опоздал.</b><br>Если знаешь, что задержишься — предупреди администратора <b>минимум за 2 часа.</b></div>
-  </div>
-  ${renderMQ('credo1','Что делать, если понимаешь, что опоздаешь на смену?',
-    ['Прийти как получится, это нормально','Предупредить администратора минимум за 2 часа','Написать коллеге, что задержишься немного','Позвонить за 10 минут до начала смены'],
-    1,'Стандарт Gusto: предупредить администратора минимум за 2 часа. Так ресторан успеет найти замену.'
-  )}`
-  },
-
-  // ② 5 ШАГОВ
-  {icon:'⭐',chapter:'Глава 2',title:'5 шагов обслуживания',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Основа сервиса Gusto</div>
-    <p class="lt">Каждый гость проходит через 5 шагов обслуживания. Пропустить шаг — значит оставить гостя без части сервиса. <span class="hl">Все шаги обязательны.</span></p>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Шаги подробно</div>
-    <div class="steps">
-      <div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">ПРИВЕТСТВИЕ</div><div class="sdesc">Встреть с теплотой и улыбкой — <b>в течение 30 секунд.</b> Назови себя: «Меня зовут [имя]!» Расскажи о новинках и акциях. <b>Улыбка слышна в голосе даже по телефону</b> — это научно доказано.</div></div></div>
-      <div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПРИЁМ ЗАКАЗА</div><div class="sdesc">Выслушай внимательно, помоги выбрать, предложи дополнения и акции. Называй <b>полные названия блюд.</b> Обязательно повтори весь заказ вслух перед завершением — это исключает ошибки.</div></div></div>
-      <div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">ВЫПОЛНЕНИЕ ЗАКАЗА</div><div class="sdesc">Контролируй время и внешний вид блюд. Соблюдай <b>правило открытой руки.</b> Если задержка — <b>сам подойди к гостю</b>, извинись и предложи компенсацию — не жди, пока позовёт.</div></div></div>
-      <div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">КОНТРОЛЬ ЧИСТОТЫ</div><div class="sdesc">Убирай грязную посуду <b>незаметно, без комментариев.</b> Принеси дополнительные салфетки. Предложи повторить напитки или десерт — это уместный <b>up-sell в нужный момент.</b></div></div></div>
-      <div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">РАСЧЁТ И ПРОЩАНИЕ</div><div class="sdesc">Уточни способ оплаты (карта или наличные). Передай чек. Попроси оставить отзыв. <b>Тепло попрощайся и пригласи снова.</b> Кладёшь трубку — последним, не первым!</div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Правило открытой руки</div>
-    <div class="callout">
-      <div class="co-icon">🤚</div>
-      <div><div class="co-t">С правой стороны — правой рукой, с левой — левой</div><div class="co-d">Гость всегда должен видеть ладонь, а не локоть. Нельзя «перекрещиваться» через гостя. Нельзя касаться пальцами рабочих поверхностей приборов и посуды — только за рёбра и ручки.</div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Чек-бэк (Check Back)</div>
-    <div class="rule green">✅ Через 2–3 минуты после подачи блюда подойди: <b>«Всё нравится? Могу что-то принести?»</b><br>Это превращает равнодушный сервис в заботливый. Большинство жалоб появляется именно потому, что никто не спросил.</div>
-  </div>
-  ${renderMQ('steps1','Гость сел за стол. Когда ты должен подойти к нему?',
-    ['Как только освободишься','В течение 30 секунд','Через 2–3 минуты, дать осмотреться','Когда позовёт'],
-    1,'Стандарт Gusto: приветствие в течение 30 секунд. Это первое впечатление — оно не бывает второй раз.'
-  )}`
-  },
-
-  // ③ ТЕЛЕФОН И 4 ШАГА ВЫНОСА
-  {icon:'📞',chapter:'Глава 3',title:'Телефонный этикет и заказ на вынос',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Каждый звонок = потенциальный гость</div>
-    <div class="callout">
-      <div class="co-icon">💡</div>
-      <div><div class="co-t">Ответь не позже 2 гудков</div><div class="co-d">Телефон — лицо ресторана. Первые 5 секунд разговора формируют всё впечатление о нас. Улыбайся — это буквально меняет форму рта и тембр голоса, что слышно в трубку.</div></div>
-    </div>
-    <div class="rule">📞 Стандарт: <b>«Доброе утро/день/вечер, пиццерия Gustoclub, меня зовут [имя], чем могу помочь?»</b><br>Максимальная длительность разговора — <b>не более 2 минут.</b></div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Правильный звонок vs Неправильный</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">✅ Так правильно</div>
-        <div class="cmp-item">Представить компанию + себя</div>
-        <div class="cmp-item">Узнать имя клиента, обращаться по имени</div>
-        <div class="cmp-item">Помочь с выбором, предложить доп.</div>
-        <div class="cmp-item">Рассказать об акциях проактивно</div>
-        <div class="cmp-item">Повторить весь заказ вслух</div>
-        <div class="cmp-item">Попросить оставить отзыв</div>
-        <div class="cmp-item">Тепло попрощаться, класть трубку последним</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">❌ Так нельзя</div>
-        <div class="cmp-item">«Алло» или «Да» вместо приветствия</div>
-        <div class="cmp-item">Не называть себя и компанию</div>
-        <div class="cmp-item">Молча записать и ничего не предложить</div>
-        <div class="cmp-item">Ждать, пока клиент спросит об акциях</div>
-        <div class="cmp-item">Не повторять заказ</div>
-        <div class="cmp-item">Класть трубку первым</div>
-        <div class="cmp-item">Разговор больше 2 минут без причины</div>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Живой пример звонка</div>
-    <div class="dlg">
-      <div class="dm cl"><span class="sp">Клиент:</span>«Здравствуйте, хочу пиццу Пепперони на самовывоз»</div>
-      <div class="dm bad"><span class="sp">❌ Плохо:</span>«Окей, 15 минут» <i style="color:#666">— нет приветствия, нет имени, нет допродажи</i></div>
-      <div class="dm st"><span class="sp">✅ Правильно:</span>«Добрый вечер! Пиццерия Gustoclub, меня зовут Алексей, чем могу помочь? Пепперони — отличный выбор! Как вас зовут? Отлично, Антон! Добавите картошку фри? При заказе от 1500₽ она бесплатно! Или соус — чесночный к пицце идеально подходит. Повторяю: пицца Пепперони + картошка фри. Готовность — 15 минут. Филиал на Высоковольтной удобен? Хорошего вечера, Антон!»</div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">4 шага заказа на вынос</div>
-    <div class="steps">
-      <div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">ПРИНЯТЬ ЗАКАЗ</div><div class="sdesc">Спросить что хочет, помочь выбрать, предложить дополнения и акции, повторить заказ вслух, уточнить адрес нашего филиала.</div></div></div>
-      <div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПРОБИТЬ ЗАКАЗ</div><div class="sdesc">Внести в кассовую систему точно и без ошибок. Перепроверить состав заказа.</div></div></div>
-      <div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">СОБРАТЬ ЗАКАЗ</div><div class="sdesc">Забрать с кухни. <b>Проверить комплектность</b> перед выдачей — все позиции, соусы, салфетки.</div></div></div>
-      <div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">ДОСТАВИТЬ ГОСТЮ</div><div class="sdesc">Поблагодарить за заказ. Тепло попрощаться, пригласить снова. Попросить отзыв.</div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Для доставки — уточнить обязательно</div>
-    <div class="pills">
-      <div class="pill red">Улица и дом</div><div class="pill red">Квартира</div><div class="pill red">Этаж</div>
-      <div class="pill red">Код домофона</div><div class="pill red">Номер телефона</div>
-      <div class="pill">Способ оплаты</div><div class="pill">Время ~45–60 мин</div>
-    </div>
-  </div>
-  ${renderMQ('phone1','Клиент позвонил и говорит только «Пепперони на вынос». Что ты делаешь первым?',
-    ['Сразу записываю заказ','Представляюсь, узнаю имя клиента и предлагаю дополнения','Спрашиваю адрес','Говорю время готовности'],
-    1,'Правильный порядок: приветствие → имя клиента → заказ с допродажей → повтор → адрес/время. Никогда не пропускай первые шаги!'
-  )}`
-  },
-
-  // ④ МЕНЮ GUSTO
-  {icon:'🍕',chapter:'Глава 4',title:'Меню Gusto — знай что продаёшь',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Почему знание меню = деньги</div>
-    <p class="lt">Официант, который <b>уверенно описывает блюда</b>, продаёт на 23% больше. Если не знаешь состав — <span class="hl">уточни на кухне, но не придумывай.</span> Аллергия — это серьёзно.</p>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Пиццы (32 см)</div>
-    <div class="mgrid">
-      <div class="mcat">
-        <div class="mcat-t">🔥 Хиты</div>
-        <ul>
-          <li>Пепперони <span class="tag">ХИТ</span></li>
-          <li>Барбекю</li>
-          <li>Сырная</li>
-          <li>Цезарь</li>
-          <li>Карбонара</li>
-          <li>Мексиканская <span class="tag">ОСТРО</span></li>
-        </ul>
-      </div>
-      <div class="mcat">
-        <div class="mcat-t">🍕 Фирменные</div>
-        <ul>
-          <li>Кисло-сладкий цыплёнок <span class="tag">НОВИНКА</span></li>
-          <li>Диабло <span class="tag">ОСТРО</span></li>
-          <li>Пицца Бургер</li>
-          <li>Джимми</li>
-          <li>Блек Джек</li>
-          <li>Чикен Ранч</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Роллы (8 шт.)</div>
-    <div class="mgrid">
-      <div class="mcat">
-        <div class="mcat-t">🍣 Классика</div>
-        <ul>
-          <li>Калифорния Лайт <span class="tag">ХИТ</span></li>
-          <li>Унаги Краб</li>
-          <li>Кранч Ролл</li>
-          <li>Спайси Краб <span class="tag">ОСТРО</span></li>
-          <li>Чука Ролл</li>
-        </ul>
-      </div>
-      <div class="mcat">
-        <div class="mcat-t">🔥 Запечённые</div>
-        <ul>
-          <li>Запечённая Креветка <span class="tag">ХИТ</span></li>
-          <li>Вулкан</li>
-          <li>Black Philadelphia</li>
-          <li>Black Unagi</li>
-          <li>Горячие Дары Моря</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Дополнения и напитки</div>
-    <div class="mgrid">
-      <div class="mcat">
-        <div class="mcat-t">🥫 Соусы</div>
-        <ul>
-          <li>Чесночный <span class="tag">ХИТ</span></li>
-          <li>Сырный</li>
-          <li>Барбекю</li>
-          <li>Острый</li>
-        </ul>
-      </div>
-      <div class="mcat">
-        <div class="mcat-t">🥤 Напитки</div>
-        <ul>
-          <li>Лимонад «Gusto» <span class="tag">ФИРМ.</span></li>
-          <li>Coca-Cola</li>
-          <li>Морс</li>
-          <li>Вода</li>
-        </ul>
-      </div>
-    </div>
-    <div class="pills" style="margin-top:12px">
-      <div class="pill gold">Картошка фри</div><div class="pill gold">Луковые кольца</div><div class="pill gold">Чизкейк</div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Лайфхак продавца</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">💬 Описывай вкусно</div>
-        <div class="cmp-item">«Пепперони — тонкое тесто, пикантная колбаска, очень сочная»</div>
-        <div class="cmp-item">«Кисло-сладкий цыплёнок — необычный, все кто берут — в восторге»</div>
-        <div class="cmp-item">«Лимонад Gusto — наш фирменный, очень освежает»</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">🚫 Не говори так</div>
-        <div class="cmp-item">«Ну это просто пицца с колбасой»</div>
-        <div class="cmp-item">«Не знаю что там, наверное вкусно»</div>
-        <div class="cmp-item">«Всё одинаково, берите что хотите»</div>
-      </div>
-    </div>
-  </div>
-  ${renderMQ('menu1','Клиент спрашивает: «Что острое в меню?» Твой ответ:',
-    ['«Не знаю, посмотрите в меню сами»','«Острые позиции: пицца Диабло, Мексиканская и ролл Спайси Краб — рекомендую!»','«У нас всё острое»','«Ничего острого нет»'],
-    1,'Знай острые позиции наизусть: Диабло, Мексиканская, Спайси Краб. Уверенный ответ = доверие гостя.'
-  )}`
-  },
-
-  // ⑤ АКЦИИ И ПРОДАЖИ
-  {icon:'🎯',chapter:'Глава 5',title:'Акции, продажи и «три нет»',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Текущие акции Gusto</div>
-    <div class="promos">
-      <div class="promo"><span class="pi">🍟</span><div><div class="pn">Бесплатная картошка фри</div><div class="pd">При заказе от 1500₽. <b>Предлагай в каждом звонке</b> — это повышает средний чек и радует гостя.</div></div></div>
-      <div class="promo"><span class="pi">🍕🍕</span><div><div class="pn">2 пиццы по цене одной</div><div class="pd">Предлагать при заказе одной пиццы и постоянным гостям. Скрипт: <b>«Возьмёте вторую бесплатно?»</b></div></div></div>
-      <div class="promo"><span class="pi">🥗</span><div><div class="pn">Комбо-обед</div><div class="pd">Пицца + гарнир + напиток по специальной цене. Идеален для обеденных звонков 11:00–15:00.</div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Кросс-селлинг — что это</div>
-    <p class="lt">Предложение <b>дополнительных позиций</b> к основному заказу. Цель — повысить средний чек и удовлетворённость гостя.</p>
-    <div class="rule">🍕 Взял пиццу → предложи: <b>соус + картошка фри + напиток</b><br>🍣 Взял роллы → предложи: <b>чесночный соус + лимонад Gusto</b><br>🍔 Взял бургер → предложи: <b>картошка фри + соус + напиток</b></div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Апселлинг — что это</div>
-    <p class="lt">Предложение <b>более дорогой или премиальной позиции</b>. Работает мягко, без давления.</p>
-    <div class="dlg">
-      <div class="dm cl"><span class="sp">Клиент:</span>«Возьму пиццу Сырную»</div>
-      <div class="dm st"><span class="sp">✅ Ты (up-sell):</span>«Сырная — отличный выбор! Кстати, сейчас хит сезона — пицца <b>Кисло-сладкий цыплёнок</b>, необычный вкус, все кто берут — заказывают снова. Попробуете?»</div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Правило «трёх нет» — никогда не сдавайся сразу</div>
-    <div class="rule gold">🔄 После первого отказа — предложи <b>другое</b> дополнение. После второго — ещё одно. Только после <b>трёх</b> отказов или «больше ничего не надо» — принимай отказ.</div>
-    <div class="dlg">
-      <div class="dm st"><span class="sp">Ты:</span>«Добавите картошку фри?»</div>
-      <div class="dm cl"><span class="sp">Клиент:</span>«Нет, спасибо» <i style="color:#555">← 1-й отказ, продолжаем</i></div>
-      <div class="dm st"><span class="sp">Ты:</span>«Понял! А напиток? Лимонад Gusto или Coca-Cola?»</div>
-      <div class="dm cl"><span class="sp">Клиент:</span>«Нет» <i style="color:#555">← 2-й отказ, ещё один шанс</i></div>
-      <div class="dm st"><span class="sp">Ты:</span>«Хорошо! Может соус к пицце — чесночный?»</div>
-      <div class="dm cl"><span class="sp">Клиент:</span>«Нет, ничего не нужно» <i style="color:#555">← 3-й отказ, принимаем</i></div>
-      <div class="dm st"><span class="sp">Ты:</span>«Отлично, принял заказ! 🎯»</div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Обращение по имени — сильнейший инструмент</div>
-    <div class="callout">
-      <div class="co-icon">🧠</div>
-      <div><div class="co-t">Мозг реагирует на своё имя сильнее, чем на любое слово</div><div class="co-d">Узнай имя клиента в начале разговора и используй его 2–3 раза. «Антон, отличный выбор!», «Антон, повторяю ваш заказ», «Антон, хорошего вечера!» — это создаёт личный контакт и лояльность.</div></div>
-    </div>
-  </div>
-  ${renderMQ('sales1','Клиент отказался от картошки фри. Что делаешь?',
-    ['Принимаю отказ и завершаю продажи','Предлагаю другую позицию — напиток или соус','Ещё раз предлагаю картошку фри','Говорю «ну ладно» и молчу'],
-    1,'Правило «трёх нет»: первый отказ — не стоп-сигнал! Предложи другое дополнение.'
-  )}`
-  },
-
-  // ⑥ КОНФЛИКТЫ И LAST
-  {icon:'🛡️',chapter:'Глава 6',title:'Конфликты и техника LAST',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Жалоба — это подарок</div>
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-num" data-to="68">0</div><div class="stat-lbl">% уходят из-за<br>равнодушия</div></div>
-      <div class="stat-box"><div class="stat-num" data-to="95">0</div><div class="stat-lbl">% вернутся, если<br>решить быстро</div></div>
-      <div class="stat-box"><div class="stat-num" data-to="4">0</div><div class="stat-lbl">буквы LAST<br>решают всё</div></div>
-    </div>
-    <div class="hquote">«Жалоба — это последний шанс удержать гостя. Тот, чью проблему решили быстро и с заботой, становится самым лояльным клиентом.»</div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Техника LAST — подробно</div>
-    <div class="last-g">
-      <div class="last-c"><div class="last-letter">L</div><div class="last-word">LISTEN — Слушай</div><div class="last-desc">Смотри в глаза. Не перебивай. Прислушивайся к фактам и чувствам. Кивай. Дай гостю <b>выговориться полностью</b> — это уже снижает агрессию.</div></div>
-      <div class="last-c"><div class="last-letter">A</div><div class="last-word">APOLOGIZE — Извинись</div><div class="last-desc">Искренне: «Мне очень жаль, что так произошло». Не оправдывайся. Не говори «но». Извинение — это не признание вины, это <b>уважение к чувствам гостя.</b></div></div>
-      <div class="last-c"><div class="last-letter">S</div><div class="last-word">SOLVE — Реши</div><div class="last-desc">Предложи <b>конкретное решение</b>: замена блюда, скидка 10%, бесплатная картошка фри, компенсация. Дай выбор из 2 вариантов — гость чувствует контроль ситуации.</div></div>
-      <div class="last-c"><div class="last-letter">T</div><div class="last-word">THANK — Поблагодари</div><div class="last-desc">«Спасибо, что сообщили — это помогает нам становиться лучше!» Искренне. Это переворачивает ситуацию: гость уходит с позитивом.</div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Что нельзя делать НИКОГДА</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">✅ Правильно</div>
-        <div class="cmp-item">Выслушать не перебивая</div>
-        <div class="cmp-item">Извиниться искренне</div>
-        <div class="cmp-item">Предложить 2 варианта решения</div>
-        <div class="cmp-item">Сохранять спокойствие</div>
-        <div class="cmp-item">Позвать менеджера если нужно</div>
-        <div class="cmp-item">Поблагодарить за отзыв</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">❌ Никогда</div>
-        <div class="cmp-item">Спорить и доказывать свою правоту</div>
-        <div class="cmp-item">Оправдываться («у нас так принято»)</div>
-        <div class="cmp-item">Шутить в конфликтной ситуации</div>
-        <div class="cmp-item">Принимать жалобу лично</div>
-        <div class="cmp-item">Игнорировать или уходить</div>
-        <div class="cmp-item">Думать, что гость «лжёт»</div>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Когда немедленно звать менеджера</div>
-    <div class="rule">🚨 <b>Немедленно:</b> гость нашёл предмет в блюде · жалуется на сотрудника · требует встречи с менеджером · ты сделал всё, а гость всё равно недоволен · гость в сильной агрессии</div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">LAST в действии — полный диалог</div>
-    <div class="dlg">
-      <div class="dm cl"><span class="sp">Клиент:</span>«В прошлый раз курьер опоздал на 40 минут! Это безобразие, я больше не буду заказывать!»</div>
-      <div class="dm st"><span class="sp">✅ Ты (L):</span>«Слышу вас, понимаю — это очень неприятно. Спасибо, что не промолчали.»</div>
-      <div class="dm st"><span class="sp">✅ Ты (A):</span>«Приношу искренние извинения — такого не должно происходить.»</div>
-      <div class="dm st"><span class="sp">✅ Ты (S):</span>«Хочу исправить ситуацию: предлагаю скидку 10% на следующий заказ или бесплатную картошку фри прямо сейчас — что предпочтёте?»</div>
-      <div class="dm st"><span class="sp">✅ Ты (T):</span>«Антон, огромное спасибо — ваш отзыв поможет нам работать лучше для вас!»</div>
-    </div>
-  </div>
-  ${renderMQ('last1','Клиент говорит: «Ваша пицца пересолена!» Что ты делаешь первым?',
-    ['Объясняешь, что повар так готовит','Молча убираешь тарелку','Искренне извиняешься и предлагаешь замену или другое решение','Спрашиваешь, уверен ли он в этом'],
-    2,'LAST начинается с Apologize — сначала извинись искренне, затем предложи решение. Не оправдывайся и не споришь!'
-  )}`
-  },
-
-  // ⑦ РАСЧЁТ, ОТЗЫВЫ И ПРОЩАНИЕ
-  {icon:'💳',chapter:'Глава 7',title:'Расчёт, отзывы и правильное прощание',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Расчёт гостя — шаг 5 обслуживания</div>
-    <div class="steps">
-      <div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">УТОЧНИ СПОСОБ ОПЛАТЫ</div><div class="sdesc">«Будете оплачивать картой или наличными?» — спросить заранее, не в последний момент. Никогда не предполагай сам.</div></div></div>
-      <div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПЕРЕДАЙ ЧЕК</div><div class="sdesc">Чек подать аккуратно. При оплате картой — сообщить итоговую сумму. Сдачу принести в специальной папке или на подносе.</div></div></div>
-      <div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">ПОПРОСИ ОТЗЫВ</div><div class="sdesc">«Если всё понравилось — будем рады вашему отзыву на нашей странице! Это очень помогает нам.» Говорить тепло, не как робот.</div></div></div>
-      <div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">ТЁПЛОЕ ПРОЩАНИЕ</div><div class="sdesc">«Спасибо за визит, ждём вас снова! Хорошего вечера!» — и <b>кладёшь трубку последним</b>. Гость должен уйти с улыбкой.</div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Как просить отзыв — правильно</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">✅ Так работает</div>
-        <div class="cmp-item">«Если вам понравилось — будем рады отзыву!»</div>
-        <div class="cmp-item">Тёплым голосом, искренне</div>
-        <div class="cmp-item">После того как гость доволен</div>
-        <div class="cmp-item">Указать где оставить (страница Gusto)</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">❌ Так не надо</div>
-        <div class="cmp-item">«Вы обязаны оставить отзыв»</div>
-        <div class="cmp-item">Монотонно, как заученный текст</div>
-        <div class="cmp-item">Если гость недоволен — сначала реши проблему</div>
-        <div class="cmp-item">«Нам очень нужны отзывы» — давление</div>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Отмена готового заказа</div>
-    <div class="callout">
-      <div class="co-icon">⚠️</div>
-      <div><div class="co-t">Заказ готов — предлагай альтернативы</div><div class="co-d">Скажи, что заказ готов. Предложи 2 варианта: <b>упаковать с собой со скидкой 15%</b> или <b>перенести время доставки</b>. Не конфликтовать — искать решение.</div></div>
-    </div>
-    <div class="dlg">
-      <div class="dm cl"><span class="sp">Клиент:</span>«Передумал, отмените пожалуйста»</div>
-      <div class="dm bad"><span class="sp">❌ Плохо:</span>«Хорошо, отменяем» <i style="color:#555">— потеряли выручку</i></div>
-      <div class="dm st"><span class="sp">✅ Правильно:</span>«Пицца уже готова и ждёт! Предлагаю упаковать с собой со скидкой 15% — очень выгодно. Или можем перенести доставку на удобное время. Что предпочтёте?»</div>
-    </div>
-  </div>
-  ${renderMQ('checkout1','Клиент хочет отменить уже готовый заказ. Твои действия:',
-    ['Согласиться и отменить','Сказать что это невозможно и требовать оплаты','Сообщить что заказ готов и предложить 2 альтернативы: скидка 15% или перенос времени','Позвонить менеджеру без объяснений'],
-    2,'Правильно: сообщить о готовности, предложить альтернативы (скидка или перенос). Это сохраняет и выручку, и лояльность клиента.'
-  )}`
-  },
-
-  // ⑧ САНИТАРИЯ И ЧИСТОТА
-  {icon:'🧹',chapter:'Глава 8',title:'Санитария, чистота и рабочее место',
-  render:()=>`
-  <div class="ls">
-    <div class="ls-title">Чистота = доверие гостя</div>
-    <div class="hquote">«Гость видит чистоту раньше, чем попробует еду. Грязный стол — это сигнал о качестве всего заведения.»</div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Личная гигиена — обязательно</div>
-    <div class="steps">
-      <div class="step"><div class="sbadge">!</div><div class="scnt"><div class="stitle">КОГДА МЫТЬ РУКИ</div><div class="sdesc">После посещения туалета, контакта с деньгами, сырыми продуктами, мусором, после еды и по необходимости. <b>Не реже одного раза в час.</b></div></div></div>
-      <div class="step"><div class="sbadge">!</div><div class="scnt"><div class="stitle">МЕДОСМОТР</div><div class="sdesc">Своевременно проходить медицинские осмотры и сдавать анализы. При признаках болезни — <b>сообщить администратору.</b></div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Контроль чистоты в зале</div>
-    <div class="cmp-grid">
-      <div class="cmp-col do">
-        <div class="cmp-col-title">✅ Стандарт</div>
-        <div class="cmp-item">Убирать посуду незаметно, без комментариев</div>
-        <div class="cmp-item">Протирать столы сразу после ухода гостей</div>
-        <div class="cmp-item">Проверять чистоту приборов — без подтёков</div>
-        <div class="cmp-item">При уборке предложить десерт или напиток</div>
-        <div class="cmp-item">Мягкую мебель пылесосить в начале смены</div>
-      </div>
-      <div class="cmp-col dont">
-        <div class="cmp-col-title">❌ Нельзя</div>
-        <div class="cmp-item">Убирать громко, с комментариями</div>
-        <div class="cmp-item">Оставлять грязные столы пока есть гости</div>
-        <div class="cmp-item">Подавать приборы с пятнами</div>
-        <div class="cmp-item">Есть на виду у гостей</div>
-        <div class="cmp-item">Использовать телефон при гостях</div>
-      </div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Подготовка зала к смене</div>
-    <div class="steps">
-      <div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">ОТКРЫТИЕ</div><div class="sdesc">Протереть все поверхности, расставить мебель, подготовить приборы и посуду, сервировать столы, заполнить станцию официанта.</div></div></div>
-      <div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ЗАКРЫТИЕ</div><div class="sdesc">Натереть тарелки и приборы, протереть столы, стулья, диваны, подготовить салфетки, сведение кассы, выключить оборудование, передача смены.</div></div></div>
-    </div>
-  </div>
-  <div class="ls">
-    <div class="ls-title">Станция официанта</div>
-    <div class="rule green">🗂️ Станция официанта — твоё рабочее место. Должна быть <b>всегда чистой и укомплектованной:</b> натёртые приборы, чистые тарелки, белые салфетки (открытая пачка + запас).</div>
-  </div>
-  ${renderMQ('clean1','Новые гости сели за стол, на котором ещё стоит посуда предыдущих. Что делать?',
-    ['Попросить гостей подождать и убрать громко','Незаметно убрать посуду, а потом предложить напиток или десерт','Убрать только после того как гости позовут','Попросить гостей пересесть'],
-    1,'Убирай незаметно и без комментариев. Используй момент для up-sell — предложи десерт или повтор напитков!'
-  )}`
-  }
+// ═══════════════════════════════════════════
+// LEARN DATA — 8 тем
+// ═══════════════════════════════════════════
+var LEARN=[
+// 1 — КРЕДО
+{icon:'🌟',chapter:'Глава 1',title:'Кредо, ценности и внешний вид',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Почему важно быть лучшим</div>'+
+'<div class="stat-row">'+
+'<div class="stat-box"><div class="stat-num" data-to="68">0</div><div class="stat-lbl">% гостей уходят из-за равнодушия персонала</div></div>'+
+'<div class="stat-box"><div class="stat-num" data-to="7">0</div><div class="stat-lbl">из 10 вернутся, если решить проблему быстро</div></div>'+
+'<div class="stat-box"><div class="stat-num" data-to="30">0</div><div class="stat-lbl">секунд — максимум до приветствия гостя</div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Кредо Gusto</div>'+
+'<div class="hquote">«Гость — самый важный человек в нашем бизнесе. Приход любого гостя — это возможность предоставить сервис и доставить удовольствие.»</div>'+
+'<p class="lt">Мы относимся к каждому с <span class="hl">уважением, заботой и пониманием</span>. Сотрудники Gusto: ответственны, достойны доверия, обязательны и позитивны.</p></div>'+
+'<div class="ls"><div class="ls-title">Стандарт внешнего вида</div>'+
+'<div class="cmp-grid">'+
+'<div class="cmp-col do"><div class="cmp-col-title">✅ Правильно</div>'+
+'<div class="cmp-item">Чёрные брюки, чистые и отглаженные</div>'+
+'<div class="cmp-item">Чёрная закрытая обувь, начищенная</div>'+
+'<div class="cmp-item">Чистый отглаженный фартук</div>'+
+'<div class="cmp-item">Бейджик с именем — всегда!</div>'+
+'<div class="cmp-item">Волосы убраны, руки чистые</div></div>'+
+'<div class="cmp-col dont"><div class="cmp-col-title">❌ Недопустимо</div>'+
+'<div class="cmp-item">Мятая или грязная одежда</div>'+
+'<div class="cmp-item">Открытая обувь или кеды</div>'+
+'<div class="cmp-item">Без фартука в смену</div>'+
+'<div class="cmp-item">Работать без бейджика</div>'+
+'<div class="cmp-item">Сильный парфюм, яркий маникюр</div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Правило пунктуальности</div>'+
+'<div class="rule gold">🕐 <b>Пришёл на 15 минут раньше — пришёл вовремя.</b> Опоздание — недопустимо. Знаешь, что задержишься — предупреди администратора <b>минимум за 2 часа.</b></div></div>'+
+'<div class="ls"><div class="ls-title">Цена ошибки</div>'+
+'<div class="cost-box"><div class="cost-icon">👔</div><div><div class="cost-t">Мятая форма или без бейджика</div><div class="cost-d">Гость теряет доверие ещё до того, как открыл рот. Первое впечатление формируется за 7 секунд.</div></div></div>'+
+'<div class="cost-box"><div class="cost-icon">⏰</div><div><div class="cost-t">Опоздание без предупреждения</div><div class="cost-d">Коллеги работают за двоих → срывается сервис → недовольные гости → потеря выручки.</div></div></div></div>'+
+renderMQ('credo1','Ты опаздываешь на смену на 20 минут. Что делаешь?',
+['Ускоряюсь и прихожу молча — главное не опоздать сильнее',
+'Звоню администратору за 2+ часа и предупреждаю, ищу замену',
+'Пишу коллеге в чат — пусть скажет менеджеру',
+'Прихожу, когда могу — форс-мажор бывает у всех, поймут'],
+1,'Стандарт Gusto: предупредить администратора минимум за 2 часа — это даёт время найти замену. Писать коллеге недостаточно.'
+);
+}},
+// 2 — 5 ШАГОВ
+{icon:'⭐',chapter:'Глава 2',title:'5 шагов обслуживания',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Пять шагов — основа сервиса</div>'+
+'<div class="steps">'+
+'<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">ПРИВЕТСТВИЕ</div><div class="sdesc">Тёплая улыбка и представление <b>в течение 30 секунд.</b> Расскажи о новинках и акциях. Улыбка меняет тембр голоса — гость это чувствует.</div></div></div>'+
+'<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПРИЁМ ЗАКАЗА</div><div class="sdesc">Выслушай, помоги выбрать, предложи дополнения и акции. Называй <b>полные названия блюд.</b> Обязательно <b>повтори весь заказ вслух!</b></div></div></div>'+
+'<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">ВЫПОЛНЕНИЕ ЗАКАЗА</div><div class="sdesc">Контроль времени и вида блюд. Соблюдай <b>правило открытой руки.</b> Если задержка — <b>сам подойди к гостю</b>, не жди, пока позовёт.</div></div></div>'+
+'<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">КОНТРОЛЬ ЧИСТОТЫ</div><div class="sdesc">Убирай посуду <b>незаметно, без комментариев.</b> Предложи повторить напитки или десерт — up-sell в нужный момент.</div></div></div>'+
+'<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">РАСЧЁТ И ПРОЩАНИЕ</div><div class="sdesc">Уточни способ оплаты. Передай чек. Попроси оставить отзыв. Тепло попрощайся. <b>Кладёшь трубку — последним!</b></div></div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Правило открытой руки</div>'+
+'<div class="callout"><div class="co-icon">🤚</div><div><div class="co-t">С правой стороны — правой рукой, с левой — левой</div><div class="co-d">Гость видит ладонь, не локоть. Нельзя перекрещиваться через гостя. Нельзя касаться рабочих поверхностей приборов пальцами.</div></div></div></div>'+
+'<div class="ls"><div class="ls-title">Чек-бэк (Check Back)</div>'+
+'<div class="rule green">✅ Через 2–3 минуты после подачи: <b>«Всё нравится? Могу что-то принести?»</b> — большинство жалоб появляется именно потому, что никто не спросил.</div></div>'+
+renderMQ('steps1','Гость сел за стол. Максимум через сколько секунд его нужно поприветствовать?',
+['Через 1 минуту — дать гостю осмотреться и расположиться',
+'Через 30 секунд — это стандарт Gusto',
+'Как только освободишься от других гостей',
+'Через 2–3 минуты, чтобы не торопить гостя'],
+1,'Стандарт Gusto: 30 секунд. Дольше — гость начинает чувствовать себя проигнорированным, и первое впечатление испорчено.'
+);
+}},
+// 3 — ТЕЛЕФОН
+{icon:'📞',chapter:'Глава 3',title:'Телефонный этикет и заказ на вынос',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Каждый звонок = потенциальный гость</div>'+
+'<div class="callout"><div class="co-icon">💡</div><div><div class="co-t">Ответь не позже 2 гудков</div><div class="co-d">Телефон — лицо ресторана. Первые 5 секунд формируют всё впечатление. Улыбайся — это буквально слышно в голосе.</div></div></div>'+
+'<div class="rule">📞 Стандарт: <b>«Добрый день/вечер, Gusto, меня зовут [имя], чем могу помочь?»</b><br>Максимальная длительность — <b>не более 2 минут.</b></div></div>'+
+'<div class="ls"><div class="ls-title">Правильный vs Неправильный звонок</div>'+
+'<div class="cmp-grid">'+
+'<div class="cmp-col do"><div class="cmp-col-title">✅ Правильно</div>'+
+'<div class="cmp-item">Представить компанию и себя</div>'+
+'<div class="cmp-item">Узнать имя, обращаться по имени</div>'+
+'<div class="cmp-item">Предложить дополнения + акции</div>'+
+'<div class="cmp-item">Повторить весь заказ вслух</div>'+
+'<div class="cmp-item">Тепло попрощаться, трубку — последним</div></div>'+
+'<div class="cmp-col dont"><div class="cmp-col-title">❌ Нельзя</div>'+
+'<div class="cmp-item">«Алло» или «Да» вместо приветствия</div>'+
+'<div class="cmp-item">Не называть себя и компанию</div>'+
+'<div class="cmp-item">Принять заказ и ничего не предложить</div>'+
+'<div class="cmp-item">Не повторять заказ перед завершением</div>'+
+'<div class="cmp-item">Положить трубку первым</div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Живой пример</div>'+
+'<div class="dlg">'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«Здравствуйте, хочу пиццу Пепперони на самовывоз»</div>'+
+'<div class="dm bad"><span class="sp">❌ Плохо:</span>«Окей, 15 минут» — нет имени, нет допродажи, нет повтора</div>'+
+'<div class="dm st"><span class="sp">✅ Правильно:</span>«Добрый вечер, Gusto, меня зовут Алексей! Пепперони — отличный выбор! Как вас зовут? Антон, отличный! Возьмёте картошку фри? При заказе от 1500₽ — бесплатно! Или соус? Повторяю: пицца Пепперони + картошка фри. Готовность — 15 минут. Всё верно?»</div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">4 шага заказа на вынос</div>'+
+'<div class="steps">'+
+'<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">ПРИНЯТЬ ЗАКАЗ</div><div class="sdesc">Помочь выбрать, предложить дополнения и акции, повторить заказ, уточнить адрес филиала.</div></div></div>'+
+'<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПРОБИТЬ</div><div class="sdesc">Внести в кассу точно. Перепроверить состав.</div></div></div>'+
+'<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">СОБРАТЬ</div><div class="sdesc">Забрать с кухни, проверить комплектность — все позиции, соусы, приборы.</div></div></div>'+
+'<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">ДОСТАВИТЬ ГОСТЮ</div><div class="sdesc">Поблагодарить, попрощаться тепло, пригласить снова.</div></div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">При доставке уточнить ОБЯЗАТЕЛЬНО</div>'+
+'<div class="pills"><div class="pill red">Улица и дом</div><div class="pill red">Квартира</div><div class="pill red">Этаж</div><div class="pill red">Код домофона</div><div class="pill red">Телефон</div><div class="pill">Способ оплаты</div><div class="pill">Время ~45–60 мин</div></div></div>'+
+'<div class="ls"><div class="ls-title">Цена ошибки</div>'+
+'<div class="cost-box"><div class="cost-icon">🚪</div><div><div class="cost-t">Не спросил этаж и домофон</div><div class="cost-d">Курьер застрял у подъезда → опоздание → недовольный клиент → LAST → потеря времени и лояльности.</div></div></div>'+
+'<div class="cost-box"><div class="cost-icon">💸</div><div><div class="cost-t">Не предложил акции</div><div class="cost-d">300–500₽ недополученной выручки с каждого звонка. 20 звонков в день = 6000–10000₽ потерь.</div></div></div></div>'+
+renderMQ('phone1','Клиент сказал «хочу Пепперони на самовывоз». Что делаешь первым?',
+['Записываю заказ и говорю время готовности — главное не задерживать',
+'Сначала спрашиваю номер телефона для базы данных',
+'Представляюсь, узнаю имя клиента, принимаю заказ и предлагаю дополнения к нему',
+'Уточняю сразу, каким способом будет оплата'],
+2,'Правильный порядок: приветствие → имя → заказ с up-sell → повтор → адрес/время. Телефон и оплата — уже после формирования заказа.'
+);
+}},
+// 4 — МЕНЮ
+{icon:'🍕',chapter:'Глава 4',title:'Меню Gusto — знай что продаёшь',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Знание меню = продажи</div>'+
+'<p class="lt">Официант, который <b>уверенно описывает блюда</b>, продаёт на 23% больше. Не знаешь состав — уточни на кухне. <span class="hl">Никогда не придумывай — аллергия серьёзна.</span></p></div>'+
+'<div class="ls"><div class="ls-title">Пиццы (32 см)</div>'+
+'<div class="mgrid">'+
+'<div class="mcat"><div class="mcat-t">🔥 Хиты</div><ul>'+
+'<li>Пепперони <span class="tag">ХИТ</span></li>'+
+'<li>Барбекю</li><li>Сырная</li><li>Цезарь</li>'+
+'<li>Карбонара</li><li>Мексиканская <span class="tag">ОСТРО</span></li></ul></div>'+
+'<div class="mcat"><div class="mcat-t">🍕 Фирменные</div><ul>'+
+'<li>Кисло-сладкий цыплёнок <span class="tag">ХИТNOVИНКА</span></li>'+
+'<li>Диабло <span class="tag">ОСТРО</span></li>'+
+'<li>Пицца Бургер</li><li>Джимми</li><li>Блек Джек</li><li>Чикен Ранч</li></ul></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Роллы (8 шт.)</div>'+
+'<div class="mgrid">'+
+'<div class="mcat"><div class="mcat-t">🍣 Классика</div><ul>'+
+'<li>Калифорния Лайт <span class="tag">ХИТ</span></li>'+
+'<li>Унаги Краб</li><li>Кранч Ролл</li>'+
+'<li>Спайси Краб <span class="tag">ОСТРО</span></li><li>Чука Ролл</li></ul></div>'+
+'<div class="mcat"><div class="mcat-t">🔥 Запечённые</div><ul>'+
+'<li>Запечённая Креветка <span class="tag">ХИТ</span></li>'+
+'<li>Вулкан</li><li>Black Philadelphia</li>'+
+'<li>Black Unagi</li><li>Горячие Дары Моря</li></ul></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Дополнения и напитки</div>'+
+'<div class="mgrid">'+
+'<div class="mcat"><div class="mcat-t">🥫 Соусы</div><ul>'+
+'<li>Чесночный <span class="tag">ХИТ</span></li><li>Сырный</li><li>Барбекю</li><li>Острый</li></ul></div>'+
+'<div class="mcat"><div class="mcat-t">🥤 Напитки</div><ul>'+
+'<li>Coca-Cola</li><li>Морс</li><li>Вода</li></ul></div>'+
+'</div>'+
+'<div class="pills" style="margin-top:10px"><div class="pill gold">Картошка фри</div><div class="pill gold">Луковые кольца</div><div class="pill gold">Чизкейк</div></div></div>'+
+'<div class="ls"><div class="ls-title">Описывай вкусно</div>'+
+'<div class="cmp-grid">'+
+'<div class="cmp-col do"><div class="cmp-col-title">💬 Так работает</div>'+
+'<div class="cmp-item">«Пепперони — тонкое тесто, острая колбаска, очень сочная»</div>'+
+'<div class="cmp-item">«Кисло-сладкий цыплёнок — необычный вкус, все берут снова»</div>'+
+'<div class="cmp-item">«Чесночный соус — к пицце идеально, гости берут всегда»</div></div>'+
+'<div class="cmp-col dont"><div class="cmp-col-title">🚫 Так нельзя</div>'+
+'<div class="cmp-item">«Ну это просто пицца с колбасой»</div>'+
+'<div class="cmp-item">«Не знаю, наверное вкусно»</div>'+
+'<div class="cmp-item">«Берите что угодно, всё одинаково»</div></div>'+
+'</div></div>'+
+renderMQ('menu1','Гость: «Что острое есть в меню?» Как отвечаешь?',
+['«Острота — понятие субъективное, у всех разный порог, лучше сами попробуйте»',
+'«Сейчас посмотрю в карточке» — берёшь меню и изучаешь',
+'«Из острых у нас: пицца Диабло, Мексиканская и ролл Спайси Краб — рекомендую!»',
+'«Всё довольно острое, зависит от вашего вкуса»'],
+2,'Знай острые позиции наизусть: Диабло, Мексиканская, Спайси Краб. Уверенный ответ = доверие и продажа.'
+);
+}},
+// 5 — АКЦИИ И ПРОДАЖИ
+{icon:'🎯',chapter:'Глава 5',title:'Акции Gusto и техники продаж',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Текущие акции Gusto</div>'+
+'<div class="promos">'+
+'<div class="promo"><span class="pi">🍟</span><div><div class="pn">Бесплатная картошка фри</div><div class="pd">При заказе от 1500₽. Картошка добавляется автоматически. <b>Говори о ней в каждом звонке!</b></div></div></div>'+
+'<div class="promo"><span class="pi">📱</span><div><div class="pn">Скидка 10% на самовывоз через приложение</div><div class="pd">При заказе через мобильное приложение Gusto и выборе самовывоза. Скидка применяется автоматически.</div><div class="pc2">💡 Предлагай скачать приложение гостям, которые делают самовывоз — выгодно им и нам.</div></div></div>'+
+'<div class="promo"><span class="pi">🎂</span><div><div class="pn">Пицца Пепперони 32 см в день рождения</div><div class="pd">Зарегистрированным пользователям приложения при заказе от 1500₽. Дата рождения — в профиле приложения (указать можно один раз).</div></div></div>'+
+'<div class="promo"><span class="pi">👫</span><div><div class="pn">Угости друга — получи бонусы</div><div class="pd">Отправь другу промокод через приложение → друг получает пиццу Маргарита 25 см при первом заказе → ты получаешь 10% от его заказа бонусными баллами.</div></div></div>'+
+'<div class="promo"><span class="pi">🎁</span><div><div class="pn">Пицца Маргарита 25 см за установку приложения</div><div class="pd">При первом заказе от 600₽ через приложение с промокодом <b>070</b> → пицца Маргарита 25 см в подарок.</div><div class="pc2">Отличный повод предложить гостю скачать приложение прямо сейчас!</div></div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Кросс-селлинг</div>'+
+'<p class="lt">Предложение <b>дополнительных позиций</b> к основному заказу.</p>'+
+'<div class="rule">🍕 Взял пиццу → предложи: <b>соус + картошку фри + напиток</b><br>🍣 Взял роллы → предложи: <b>соус + напиток</b></div></div>'+
+'<div class="ls"><div class="ls-title">Апселлинг</div>'+
+'<p class="lt">Предложение <b>более дорогой или новой позиции</b> вместо обычной.</p>'+
+'<div class="dlg">'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«Возьму пиццу Сырную»</div>'+
+'<div class="dm st"><span class="sp">✅ Ты:</span>«Сырная — отличный выбор! Кстати, сейчас хит — <b>Кисло-сладкий цыплёнок</b>, необычный вкус, все кто берут — заказывают снова. Попробуете?»</div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Правило «трёх нет»</div>'+
+'<div class="rule gold">🔄 Продолжай предлагать <b>разные</b> позиции пока гость не откажется трижды. <b>Первый «нет» — не стоп-сигнал!</b></div>'+
+'<div class="dlg">'+
+'<div class="dm st"><span class="sp">Ты:</span>«Добавить картошку фри?»</div>'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«Нет, спасибо» ← 1-й отказ</div>'+
+'<div class="dm st"><span class="sp">Ты:</span>«Понял! А напиток — Coca-Cola или морс?»</div>'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«Нет» ← 2-й отказ</div>'+
+'<div class="dm st"><span class="sp">Ты:</span>«Хорошо! Тогда соус к пицце — чесночный?»</div>'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«Нет, ничего не нужно» ← 3-й отказ, принимаем</div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Сила обращения по имени</div>'+
+'<div class="callout"><div class="co-icon">🧠</div><div><div class="co-t">Мозг реагирует на своё имя сильнее, чем на любое слово</div><div class="co-d">Используй имя клиента 2–3 раза: «Антон, отличный выбор!», «Антон, повторяю заказ», «Антон, хорошего вечера!»</div></div></div></div>'+
+renderMQ('sales1','Клиент первый раз отказался от картошки фри. Что делаешь?',
+['Принимаю отказ, уважаю выбор гостя и перехожу к оформлению заказа',
+'Предлагаю картошку фри ещё раз, но уже со скидкой',
+'Предлагаю другую позицию — напиток или соус',
+'Спрашиваю, почему не хочет — может, объясню состав и он передумает'],
+2,'Правило «трёх нет»: после первого отказа предложи ДРУГУЮ позицию. Только после трёх отказов или «больше ничего не надо» останавливайся.'
+);
+}},
+// 6 — КОНФЛИКТЫ LAST
+{icon:'🛡️',chapter:'Глава 6',title:'Конфликты и техника LAST',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Жалоба — это возможность</div>'+
+'<div class="stat-row">'+
+'<div class="stat-box"><div class="stat-num" data-to="68">0</div><div class="stat-lbl">% уходят из-за равнодушия</div></div>'+
+'<div class="stat-box"><div class="stat-num" data-to="95">0</div><div class="stat-lbl">% вернутся при быстром решении</div></div>'+
+'<div class="stat-box"><div class="stat-num" data-to="9">0</div><div class="stat-lbl">людям расскажет о плохом опыте</div></div>'+
+'</div>'+
+'<div class="hquote">«Тот, чью жалобу решили быстро и с заботой, становится самым лояльным гостем.»</div></div>'+
+'<div class="ls"><div class="ls-title">Техника LAST</div>'+
+'<div class="last-g">'+
+'<div class="last-c"><div class="last-letter">L</div><div class="last-word">LISTEN — Слушай</div><div class="last-desc">Смотри в глаза, не перебивай, кивай. Дай гостю выговориться — это снижает агрессию на 70%.</div></div>'+
+'<div class="last-c"><div class="last-letter">A</div><div class="last-word">APOLOGIZE — Извинись</div><div class="last-desc">Искренне: «Мне очень жаль». Не оправдывайся. Не говори «но». Извинение — уважение к чувствам.</div></div>'+
+'<div class="last-c"><div class="last-letter">S</div><div class="last-word">SOLVE — Реши</div><div class="last-desc">Предложи 2 конкретных варианта: замена, скидка, картошка фри, менеджер. Гость выбирает — чувствует контроль.</div></div>'+
+'<div class="last-c"><div class="last-letter">T</div><div class="last-word">THANK — Поблагодари</div><div class="last-desc">«Спасибо, что сказали — помогает нам становиться лучше!» Искренне. Это переворачивает ситуацию.</div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Никогда не делай</div>'+
+'<div class="pills">'+
+'<div class="pill red">Спорить с гостем</div><div class="pill red">Оправдываться</div>'+
+'<div class="pill red">Шутить при конфликте</div><div class="pill red">Думать, что гость лжёт</div>'+
+'<div class="pill red">Игнорировать жалобу</div><div class="pill red">Принимать лично</div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Когда немедленно звать менеджера</div>'+
+'<div class="rule">🚨 Гость нашёл предмет в блюде · жалуется на сотрудника · требует менеджера · ты сделал всё — гость всё равно недоволен · сильная агрессия</div></div>'+
+'<div class="ls"><div class="ls-title">LAST в действии — полный диалог</div>'+
+'<div class="dlg">'+
+'<div class="dm cl"><span class="sp">Клиент:</span>«В прошлый раз курьер опоздал на 40 минут! Я больше не буду заказывать!»</div>'+
+'<div class="dm st"><span class="sp">✅ (L):</span>«Слышу вас, понимаю — это очень неприятно.»</div>'+
+'<div class="dm st"><span class="sp">✅ (A):</span>«Приношу искренние извинения — такого не должно быть.»</div>'+
+'<div class="dm st"><span class="sp">✅ (S):</span>«Предлагаю скидку 10% на следующий заказ или бесплатную картошку фри прямо сейчас.»</div>'+
+'<div class="dm st"><span class="sp">✅ (T):</span>«Огромное спасибо — это поможет нам работать лучше!»</div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Цена ошибки</div>'+
+'<div class="cost-box"><div class="cost-icon">📢</div><div><div class="cost-t">Проигнорировал жалобу или ответил грубо</div><div class="cost-d">1 недовольный гость рассказывает 9–15 людям. Это прямые потери новых гостей и репутации.</div></div></div></div>'+
+renderMQ('last1','Клиент кричит: «Ваша пицца пересолена!» Твои первые слова?',
+['«Понимаю ваше недовольство, но наш повар следует рецептуре, это стандартное количество соли»',
+'«Приношу извинения! Заменим пиццу или принесём другое — что предпочтёте?»',
+'«Давайте я позову менеджера, это его компетенция»',
+'«Попробуйте запить водой — иногда помогает снизить ощущение солёного»'],
+1,'LAST: сначала Apologize, потом Solve (2 варианта). Оправдываться нельзя — гостя не волнует рецептура, его волнует его впечатление.'
+);
+}},
+// 7 — РАСЧЁТ, ОТЗЫВЫ
+{icon:'💳',chapter:'Глава 7',title:'Расчёт, отзывы и прощание',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Расчёт гостя — 4 шага</div>'+
+'<div class="steps">'+
+'<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">УТОЧНИ СПОСОБ ОПЛАТЫ</div><div class="sdesc">«Картой или наличными?» — заранее, не в последний момент. Никогда не предполагай сам.</div></div></div>'+
+'<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">ПЕРЕДАЙ ЧЕК</div><div class="sdesc">Аккуратно. При оплате картой назвать итоговую сумму. Сдачу — на подносе или в папке.</div></div></div>'+
+'<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">ПОПРОСИ ОТЗЫВ</div><div class="sdesc">«Если всё понравилось — будем рады отзыву в нашем приложении!» Тепло, не как робот.</div></div></div>'+
+'<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">ТЁПЛОЕ ПРОЩАНИЕ</div><div class="sdesc">«Спасибо, ждём вас снова! Хорошего вечера!» — трубку кладёшь последним.</div></div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Отмена готового заказа</div>'+
+'<div class="callout"><div class="co-icon">⚠️</div><div><div class="co-t">Заказ готов — предлагай альтернативы</div><div class="co-d">Заказ приготовлен → скажи об этом → предложи <b>упаковать с собой со скидкой 15%</b> или <b>перенести время доставки</b>. Не конфликтуй — ищи решение.</div></div></div></div>'+
+renderMQ('checkout1','Клиент просит отменить только что готовый заказ. Твои действия?',
+['Аннулирую заказ — клиент всегда прав, удержать нельзя',
+'Объясняю, что отмена готового заказа невозможна и требую оплаты',
+'Сообщаю что заказ готов, предлагаю упаковать со скидкой 15% или перенести время доставки',
+'Спрашиваю причину отмены и на основе ответа принимаю решение'],
+2,'Правильно: сообщить о готовности + предложить 2 альтернативы. Это сохраняет и выручку, и лояльность клиента.'
+);
+}},
+// 8 — САНИТАРИЯ, КОМАНДА
+{icon:'🧹',chapter:'Глава 8',title:'Санитария, команда и ценности',
+render:function(){return ''+
+'<div class="ls"><div class="ls-title">Личная гигиена</div>'+
+'<div class="steps">'+
+'<div class="step"><div class="sbadge">!</div><div class="scnt"><div class="stitle">КОГДА МЫТЬ РУКИ</div><div class="sdesc">После туалета, работы с деньгами, сырыми продуктами, мусором, едой. Минимум раз в час. Перед приготовлением — всегда.</div></div></div>'+
+'<div class="step"><div class="sbadge">!</div><div class="scnt"><div class="stitle">МЕДОСМОТР</div><div class="sdesc">Своевременно проходить медосмотры. При признаках болезни — <b>сообщить администратору.</b></div></div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Контроль чистоты в зале</div>'+
+'<div class="cmp-grid">'+
+'<div class="cmp-col do"><div class="cmp-col-title">✅ Стандарт</div>'+
+'<div class="cmp-item">Убирать посуду незаметно, без слов</div>'+
+'<div class="cmp-item">Протирать столы сразу после гостей</div>'+
+'<div class="cmp-item">При уборке — предложить десерт/напиток</div>'+
+'<div class="cmp-item">Приборы — без подтёков и сколов</div></div>'+
+'<div class="cmp-col dont"><div class="cmp-col-title">❌ Нельзя</div>'+
+'<div class="cmp-item">Убирать громко, с комментариями</div>'+
+'<div class="cmp-item">Есть и пить на виду у гостей</div>'+
+'<div class="cmp-item">Использовать телефон при гостях</div>'+
+'<div class="cmp-item">Подавать посуду с пятнами</div></div>'+
+'</div></div>'+
+'<div class="ls"><div class="ls-title">Командная работа и ценности</div>'+
+'<div class="hquote">«Все сотрудники Gusto — одна большая дружная семья. Мы помогаем друг другу и никогда не критикуем коллег при гостях.»</div>'+
+'<div class="callout"><div class="co-icon">🤝</div><div><div class="co-t">Правило: о коллегах — только хорошо, особенно при гостях</div><div class="co-d">Если коллега ошибся — помоги исправить молча, разберитесь после смены. Гость не должен видеть внутренние разборки.</div></div></div></div>'+
+'<div class="ls"><div class="ls-title">Честность — основа доверия</div>'+
+'<div class="rule green">✅ Здоровье гостя важнее одной продажи. Если знаешь о проблеме с продуктом — сообщи на кухню и предложи альтернативу. Гость вернётся именно потому, что ты честен.</div></div>'+
+renderMQ('clean1','Новые гости сели за стол с грязной посудой от предыдущих. Первое действие?',
+['Попрошу гостей подождать минуту, пока уберу стол',
+'Уберу посуду незаметно и аккуратно, затем предложу напиток или десерт',
+'Быстро и чётко уберу всё — скорость важнее тишины',
+'Попрошу гостей пересесть за свободный чистый стол'],
+1,'Убирай незаметно и без слов — это профессионализм. Потом используй момент для up-sell. Просить пересесть — неуважение к выбору гостя.'
+);
+}}
 ];
 
-// ─────────── PRACTICE ───────────
-const SCENARIOS=[
-  {tag:'📞 ТЕЛЕФОН',title:'Первый звонок дня',
-  scene:'<span class="cl"><span class="cln">Клиент (по телефону):</span> «Здравствуйте! Хочу пиццу Пепперони и Кранч Ролл на самовывоз. Сколько ждать?»</span>',
-  q:'Как выглядит идеальный ответ диспетчера?',
-  opts:['«Окей, 15 минут» — коротко и по делу','«Пиццерия Gustoclub, меня зовут [имя]! Как вас зовут? Отличный выбор! Добавите картошку фри? При заказе от 1500₽ — бесплатно! Уточните адрес нашего филиала? Готовность 15 минут. Повторяю: Пепперони + Кранч Ролл — верно?»','«Принял заказ. Ждите, сделаем» — без лишних слов','«Пепперони? Хорошо. 15 минут. Адрес какой?»'],
-  correct:1,why:'✅ Идеальный звонок: представиться, узнать имя, повторить заказ, предложить допы + акцию, уточнить адрес, назвать время. Улыбка слышна в голосе!'},
-  {tag:'🏠 ЗАЛ',title:'Гость торопится',
-  scene:'<span class="cl"><span class="cln">Клиент (нетерпеливо):</span> «Мне пиццу Барбекю. Быстро, я очень тороплюсь на встречу!»</span>',
-  q:'Как принять заказ, не замедляя торопящегося гостя?',
-  opts:['Молча принять и уйти','«Минуту! Здесь или с собой? Добавить картошку фри и соус? Лимонад Gusto — освежит! Всё готовим быстро, 15 минут максимум!»','Попросить подождать пока запишешь','«Мы быстро не делаем, у нас очередь»'],
-  correct:1,why:'✅ Быстро уточнить формат (здесь/с собой), сделать короткий кросс-селл, обозначить время. Уважение к времени гостя — это тоже сервис!'},
-  {tag:'😡 КОНФЛИКТ',title:'Опоздание доставки',
-  scene:'<span class="cl"><span class="cln">Клиент (раздражённо):</span> «В прошлый раз ваш курьер опоздал на 40 минут! Я больше не буду заказывать у вас!»</span>',
-  q:'LAST в действии — что говоришь?',
-  opts:['«Ну, пробки бывают — не наша вина»','«Извините, исправимся»','«Понимаю ваше недовольство и приношу искренние извинения! Это недопустимо. Хочу предложить скидку 10% на следующий заказ или бесплатную картошку фри сейчас. Спасибо, что сказали — это поможет нам стать лучше!»','«Напишите жалобу на сайте»'],
-  correct:2,why:'✅ Полный LAST: Listen (выслушал) → Apologize (извинился искренне) → Solve (2 варианта решения) → Thank (поблагодарил). Без оправданий!'},
-  {tag:'🤔 ВЫБОР',title:'Нерешительный гость',
-  scene:'<span class="cl"><span class="cln">Гость (растерянно смотрит в меню):</span> «Не знаю что взять... Всё выглядит вкусно, уже 10 минут смотрю...»</span>',
-  q:'Как профессионально помочь гостю сделать выбор?',
-  opts:['«Дать меню и сказать: решайте сами»','«Вам нравится острое или нет? Любите курицу или мясо? Тогда — пицца Кисло-сладкий цыплёнок, это хит, все кто берут — берут снова! Или Сырная — нежный классический вкус. Что больше?»','«Берите Пепперони, все берут»','«У вас ещё есть время, не спешите»'],
-  correct:1,why:'✅ Два наводящих вопроса о предпочтениях → два конкретных варианта с мини-описанием. Гость не должен чувствовать давление, но должен получить помощь.'},
-  {tag:'⭐ ПОСТОЯННЫЙ',title:'«Как обычно» по телефону',
-  scene:'<span class="cl"><span class="cln">Клиент:</span> «Алло, это Антон. Мне как обычно, вы же помните!»</span>',
-  q:'Что делаешь с постоянным гостем?',
-  opts:['Делаешь предполагаемый заказ без уточнений','«Конечно, Антон! Пицца Пепперони и Кола — верно? Кстати, сейчас акция: 2 пиццы по цене одной — возьмёте вторую? И уточни — самовывоз как обычно?»','«Не помним вас, назовите заказ»','«Вы должны всё называть сами»'],
-  correct:1,why:'✅ Уточнить заказ вслух (гость подтверждает — нет ошибок), предложить актуальную акцию, уточнить формат. Постоянный гость ценит, что его помнят!'},
-  {tag:'⏰ ОЖИДАНИЕ',title:'Пришёл раньше времени',
-  scene:'<span class="cl"><span class="cln">Гость:</span> «Я заказывал пиццу на 18:30, но пришёл в 18:10. Готово уже?»</span>',
-  q:'Как превратить ожидание в приятный опыт?',
-  opts:['«Не готово, ждите» — и уйти','«Заказ будет в 18:30 точно по расписанию. Присаживайтесь, я принесу лимонад Gusto от нас — как комплимент! Осталось около 20 минут.»','«Приходите в 18:30 как заказывали»','«Подождёте снаружи?»'],
-  correct:1,why:'✅ Пригласить присесть + бесплатный напиток как комплимент + точное время. Гость из «раздражённого ожидающего» превращается в «приятно удивлённого гостя».'},
-  {tag:'😤 ЖАЛОБА',title:'Пересолено — жалоба на блюдо',
-  scene:'<span class="cl"><span class="cln">Гость:</span> «Ваша Сырная пицца совсем пересолена, есть невозможно!»</span>',
-  q:'Правильный алгоритм при жалобе на качество блюда?',
-  opts:['«Повар так готовит, это рецептура»','«Извините — заменим пиццу или принесём другое блюдо на ваш выбор. Сообщу на кухню. Если хотите — позову менеджера, разберёмся!»','Молча убрать тарелку','«Попробуйте добавить воды»'],
-  correct:1,why:'✅ Извиниться → 2 варианта решения → сообщить на кухню → при нужде позвать менеджера. Никогда не оправдываться!'},
-  {tag:'📦 ДОСТАВКА',title:'Оформление доставки',
-  scene:'<span class="cl"><span class="cln">Клиент:</span> «Хочу доставку: пицца Барбекю и Запечённая Креветка 8 шт.»</span>',
-  q:'Полный алгоритм оформления заказа с доставкой:',
-  opts:['Записать заказ, спросить адрес, положить трубку','«Отличный выбор! Добавите картошку фри? При заказе от 1500₽ — бесплатно! Назовите: адрес, квартиру, этаж, домофон и телефон. Повторяю: Барбекю + Запечённая Креветка. Доставка 45–60 минут. Картой или наличными?»','Только записать адрес','Спросить имя и адрес, не повторять заказ'],
-  correct:1,why:'✅ Кросс-селл + акция → полный адрес (этаж, квартира, домофон!) → телефон → повтор заказа → время → оплата. Пропустить этаж или домофон = курьер застрянет!'},
-  {tag:'❌ ОТМЕНА',title:'Клиент отменяет готовый заказ',
-  scene:'<span class="cl"><span class="cln">Клиент (по телефону):</span> «Слушайте, я передумал — отмените пожалуйста заказ пиццы.»</span>',
-  q:'Заказ уже приготовлен — правильные действия:',
-  opts:['«Ладно, отменяем»','«Пицца уже готова и ждёт вас! Предлагаю: упакую с собой со скидкой 15% — очень выгодно. Или перенесём доставку на удобное время. Что выбираете?»','«Это невозможно, платите»','Молча аннулировать'],
-  correct:1,why:'✅ Сообщить о готовности + 2 варианта альтернативы: скидка 15% или перенос. Это сохраняет и деньги заведения, и отношения с клиентом.'},
-  {tag:'🧹 ЧИСТОТА',title:'Грязный стол при новых гостях',
-  scene:'<span class="cl">Ситуация: новая пара садится за стол — предыдущие гости оставили посуду и крошки.</span>',
-  q:'Идеальные действия сотрудника:',
-  opts:['Громко и быстро убрать с комментариями','Незаметно убрать посуду, потом спросить: «Повторим напитки? Или могу предложить чизкейк на десерт?»','Попросить гостей пересесть','Ждать пока попросят'],
-  correct:1,why:'✅ Убрать тихо и незаметно — это профессионализм. Потом использовать момент для up-sell: десерт или напиток. Никаких комментариев о предыдущих гостях!'},
-  {tag:'😡 АГРЕССИЯ',title:'Грубый и агрессивный клиент',
-  scene:'<span class="cl"><span class="cln">Клиент (кричит):</span> «Вы все тут некомпетентные! Хуже сервиса в городе не найти!»</span>',
-  q:'Как работать с агрессией? LAST в сложной ситуации:',
-  opts:['Ответить жёстко — за себя надо отвечать','Уйти молча','«Слышу вас и понимаю расстройство. Искренне извиняюсь за то, что так вышло. Позвольте позвать менеджера — мы разберёмся и всё исправим. Спасибо, что сказали — мы ценим каждый отзыв.»','«Говорите тише, здесь другие гости»'],
-  correct:2,why:'✅ LAST даже с агрессором: выслушать спокойно (не перебивать!) → извиниться → предложить менеджера → поблагодарить. Спокойствие — твоё главное оружие.'},
-  {tag:'⏳ ПЕРЕГРУЗКА',title:'Гость ждёт 20 минут',
-  scene:'<span class="cl"><span class="cln">Гость (нервно смотрит на часы):</span> «Я уже 20 минут жду! Что происходит на кухне?»</span>',
-  q:'Как действовать при перегрузке — правильный подход:',
-  opts:['«Кухня занята, ждите» — и уйти','Игнорировать — сам позовёт','Подойти самому: «Приношу извинения! Сейчас пик загрузки. По акции угощаю картошкой фри! Ваш заказ — через 5–7 минут. Подождёте?»','«Мы ничего не можем поделать»'],
-  correct:2,why:'✅ Ключевое: подойди САМА, не жди! Извинись + честная причина + компенсация (картошка фри) + конкретное время. Гость чувствует заботу даже в плохой ситуации.'}
+// ═══════════════════════════════════════════
+// SCENARIOS — 15 сценариев
+// ═══════════════════════════════════════════
+var SCENARIOS=[
+{tag:'📞 ТЕЛЕФОН',title:'Первый звонок дня',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «Здравствуйте, хочу пиццу Пепперони и Кранч Ролл на самовывоз. Сколько ждать?»</span>',
+q:'Как выглядит идеальный ответ диспетчера?',
+opts:['Говорю время готовности и принимаю заказ — не стоит задерживать клиента лишними вопросами',
+'«Добрый день, Gusto, меня зовут [имя]! Как вас зовут? Отличный выбор! Добавите картошку фри — при заказе от 1500₽ бесплатно! Повторяю: Пепперони + Кранч Ролл. Готовность 15 минут, наш адрес [адрес]. Всё верно?»',
+'Принимаю заказ, называю адрес и время — всё необходимое уже есть',
+'Предлагаю только акцию на скидку через приложение и потом принимаю заказ'],
+correct:1,why:'✅ Идеально: представиться, узнать имя, принять заказ с кросс-селлом и акцией, повторить заказ, назвать адрес и время. Каждый шаг важен.'},
+{tag:'🏠 ЗАЛ',title:'Гость торопится',
+scene:'<span class="cl"><span class="cln">Клиент (нетерпеливо):</span> «Мне пиццу Барбекю. Срочно, у меня 20 минут.»</span>',
+q:'Как принять заказ у торопящегося гостя, не теряя качество сервиса?',
+opts:['Молча принимаю заказ и ухожу — не буду задерживать',
+'«Секунду! Здесь или с собой? Добавить картошку фри и соус к пицце? Сделаем за 15 минут максимум!»',
+'Говорю что за 20 минут не успеем и предлагаю другое блюдо',
+'Уточняю сначала способ оплаты, потом принимаю заказ'],
+correct:1,why:'✅ Быстрое уточнение формата + короткий кросс-селл + конкретное время. Уважение ко времени гостя — это тоже сервис.'},
+{tag:'😡 КОНФЛИКТ',title:'Опоздание доставки',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «В прошлый раз ваш курьер опоздал на 40 минут! Я больше не буду у вас заказывать!»</span>',
+q:'Применяем технику LAST. Что говоришь?',
+opts:['«Понимаю ваше расстройство, но пробки в Рязани — это общая проблема, не только наша»',
+'«Приносим извинения, в следующий раз постараемся лучше»',
+'«Слышу вас и искренне извиняюсь — это недопустимо. Предлагаю скидку 10% на следующий заказ или бесплатную картошку фри прямо сейчас. Спасибо, что сказали нам об этом!»',
+'«Напишите в нашу службу поддержки, там разберутся с этим случаем»'],
+correct:2,why:'✅ Полный LAST: выслушал → извинился искренне без оправданий → предложил 2 решения → поблагодарил. Перенаправление в службу поддержки — отказ от ответственности.'},
+{tag:'🤔 ВЫБОР',title:'Нерешительный гость',
+scene:'<span class="cl"><span class="cln">Гость:</span> «Не знаю что взять... Всё выглядит интересно, но я ещё не определился.»</span>',
+q:'Как профессионально помочь, не давя на гостя?',
+opts:['Даю меню и говорю «позовите, как определитесь» — не буду навязываться',
+'Предлагаю самое популярное блюдо без вопросов — Пепперони берут все',
+'«Вам нравится острое или нет? Любите курицу или мясо? Тогда рекомендую пиццу Кисло-сладкий цыплёнок — хит сезона! Или Сырная — нежный вкус. Что ближе?»',
+'Предлагаю взять Комбо-обед — так проще выбрать и выгоднее'],
+correct:2,why:'✅ 2 наводящих вопроса о предпочтениях → 2 конкретных варианта с описанием. Гость не чувствует давления, но получает помощь.'},
+{tag:'⭐ ПОСТОЯННЫЙ',title:'«Как обычно»',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «Алло, это Антон. Мне как обычно, вы помните!»</span>',
+q:'Правильная работа с постоянным гостем:',
+opts:['Делаю предполагаемый заказ — зачем переспрашивать, если помним',
+'«Конечно, Антон! Пицца Пепперони и Coca-Cola — верно? Кстати, сейчас акция: 2 пиццы по цене одной — возьмёте вторую домой? Самовывоз как обычно?»',
+'Прошу назвать заказ снова — во избежание ошибок важно всё уточнить',
+'Говорю что акций новых нет и принимаю стандартный заказ'],
+correct:1,why:'✅ Уточнить заказ вслух (гость подтвердит — нет ошибок), предложить актуальную акцию, уточнить формат. Постоянный гость ценит, что его помнят!'},
+{tag:'⏰ ОЖИДАНИЕ',title:'Пришёл раньше времени',
+scene:'<span class="cl"><span class="cln">Гость:</span> «Я заказывал на 18:30, но пришёл в 18:10. Готово уже?»</span>',
+q:'Как превратить ожидание в позитивный опыт?',
+opts:['«Заказ будет в 18:30, приходите тогда» — или ждите здесь',
+'«Заказ будет точно в 18:30. Присаживайтесь — принесу морс в качестве комплимента за ожидание! Осталось около 20 минут.»',
+'«Постараемся ускорить, но ничего не обещаю» и ухожу на кухню',
+'Предлагаю пока изучить меню и заказать что-нибудь ещё'],
+correct:1,why:'✅ Пригласить присесть + бесплатный напиток как комплимент + точное время. Гость уходит из «раздражённого ожидающего» в «приятно удивлённого».'},
+{tag:'😤 ЖАЛОБА',title:'Жалоба на качество блюда',
+scene:'<span class="cl"><span class="cln">Гость:</span> «Ваша пицца Сырная совсем пересолена! Это есть невозможно.»</span>',
+q:'Правильный алгоритм действий при жалобе на блюдо:',
+opts:['«Повар использует стандартное количество соли по рецептуре, возможно у вас повышенная чувствительность»',
+'«Извините — заменим пиццу или принесём другое блюдо на ваш выбор. Сообщу на кухню. Или позову менеджера, если хотите»',
+'Молча убираю тарелку и несу новую, не комментируя',
+'«Попробуйте с напитком — часто помогает сбалансировать вкус»'],
+correct:1,why:'✅ Извинись → предложи 2 решения (замена/другое) → сообщи на кухню → менеджер при необходимости. Объяснения и оправдания — признак слабости сервиса.'},
+{tag:'📦 ДОСТАВКА',title:'Оформление доставки',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «Хочу доставку — пицца Барбекю и Запечённая Креветка 8 шт.»</span>',
+q:'Полный алгоритм оформления заказа с доставкой:',
+opts:['Записываю заказ, спрашиваю адрес и называю примерное время',
+'«Отличный выбор! Добавите картошку фри? При заказе от 1500₽ — бесплатно! Назовите адрес, квартиру, этаж, домофон и телефон. Повторяю: Барбекю + Запечённая Креветка. Доставка 45–60 мин. Картой или наличными?»',
+'Сначала называю стоимость доставки, потом уточняю адрес и заказ',
+'Принимаю заказ и говорю, что курьер позвонит и уточнит детали'],
+correct:1,why:'✅ Кросс-селл + акция → полный адрес (этаж, домофон!) → телефон → повтор → время → оплата. «Курьер позвонит» — перекладывание ответственности.'},
+{tag:'❌ ОТМЕНА',title:'Клиент отменяет готовый заказ',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «Передумал, пожалуйста отмените мой заказ пиццы.»</span>',
+q:'Заказ уже приготовлен. Как действуешь?',
+opts:['Отменяю без вопросов — клиент всегда прав',
+'«Пицца уже готова и ждёт! Предлагаю упаковать с собой со скидкой 15% — очень выгодно. Или перенесём доставку на удобное время. Что выберете?»',
+'Объясняю, что отмена невозможна и пицца должна быть выкуплена',
+'Зову менеджера для принятия решения — это не мои полномочия'],
+correct:1,why:'✅ Сообщить о готовности + 2 альтернативы. Отмена без предложений = потеря выручки. «Это не мои полномочия» — уход от ответственности.'},
+{tag:'🧹 ЧИСТОТА',title:'Грязный стол',
+scene:'<span class="cl">Новая пара садится за стол, где ещё стоит посуда от предыдущих гостей.</span>',
+q:'Идеальные действия сотрудника:',
+opts:['Прошу гостей подождать минутку, убираю быстро и чётко',
+'Незаметно убираю посуду во время разговора с гостями, затем предлагаю: «Повторим напитки? Или принесу чизкейк на десерт?»',
+'Быстро убираю со словами «извините, сейчас всё уберём»',
+'Прошу гостей пересесть за другой чистый стол'],
+correct:1,why:'✅ Убирать незаметно — профессионализм. Up-sell после уборки. Просить пересесть = неуважение. Комментировать уборку = привлекать внимание к проблеме.'},
+{tag:'😡 АГРЕССИЯ',title:'Агрессивный клиент',
+scene:'<span class="cl"><span class="cln">Клиент (кричит):</span> «Вы все тут некомпетентные! Хуже обслуживания в городе нет!»</span>',
+q:'Работа с агрессией по технике LAST:',
+opts:['Отвечаю спокойно, но чётко — что недопустимо повышать голос на сотрудников',
+'Ухожу молча и зову менеджера',
+'«Слышу вас и понимаю расстройство. Искренне извиняюсь за доставленные неудобства. Позвольте позвать менеджера — мы разберёмся. Спасибо, что сказали нам об этом.»',
+'Предлагаю гостю бесплатное блюдо, чтобы сразу снять напряжение'],
+correct:2,why:'✅ LAST: выслушать спокойно → извиниться → предложить менеджера → поблагодарить. Уходить молча — игнорирование. Давать блюдо без решения проблемы — не LAST.'},
+{tag:'⏳ ПЕРЕГРУЗКА',title:'Гость ждёт 20 минут',
+scene:'<span class="cl"><span class="cln">Гость (нервно):</span> «Я жду уже 20 минут! Что происходит?»</span>',
+q:'Действия при перегрузке кухни:',
+opts:['«Кухня сейчас загружена, подождите ещё немного» и ухожу',
+'Игнорирую и жду, пока гость успокоится — сам разберётся',
+'Подхожу сам: «Приношу извинения! Сейчас пик загрузки. По акции угощаю картошкой фри! Ваш заказ — через 5–7 минут. Подождёте?»',
+'Предлагаю заменить заказ на более быстрое в приготовлении блюдо'],
+correct:2,why:'✅ Ключевое: подойди САМ, не жди! Извинись + честная причина + компенсация + конкретное время. «Сам разберётся» — прямой путь к конфликту.'},
+{tag:'🤝 КОМАНДА',title:'Коллега ошибся',
+scene:'<span class="cl">Коллега перепутал столы и отнёс чужой заказ. Гость ждёт. Коллега растерян.</span>',
+q:'Как поступить согласно ценностям Gusto?',
+opts:['При госте говорю коллеге, что так работать нельзя — это поможет избежать повторения',
+'Спокойно помогаю исправить ситуацию: извиняюсь перед гостем, уточняю заказ. После смены мягко напоминаю коллеге о стандарте',
+'Зову менеджера — пусть сам разбирается с ошибкой коллеги',
+'Молчу и жду, когда коллега сам исправит — это его ответственность'],
+correct:1,why:'✅ Ценности Gusto: сначала реши проблему гостя, потом разбирайся внутри команды. Критика коллеги при госте — удар по репутации всего заведения.'},
+{tag:'⚖️ ЧЕСТНОСТЬ',title:'Срок годности',
+scene:'<span class="cl"><span class="cln">Гость:</span> «Продукты у вас свежие? Я аллергик, это важно.»<br>Ты знаешь: срок годности соуса истекает сегодня.</span>',
+q:'Как поступить честно и профессионально?',
+opts:['Говорю что всё свежее — не буду расстраивать гостя, а соус сегодня последний день',
+'Уточняю у кухни и если соус можно подавать — говорю что всё в порядке',
+'Проверяю, сообщаю на кухню о соусе, предлагаю альтернативный соус и честно объясняю ситуацию',
+'Предлагаю блюдо без соуса — не упоминая про срок годности'],
+correct:2,why:'✅ Честность важнее одной продажи. Сообщи на кухню, предложи альтернативу, будь открытым. Гость с аллергией вернётся, зная, что ему здесь доверяют.'},
+{tag:'🚴 КУРЬЕР',title:'Повреждённая упаковка',
+scene:'<span class="cl"><span class="cln">Клиент:</span> «Курьер привёз пиццу — коробка помята, соус вылился. Это ужасно!»</span>',
+q:'Как диспетчер реагирует на проблему с доставкой?',
+opts:['«Это ответственность курьера, обратитесь к нему напрямую»',
+'«Понимаю ваше расстройство — приношу извинения! Это наша ответственность. Сейчас сообщу менеджеру. Предлагаю заменить пиццу или вернуть стоимость соуса — что удобнее?»',
+'«Напишите жалобу в приложении, там обработают в течение 3 рабочих дней»',
+'«Соус можно протереть салфеткой — пицца должна быть в порядке»'],
+correct:1,why:'✅ Курьер — часть сервиса Gusto. Клиент звонит НАМ. Принять ответственность + 2 решения + менеджер. «Это не наша ответственность» — потеря клиента навсегда.'}
 ];
 
-// ─────────── EXAM ───────────
-const EXAM=[
-  {q:'Стандартное телефонное приветствие Gustoclub:',opts:['«Алло»','«Доброе утро/день/вечер, пиццерия Gustoclub, меня зовут [имя], чем могу помочь?»','«Говорите»','«Да»'],c:1},
-  {q:'Через сколько секунд нужно поприветствовать гостя в зале?',opts:['60 секунд','2 минуты','30 секунд','5 минут'],c:2},
-  {q:'Что такое кросс-селлинг?',opts:['Замена блюда более дорогим','Предложение дополнительных позиций к основному заказу','Повышение цены при перегрузке','Скидка на следующий заказ'],c:1},
-  {q:'Что такое апселлинг?',opts:['Соус к пицце','Предложение более дорогого аналога или новинки','Увеличение порции','Второй напиток'],c:1},
-  {q:'Правило «трёх нет» означает:',opts:['Предлагать одно блюдо 3 раза','Предлагать разные дополнения до 3-го отказа подряд','После 1-го отказа прекращать','Предлагать только 3 позиции'],c:1},
-  {q:'L в технике LAST — это:',opts:['Laugh','Listen — выслушать не перебивая','Leave — уйти','Limit'],c:1},
-  {q:'A в технике LAST — это:',opts:['Ask','Action','Apologize — искренне извиниться','Alert'],c:2},
-  {q:'S в технике LAST — это:',opts:['Say','Solve — предложить решение','Stop','Send'],c:1},
-  {q:'T в технике LAST — это:',opts:['Time','Talk','Transfer','Thank — поблагодарить гостя'],c:3},
-  {q:'При оформлении ДОСТАВКИ обязательно уточнить:',opts:['Только адрес улицы','Имя и телефон','Улица, дом, квартира, этаж, домофон, телефон','Адрес и время'],c:2},
-  {q:'Стандартное время готовности заказа на самовывоз:',opts:['5 минут','15 минут','30 минут','45 минут'],c:1},
-  {q:'Акция «Бесплатная картошка фри» при заказе от:',opts:['500₽','1000₽','1500₽','2000₽'],c:2},
-  {q:'Комбо-обед — это:',opts:['Скидка 20%','Пицца + гарнир + напиток по спец. цене','2 ролла в подарок','Бесплатный десерт'],c:1},
-  {q:'Как правильно завершить телефонный разговор?',opts:['«Пока»','Положить трубку первым','«Спасибо за заказ! Хорошего вечера!» — ждёшь, пока клиент кладёт трубку','«Ага, до свидания»'],c:2},
-  {q:'Правило открытой руки при подаче — это:',opts:['Держать руку при расчёте','Гость видит ладонь, не локоть. С правой стороны — правой рукой, с левой — левой','Подавать только правой','Не держать двумя руками'],c:1},
-  {q:'Гость ждёт 20 минут. Что делаешь ПЕРВЫМ?',opts:['Жду, пока позовёт','Сам подхожу, извиняюсь, объясняю и предлагаю компенсацию','Говорю кухне','Предлагаю скидку в следующий раз'],c:1},
-  {q:'Стандарт внешнего вида сотрудника Gusto:',opts:['Любая одежда','Чёрные брюки, чёрная закрытая обувь, чистый фартук, бейджик с именем','Тёмная одежда, без бейджа','Только в дни проверок'],c:1},
-  {q:'Фирменный напиток пиццерии Gusto:',opts:['Fanta','Pepsi','Лимонад «Gusto»','Sprite'],c:2},
-  {q:'Зачем повторять заказ вслух перед завершением?',opts:['Показать профессионализм','Гость подтверждает — исключаем ошибки и споры','Так требует программа','Не нужно повторять'],c:1},
-  {q:'Клиент хочет отменить уже готовый заказ:',opts:['«Ладно, отменяем»','«Невозможно, платите»','«Заказ готов! Упакую со скидкой 15% или перенесём время — что выбираете?»','Звоню руководителю'],c:2},
-  {q:'Чек-бэк — это:',opts:['Проверка чека','Подойти к гостю через 2–3 мин после подачи: «Всё нравится?»','Повторный заказ','Проверка состава заказа'],c:1},
-  {q:'Первое действие при жалобе на пересоленное блюдо:',opts:['«Повар так готовит»','Убрать молча','Извиниться и предложить замену или другое решение','Дать соль'],c:2},
-  {q:'Правило пунктуальности Gusto:',opts:['Прийти вовремя — нормально','Пришёл на 15 минут раньше — пришёл вовремя','Опоздание до 5 мин — ОК','Главное — предупредить утром'],c:1},
-  {q:'Когда немедленно звать менеджера?',opts:['При любой жалобе','Только при крике','Гость нашёл предмет в блюде / жалуется на сотрудника / требует менеджера / ситуация не решается','Только при скидке'],c:2},
-  {q:'Правильный порядок 4 шагов заказа на вынос:',opts:['Приготовить → принять → пробить → отдать','Принять → пробить → собрать → доставить гостю','Пробить → принять → собрать → отдать','Собрать → принять → пробить → отдать'],c:1}
+// ═══════════════════════════════════════════
+// EXAM — 25 вопросов (сложные варианты)
+// ═══════════════════════════════════════════
+var EXAM=[
+{q:'Стандартное приветствие при ответе на звонок в Gusto:',
+opts:['«Gusto, слушаю вас»',
+'«Добрый день/вечер, Gusto, меня зовут [имя], чем могу помочь?»',
+'«Здравствуйте, пиццерия, чем могу быть полезен?»',
+'«Gusto, добрый день, говорите»'],c:1},
+{q:'Гость сел за стол. Через сколько секунд ты обязан его поприветствовать?',
+opts:['В течение одной минуты — дать время осмотреться',
+'Как только закончишь обслуживать другой стол',
+'В течение 30 секунд — это стандарт компании',
+'Сразу как только увидел, даже если занят'],c:2},
+{q:'Что такое кросс-селлинг в работе диспетчера?',
+opts:['Предложение клиенту перейти на более дорогую пиццу вместо выбранной',
+'Предложение дополнительных позиций к основному заказу: соус, напиток, картошка фри',
+'Рассказ о действующих акциях при оформлении заказа',
+'Повторное предложение заказать снова при следующем звонке'],c:1},
+{q:'Клиент трижды подряд отказался от всех дополнений. Что делаешь?',
+opts:['Предлагаю ещё раз, но с другой формулировкой',
+'Принимаю финальный отказ и завершаю оформление заказа',
+'Предлагаю скидку через приложение как последний аргумент',
+'Уточняю причину отказа, чтобы лучше понять гостя'],c:1},
+{q:'Акция «Бесплатная картошка фри» действует при заказе от:',
+opts:['1000₽','1200₽','1500₽','2000₽'],c:2},
+{q:'L в технике LAST означает:',
+opts:['Love — проявить искреннюю заботу о госте',
+'Limit — ограничить эмоциональный разговор',
+'Listen — выслушать гостя не перебивая',
+'Lead — взять инициативу в разговоре'],c:2},
+{q:'A в технике LAST означает:',
+opts:['Act — немедленно начать действовать',
+'Argue — аргументированно объяснить свою позицию',
+'Apologize — искренне извиниться',
+'Agree — согласиться с претензией гостя'],c:2},
+{q:'S в технике LAST означает:',
+opts:['Stay — оставаться рядом с гостем',
+'Solve — предложить конкретное решение проблемы',
+'Suppress — подавить собственные эмоции',
+'Speak — попросить гостя высказаться подробнее'],c:1},
+{q:'T в технике LAST означает:',
+opts:['Tell — рассказать коллегам о случившемся',
+'Track — отследить заказ и доставку',
+'Transfer — передать гостя менеджеру',
+'Thank — поблагодарить гостя за обращение'],c:3},
+{q:'При оформлении доставки обязательно уточнить:',
+opts:['Адрес улицы и имя получателя',
+'Адрес, квартиру, этаж, код домофона и номер телефона',
+'Адрес и желаемое время доставки',
+'Только телефон — курьер сам всё уточнит при звонке'],c:1},
+{q:'Стандартное время готовности заказа на самовывоз:',
+opts:['5–10 минут','15 минут','25–30 минут','40–45 минут'],c:1},
+{q:'Скидка 10% на самовывоз через приложение действует:',
+opts:['Только по выходным и праздникам',
+'При заказе через мобильное приложение Gusto с выбором самовывоза',
+'При предъявлении промокода из социальных сетей',
+'Для зарегистрированных пользователей при любом способе заказа'],c:1},
+{q:'Акция «Подарок в день рождения» — что и на каких условиях?',
+opts:['Скидка 20% на весь заказ без ограничений',
+'Бесплатная доставка в день рождения при любом заказе',
+'Пицца Пепперони 32 см при заказе от 1500₽ для пользователей приложения с указанной датой рождения',
+'Бесплатная пицца Маргарита 25 см при показе паспорта'],c:2},
+{q:'Как завершить телефонный разговор по стандарту Gusto?',
+opts:['Прощаюсь первым сразу после подтверждения заказа',
+'«Всего доброго!» и жду 3 секунды, затем кладу трубку',
+'«Спасибо за заказ, хорошего вечера!» — трубку кладу последним',
+'Говорю стандартную фразу и нажимаю отбой одновременно'],c:2},
+{q:'Правило открытой руки при подаче блюд:',
+opts:['Подавать блюда только правой рукой вне зависимости от расположения',
+'Держать блюдо двумя руками для устойчивости',
+'С правой стороны работать правой рукой, с левой — левой, гость видит ладонь',
+'Использовать поднос при подаче любого блюда'],c:2},
+{q:'Гость ждёт заказ 20 минут. Твои действия:',
+opts:['Жду, пока гость сам обратится — чтобы не мешать',
+'Информирую кухню и продолжаю другую работу',
+'Сам подхожу, извиняюсь, объясняю причину и предлагаю компенсацию',
+'Предлагаю отменить и сделать новый заказ'],c:2},
+{q:'Стандарт внешнего вида сотрудника Gusto:',
+opts:['Чёрные брюки, любая обувь, фартук по желанию, имя знают постоянные гости',
+'Форма компании, бейджик только при проверках, опрятный вид',
+'Чёрные брюки, чёрная закрытая обувь, чистый отглаженный фартук, бейджик с именем',
+'Любая тёмная одежда, бейджик и фартук'],c:2},
+{q:'Чек-бэк (check back) — это:',
+opts:['Проверка правильности кассового чека перед выдачей',
+'Повторный звонок клиенту для подтверждения заказа',
+'Подход к гостю через 2–3 минуты после подачи блюда с вопросом «Всё нравится?»',
+'Сверка заказа с кухней перед выносом блюда'],c:2},
+{q:'Зачем повторять заказ вслух перед завершением разговора?',
+opts:['Это демонстрирует профессионализм и внимательность',
+'Так требует кассовая система перед пробитием',
+'Гость подтверждает — исключаются ошибки и разногласия при получении',
+'Повторение помогает оператору лучше запомнить заказ'],c:2},
+{q:'Клиент отменяет готовый заказ. Правильное действие:',
+opts:['Аннулирую — клиент всегда прав, удержание недопустимо',
+'Говорю что заказ готов, предлагаю упаковать со скидкой 15% или перенести время',
+'Объясняю что отмена готового заказа невозможна по условиям',
+'Зову менеджера — только он вправе принимать такое решение'],c:1},
+{q:'Промокод 070 в приложении Gusto даёт:',
+opts:['Скидку 7% на первый заказ',
+'Бесплатную доставку первого заказа',
+'Пиццу Маргарита 25 см в подарок при первом заказе от 600₽',
+'Двойные бонусные баллы за первую покупку'],c:2},
+{q:'Акция «Угости друга» — что получает пригласивший?',
+opts:['Скидку 10% на свой следующий заказ',
+'10% от суммы заказа друга в виде бонусных баллов на счёт',
+'Бесплатную пиццу Маргарита 25 см',
+'Промокод на 15% скидки для обоих'],c:1},
+{q:'Правило пунктуальности Gusto — что считается «вовремя»?',
+opts:['Прийти точно к началу смены',
+'Прийти на 5 минут раньше — небольшой запас достаточен',
+'Прийти на 15 минут раньше — это и есть «вовремя»',
+'Главное — предупредить за 30 минут, если знаешь что опоздаешь'],c:2},
+{q:'Когда немедленно звать менеджера?',
+opts:['При любой жалобе на качество блюда',
+'Только когда гость сам требует встречи с руководством',
+'Когда гость нашёл предмет в блюде, жалуется на сотрудника, ты исчерпал возможности, сильная агрессия',
+'Только при угрозе физического конфликта'],c:2},
+{q:'Что делать, если не знаешь состав блюда, о котором спрашивает гость-аллергик?',
+opts:['Называю предположительный состав — скорее всего знаю правильно',
+'Говорю что все блюда свежие и безопасные — стандарт компании',
+'Уточняю на кухне и только потом отвечаю гостю',
+'Предлагаю гостю самому изучить состав в приложении'],c:2}
 ];
 
-// ─────────── INIT ───────────
+// ═══════════════════════════════════════════
+// BLITZ POOL — 12 вопросов
+// ═══════════════════════════════════════════
+var BLITZ_POOL=[
+{q:'Стандартное приветствие по телефону в Gusto?',
+opts:['«Gusto, слушаю»','«Добрый день, Gusto, [имя], чем могу помочь?»','«Здравствуйте, пицца Gusto»','«Да, говорите»'],c:1},
+{q:'L в технике LAST означает:',
+opts:['Love — заботу','Lead — инициативу','Listen — выслушать','Limit — ограничить'],c:2},
+{q:'Правило «трёх нет» — когда остановить допродажи?',
+opts:['После первого отказа','После второго отказа','После трёх отказов подряд или «больше ничего не надо»','Когда гость скажет «стоп»'],c:2},
+{q:'«Бесплатная картошка фри» — при заказе от какой суммы?',
+opts:['1000₽','1200₽','1500₽','1800₽'],c:2},
+{q:'Через сколько секунд нужно поприветствовать гостя в зале?',
+opts:['60','45','30','15'],c:2},
+{q:'Что обязательно уточнить при доставке?',
+opts:['Только адрес и телефон','Адрес, квартиру, этаж, домофон и телефон','Адрес и время доставки','Адрес и способ оплаты'],c:1},
+{q:'T в технике LAST:',
+opts:['Transfer — передать менеджеру','Tell — рассказать коллегам','Track — отследить','Thank — поблагодарить'],c:3},
+{q:'Правило открытой руки — это:',
+opts:['Подавать только правой рукой','С правой стороны — правой, с левой — левой, гость видит ладонь','Держать блюдо двумя руками','Использовать поднос'],c:1},
+{q:'Время готовности заказа на самовывоз:',
+opts:['5 мин','15 мин','30 мин','45 мин'],c:1},
+{q:'Коллега ошибся с заказом. Что делаешь?',
+opts:['Указываю при госте — для предотвращения повторений','Зову менеджера немедленно','Спокойно помогаю исправить, разбираюсь с коллегой после смены','Молчу — это его ответственность'],c:2},
+{q:'Чек-бэк — это подход к гостю через сколько минут после подачи?',
+opts:['Сразу','2–3 минуты','5–7 минут','10 минут'],c:1},
+{q:'Промокод для получения пиццы Маргарита 25 см за первый заказ в приложении:',
+opts:['GUSTO','PIZZA','070','FIRST'],c:2}
+];
+
+// ═══════════════════════════════════════════
+// CHECKLIST
+// ═══════════════════════════════════════════
+var CHECKLIST=[
+{icon:'👔',text:'Чёрные брюки — чистые и отглаженные'},
+{icon:'👟',text:'Чёрная закрытая обувь, начищенная'},
+{icon:'🍽️',text:'Фартук чистый и отглаженный'},
+{icon:'🏷️',text:'Бейджик с именем на месте'},
+{icon:'💆',text:'Волосы убраны, внешний вид аккуратный'},
+{icon:'🎯',text:'Знаю все текущие акции Gusto наизусть'},
+{icon:'📋',text:'Проверил станцию — приборы, тарелки, салфетки'},
+{icon:'😊',text:'Настрой позитивный, улыбка включена!'},
+{icon:'🤝',text:'Готов помочь коллегам в любой момент'},
+{icon:'📞',text:'Знаю скрипт приветствия по телефону наизусть'}
+];
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 window.onload=function(){
   var inp=document.getElementById('ninp');
   var btn=document.getElementById('btn-start');
-
-  // Bind start button — both click and touchend for iOS reliability
-  function onStart(e){
-    e.preventDefault();
-    startGame();
-  }
-  btn.addEventListener('click', onStart);
-  btn.addEventListener('touchend', onStart);
-
+  function onStart(e){e.preventDefault();startGame();}
+  btn.addEventListener('click',onStart);
+  btn.addEventListener('touchend',onStart);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){inp.blur();startGame();}});
   if(load()&&S.name){
     if(!S.mqAnswered) S.mqAnswered={};
+    if(!S.checklistState) S.checklistState=[];
+    if(!S.blitzQ) S.blitzQ=[];
     showHdr();
-    if(S.examDone){goExamResult();}
-    else if(S.phase===2){showPhase(2);renderExamQ();}
-    else if(S.phase===1){showPhase(1);renderPractice();}
-    else{showPhase(0);renderLearn();}
+    restorePhase();
   }
 };
+
+function restorePhase(){
+  if(S.phase===4){showPhase(4);renderChecklist();}
+  else if(S.examDone){showPhase(3);goExamResult();}
+  else if(S.phase===3){showPhase(3);renderExamQ();}
+  else if(S.phase===2){showPhase(2);renderPractice();}
+  else if(S.phase===1){showPhase(1);renderBlitz();}
+  else{showPhase(0);renderLearn();}
+}
 
 function showHdr(){
   document.getElementById('hname').style.display='';
@@ -1070,232 +1204,513 @@ function showHdr(){
 }
 
 function updatePS(){
-  ['ps0','ps1','ps2'].forEach((id,i)=>{
-    const el=document.getElementById(id);
+  var ids=['ps0','ps1','ps2','ps3','ps4'];
+  ids.forEach(function(id,i){
+    var el=document.getElementById(id);
     el.className='pstep';
     if(i===S.phase)el.classList.add('active');
     else if(i<S.phase)el.classList.add('done');
   });
 }
 
+var SCREEN_IDS=['s-learn','s-blitz','s-practice','s-exam','s-checklist','s-home'];
+
 function showPhase(p){
   S.phase=p; save(); updatePS();
-  var ids=['s-learn','s-practice','s-exam'];
-  for(var i=0;i<ids.length;i++){
-    var el=document.getElementById(ids[i]);
-    if(i===p){ el.classList.add('active'); }
-    else { el.classList.remove('active'); }
-  }
+  SCREEN_IDS.forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(el){if(i===p)el.classList.add('active');else el.classList.remove('active');}
+  });
 }
 
 function setScreen(id,show){
   var el=document.getElementById(id);
-  if(show){ el.classList.add('active'); } else { el.classList.remove('active'); }
+  if(el){if(show)el.classList.add('active');else el.classList.remove('active');}
+}
+
+// Navigation from phase tabs — allow revisiting completed phases
+function navTo(p){
+  var phaseUnlocked=[true, S.learnIdx>=LEARN.length, S.blitzDone, S.practiceDone, S.examDone];
+  if(!phaseUnlocked[p] && p>0){
+    // Show which phase to complete first
+    return;
+  }
+  // Hide all
+  SCREEN_IDS.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.classList.remove('active');
+  });
+  S.phase=p; save(); updatePS();
+  if(p===0){setScreen('s-learn',true);renderLearn();}
+  else if(p===1){setScreen('s-blitz',true);if(S.blitzDone)showBlitzResult();else renderBlitz();}
+  else if(p===2){setScreen('s-practice',true);if(S.practiceDone)renderPracticeDone();else renderPractice();}
+  else if(p===3){setScreen('s-exam',true);if(S.examDone)goExamResult();else renderExamQ();}
+  else if(p===4){setScreen('s-checklist',true);renderChecklist();}
+}
+
+function goHome(){
+  SCREEN_IDS.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.classList.remove('active');
+  });
+  setScreen('s-home',true);
+  renderHome();
 }
 
 function startGame(){
-  // blur input first — fixes iOS Safari tap issue
   var inp=document.getElementById('ninp');
-  if(inp) inp.blur();
-  var v=inp ? inp.value.trim() : '';
+  if(inp)inp.blur();
+  var v=inp?inp.value.trim():'';
   if(!v){
     inp.style.borderBottomColor='#f04040';
     inp.placeholder='Введи имя!';
     setTimeout(function(){inp.style.borderBottomColor='';inp.placeholder='Введи своё имя...';},1500);
     return;
   }
-  S={name:v,phase:0,learnIdx:0,practiceIdx:0,practiceScore:0,examIdx:0,examScore:0,examDone:false,mqAnswered:{}};
+  S={name:v,phase:0,learnIdx:0,
+     blitzIdx:0,blitzScore:0,blitzQ:[],blitzDone:false,
+     practiceIdx:0,practiceScore:0,practiceDone:false,
+     examIdx:0,examScore:0,examDone:false,
+     checklistState:[],mqAnswered:{},totalPoints:0};
   save();
   document.getElementById('s-start').classList.remove('active');
-  showHdr();
-  showPhase(0);
-  renderLearn();
+  showHdr();showPhase(0);renderLearn();
 }
 
-// ─────────── COUNTERS ANIMATION ───────────
+// ═══════════════════════════════════════════
+// HOME DASHBOARD
+// ═══════════════════════════════════════════
+function renderHome(){
+  var total=calcTotal();
+  var maxP=MAX_POINTS();
+  var pct=Math.round(total/maxP*100);
+  var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
+  var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
+
+  var html='<div class="score-tracker">'+
+    '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
+    '<div class="st-bars">'+
+    stBar('📖 Обучение',mqDone,LEARN.length,'var(--blue)')+
+    stBar('⚡ Блиц',S.blitzScore,10,'var(--gold)')+
+    stBar('🎭 Практика',S.practiceScore,SCENARIOS.length,'var(--green)')+
+    stBar('📝 Экзамен',S.examScore,25,'var(--red)')+
+    stBar('📋 Смена',clDone,CHECKLIST.length,'#c060ff')+
+    '</div></div>';
+
+  html+='<div class="results-grid">'+
+    '<div class="res-box"><div class="res-num" style="color:var(--gold)">'+S.blitzScore+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="res-lbl">Блиц-тест</div></div>'+
+    '<div class="res-box"><div class="res-num" style="color:var(--green)">'+S.practiceScore+'<span style="font-size:1rem;color:var(--muted)">/'+SCENARIOS.length+'</span></div><div class="res-lbl">Практика</div></div>'+
+    '<div class="res-box"><div class="res-num" style="color:var(--red)">'+S.examScore+'<span style="font-size:1rem;color:var(--muted)">/25</span></div><div class="res-lbl">Экзамен</div></div>'+
+    '</div>';
+
+  html+='<div style="margin-top:8px"><div class="share-box">'+
+    '<div class="share-lbl">📤 Отправить руководителю</div>'+
+    '<div class="share-txt" id="share-txt-h">'+buildShareText()+'</div>'+
+    '<div class="share-acts">'+
+    '<button class="btn btn-outline btn-sm" onclick="copyResult(\'share-txt-h\')">📋 Скопировать</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="shareResult()">📤 Поделиться</button>'+
+    '</div></div></div>';
+
+  html+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">'+
+    '<button class="btn btn-red" onclick="navTo(0)">📖 К обучению</button>'+
+    (S.blitzDone?'<button class="btn btn-outline" onclick="navTo(1)">⚡ Повторить блиц</button>':'')+
+    (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
+    (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
+    '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
+    '</div>';
+
+  document.getElementById('home-content').innerHTML=html;
+}
+
+function stBar(lbl,val,max,color){
+  var pct=max?Math.round(val/max*100):0;
+  return '<div class="st-row"><span class="st-lbl">'+lbl+'</span>'+
+    '<div class="st-bar"><div class="st-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
+    '<span class="st-val" style="color:'+color+'">'+val+'/'+max+'</span></div>';
+}
+
+function buildShareText(){
+  var d=new Date().toLocaleDateString('ru-RU');
+  return 'Сотрудник: '+S.name+'\nДата: '+d+
+    '\nОбучение Gusto — Академия сервиса'+
+    '\n\nЭкзамен: '+S.examScore+'/25 — '+(S.examScore>=22?'СДАН ✅':'не сдан ❌')+
+    '\nПрактика: '+S.practiceScore+'/'+SCENARIOS.length+
+    '\nБлиц-тест: '+S.blitzScore+'/10'+
+    '\nОбщий балл: '+calcTotal()+'/'+MAX_POINTS()+' ('+Math.round(calcTotal()/MAX_POINTS()*100)+'%)'+
+    '\ngusto.ru';
+}
+
+function copyResult(id){
+  var el=document.getElementById(id||'share-txt-h');
+  if(!el)return;
+  var txt=el.textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){alert('Скопировано!');});}
+  else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Скопировано!');}
+}
+function shareResult(){
+  var txt=buildShareText();
+  if(navigator.share){navigator.share({title:'Результат обучения Gusto',text:txt}).catch(function(){});}
+  else copyResult('share-txt-h');
+}
+
+// ═══════════════════════════════════════════
+// COUNTERS
+// ═══════════════════════════════════════════
 function animateCounters(){
-  document.querySelectorAll('.stat-num[data-to]').forEach(el=>{
-    const target=parseInt(el.getAttribute('data-to'));
-    let cur=0; const step=Math.ceil(target/30);
-    const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(t);},40);
+  document.querySelectorAll('.stat-num[data-to]').forEach(function(el){
+    var target=parseInt(el.getAttribute('data-to'));
+    var cur=0,step=Math.ceil(target/30);
+    var t=setInterval(function(){cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(t);},40);
   });
 }
 
-// ─────────── LEARN ───────────
+// ═══════════════════════════════════════════
+// LEARN
+// ═══════════════════════════════════════════
 function renderLearn(){
-  const tot=LEARN.length, idx=S.learnIdx;
+  var tot=LEARN.length,idx=S.learnIdx;
   document.getElementById('lc').textContent=Math.min(idx+1,tot);
   document.getElementById('lt').textContent=tot;
   document.getElementById('lfill').style.width=(idx/tot*100)+'%';
   if(idx>=tot){renderLearnDone();return;}
-  const t=LEARN[idx];
-  const dots=LEARN.map((_,i)=>`<div class="ldot ${i<idx?'done':i===idx?'active':''}"></div>`).join('');
-  document.getElementById('learn-content').innerHTML=`
-    <div class="lcard">
-      <div class="lcard-hdr">
-        <div class="lcard-hdr-icon">${t.icon}</div>
-        <div><div class="lcard-chapter">${t.chapter} из ${tot}</div><div class="lcard-title">${t.title}</div></div>
-      </div>
-      <div class="lcard-body">
-        ${t.render()}
-        <div class="lnav"><div class="ldots">${dots}</div>
-          <button class="btn btn-red" onclick="nextLearn()">${idx<tot-1?'СЛЕДУЮЩАЯ ТЕМА →':'К ПРАКТИКЕ →'}</button>
-        </div>
-      </div>
-    </div>`;
+  var t=LEARN[idx];
+  var dots=LEARN.map(function(_,i){return '<div class="ldot '+(i<idx?'done':i===idx?'active':'')+'"></div>';}).join('');
+  var html='<div class="lcard">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">'+t.icon+'</div>'+
+    '<div><div class="lcard-chapter">'+t.chapter+' из '+tot+'</div><div class="lcard-title">'+t.title+'</div></div></div>'+
+    '<div class="lcard-body">'+t.render()+
+    '<div class="lnav"><div class="ldots">'+dots+'</div>'+
+    '<div style="display:flex;gap:8px">'+
+    (idx>0?'<button class="btn btn-outline btn-sm" onclick="prevLearn()">← Назад</button>':'')+
+    '<button class="btn btn-red" onclick="nextLearn()">'+(idx<tot-1?'ДАЛЬШЕ →':'К БЛИЦ-ТЕСТУ →')+'</button>'+
+    '</div></div></div></div>';
+  document.getElementById('learn-content').innerHTML=html;
   setTimeout(animateCounters,100);
 }
 
+function prevLearn(){if(S.learnIdx>0){S.learnIdx--;save();renderLearn();}}
 function nextLearn(){S.learnIdx++;save();renderLearn();}
 
 function renderLearnDone(){
   document.getElementById('lfill').style.width='100%';
-  document.getElementById('learn-content').innerHTML=`
-    <div class="done-card">
-      <div class="done-icon">📚</div>
-      <div class="done-t" style="color:var(--green)">Все темы изучены!</div>
-      <div class="done-sub">Отлично, <b>${S.name}</b>! 8 тем пройдено. Применим знания на практике — 12 реальных сценариев.</div>
-      <button class="btn btn-red" onclick="startPractice()">НАЧАТЬ ПРАКТИКУ →</button>
-    </div>`;
+  document.getElementById('learn-content').innerHTML=
+    '<div class="done-card">'+
+    '<div class="done-icon">📚</div>'+
+    '<div class="done-t" style="color:var(--green)">Все 8 тем изучены!</div>'+
+    '<div class="done-sub">Отлично, <b>'+S.name+'</b>! Теперь блиц-тест — 10 быстрых вопросов с таймером для закрепления.</div>'+
+    '<div class="done-actions">'+
+    '<button class="btn btn-red" onclick="startBlitz()">БЛИЦ-ТЕСТ →</button>'+
+    '<button class="btn btn-outline" onclick="prevLearn()">← Вернуться</button>'+
+    '</div></div>';
 }
 
-function startPractice(){S.practiceIdx=0;S.practiceScore=0;save();showPhase(1);renderPractice();}
+// ═══════════════════════════════════════════
+// BLITZ
+// ═══════════════════════════════════════════
+function startBlitz(){
+  var pool=BLITZ_POOL.slice().sort(function(){return Math.random()-.5;}).slice(0,10);
+  S.blitzQ=pool;S.blitzIdx=0;S.blitzScore=0;S.blitzDone=false;save();
+  showPhase(1);renderBlitz();
+}
 
-// ─────────── PRACTICE ───────────
+function renderBlitz(){
+  if(blitzTimer){clearInterval(blitzTimer);blitzTimer=null;}
+  var tot=10,idx=S.blitzIdx;
+  document.getElementById('bc').textContent=Math.min(idx+1,tot);
+  document.getElementById('bfill').style.width=(idx/tot*100)+'%';
+  if(idx>=tot||!S.blitzQ||idx>=S.blitzQ.length){finishBlitz();return;}
+  var q=S.blitzQ[idx],L=['А','Б','В','Г'];
+  var optsHtml=q.opts.map(function(o,i){
+    return '<button class="opt" id="bo'+i+'" onclick="answerBlitz('+i+')"><span class="opt-l">'+L[i]+'</span><span>'+o+'</span></button>';
+  }).join('');
+  document.getElementById('blitz-content').innerHTML=
+    '<div class="blitz-timer-wrap"><span class="xp-l">Время</span>'+
+    '<div class="blitz-tbar"><div class="blitz-tfill" id="btfill" style="width:100%"></div></div>'+
+    '<span class="blitz-tval" id="btval">15</span></div>'+
+    '<div class="card"><div class="card-top"><div class="card-lbl">Вопрос '+(idx+1)+' / '+tot+'</div><div class="card-badge">⚡ '+S.blitzScore+'</div></div>'+
+    '<div class="card-body"><div class="qtext">'+q.q+'</div>'+
+    '<div class="opts" id="bopts">'+optsHtml+'</div><div id="bfb"></div></div></div>';
+  var timeLeft=15;
+  blitzTimer=setInterval(function(){
+    timeLeft--;
+    var tv=document.getElementById('btval'),bar=document.getElementById('btfill');
+    if(tv)tv.textContent=timeLeft;
+    if(bar){bar.style.width=(timeLeft/15*100)+'%';if(timeLeft<=5)bar.style.background='var(--red)';}
+    if(timeLeft<=0){clearInterval(blitzTimer);blitzTimer=null;answerBlitz(-1);}
+  },1000);
+}
+
+function answerBlitz(ch){
+  if(blitzTimer){clearInterval(blitzTimer);blitzTimer=null;}
+  var q=S.blitzQ[S.blitzIdx],ok=(ch===q.c);
+  document.querySelectorAll('#bopts .opt').forEach(function(b){b.disabled=true;});
+  if(ch>=0)document.getElementById('bo'+ch).classList.add(ok?'correct':'wrong');
+  document.getElementById('bo'+q.c).classList.add('correct');
+  flashFx(ok);
+  if(ok)S.blitzScore++;
+  S.blitzIdx++;save();
+  var msg=ch===-1?'⏱ Время вышло! ':ok?'✅ Верно! ':'❌ Неверно. ';
+  document.getElementById('bfb').innerHTML=
+    '<div class="fb '+(ok?'ok':'nope')+'">'+msg+(ok?'Отличная реакция!':'Посмотри правильный ответ выше.')+'</div>'+
+    '<div class="next-r"><button class="btn btn-red" onclick="renderBlitz()">'+(S.blitzIdx<10?'СЛЕДУЮЩИЙ →':'РЕЗУЛЬТАТ →')+'</button></div>';
+}
+
+function finishBlitz(){
+  S.blitzDone=true;save();
+  var pct=Math.round(S.blitzScore/10*100);
+  var color=pct>=80?'var(--green)':pct>=60?'var(--gold)':'var(--red)';
+  var msg=pct>=80?'Знания прочные! Готов к практике.':pct>=60?'Хорошо. Есть что подтянуть.':'Рекомендую повторить обучение.';
+  document.getElementById('blitz-content').innerHTML=
+    '<div class="done-card">'+
+    '<div class="done-icon">'+(pct>=80?'⚡':'📖')+'</div>'+
+    '<div class="done-t" style="color:'+color+'">Блиц завершён!</div>'+
+    '<div class="blitz-score-big" style="color:'+color+'">'+S.blitzScore+'<sup style="font-size:1.4rem;color:var(--muted)"> / 10</sup></div>'+
+    '<div class="done-sub">'+msg+'</div>'+
+    '<div class="done-actions">'+
+    '<button class="btn btn-red" onclick="startPractice()">К ПРАКТИКЕ →</button>'+
+    '<button class="btn btn-outline" onclick="startBlitz()">↺ Повторить блиц</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>'+
+    '</div></div>';
+}
+
+function showBlitzResult(){
+  S.blitzDone=true;
+  var pct=Math.round(S.blitzScore/10*100);
+  var color=pct>=80?'var(--green)':pct>=60?'var(--gold)':'var(--red)';
+  document.getElementById('blitz-content').innerHTML=
+    '<div class="done-card">'+
+    '<div class="done-t" style="color:'+color+'">Блиц пройден</div>'+
+    '<div class="blitz-score-big" style="color:'+color+'">'+S.blitzScore+'<sup style="font-size:1.4rem;color:var(--muted)"> / 10</sup></div>'+
+    '<div class="done-actions">'+
+    '<button class="btn btn-red" onclick="startPractice()">К ПРАКТИКЕ →</button>'+
+    '<button class="btn btn-outline" onclick="startBlitz()">↺ Пройти заново</button>'+
+    '</div></div>';
+}
+
+// ═══════════════════════════════════════════
+// PRACTICE
+// ═══════════════════════════════════════════
+function startPractice(){S.practiceIdx=0;S.practiceScore=0;S.practiceDone=false;save();showPhase(2);renderPractice();}
+
 function renderPractice(){
-  const tot=SCENARIOS.length,idx=S.practiceIdx;
+  var tot=SCENARIOS.length,idx=S.practiceIdx;
   document.getElementById('pc').textContent=Math.min(idx+1,tot);
   document.getElementById('pt').textContent=tot;
   document.getElementById('pfill').style.width=(idx/tot*100)+'%';
   document.getElementById('xpf').style.width=(S.practiceScore/tot*100)+'%';
   document.getElementById('xpv').textContent=S.practiceScore+' / '+tot;
   if(idx>=tot){renderPracticeDone();return;}
-  const sc=SCENARIOS[idx];
-  const L=['А','Б','В','Г'];
-  document.getElementById('practice-content').innerHTML=`
-    <div class="card">
-      <div class="card-top"><div class="card-lbl">${sc.tag} · Сценарий ${idx+1}/${tot}</div><div class="card-badge">⭐ ${S.practiceScore}</div></div>
-      <div class="card-body">
-        <div class="scene">${sc.scene}</div>
-        <div class="qtext">${sc.q}</div>
-        <div class="opts" id="opts">
-          ${sc.opts.map((o,i)=>`<button class="opt" id="o${i}" onclick="answerP(${i})"><span class="opt-l">${L[i]}</span><span>${o}</span></button>`).join('')}
-        </div><div id="pfb"></div>
-      </div>
-    </div>`;
+  var sc=SCENARIOS[idx],L=['А','Б','В','Г'];
+  document.getElementById('practice-content').innerHTML=
+    '<div class="card">'+
+    '<div class="card-top"><div class="card-lbl">'+sc.tag+' · Сценарий '+(idx+1)+'/'+tot+'</div><div class="card-badge">⭐ '+S.practiceScore+'</div></div>'+
+    '<div class="card-body"><div class="scene">'+sc.scene+'</div>'+
+    '<div class="qtext">'+sc.q+'</div>'+
+    '<div class="opts" id="opts">'+
+    sc.opts.map(function(o,i){return '<button class="opt" id="o'+i+'" onclick="answerP('+i+')"><span class="opt-l">'+L[i]+'</span><span>'+o+'</span></button>';}).join('')+
+    '</div><div id="pfb"></div></div></div>';
 }
 
 function answerP(ch){
-  const sc=SCENARIOS[S.practiceIdx],ok=ch===sc.correct;
-  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  var sc=SCENARIOS[S.practiceIdx],ok=(ch===sc.correct);
+  document.querySelectorAll('.opt').forEach(function(b){b.disabled=true;});
   document.getElementById('o'+ch).classList.add(ok?'correct':'wrong');
   if(!ok)document.getElementById('o'+sc.correct).classList.add('correct');
   flashFx(ok);
   if(ok)S.practiceScore++;
   S.practiceIdx++;save();
-  document.getElementById('pfb').innerHTML=`<div class="fb ${ok?'ok':'nope'}">${ok?'✅ <b>Верно!</b>':'❌ <b>Неверно.</b>'} ${sc.why}</div>
-    <div class="next-r"><button class="btn btn-red" onclick="renderPractice()">СЛЕДУЮЩИЙ →</button></div>`;
+  document.getElementById('pfb').innerHTML=
+    '<div class="fb '+(ok?'ok':'nope')+'">'+(ok?'✅ <b>Верно!</b>':'❌ <b>Неверно.</b>')+' '+sc.why+'</div>'+
+    '<div class="next-r"><button class="btn btn-red" onclick="renderPractice()">'+
+    (S.practiceIdx<SCENARIOS.length?'СЛЕДУЮЩИЙ →':'ЗАВЕРШИТЬ →')+'</button></div>';
   document.getElementById('xpf').style.width=(S.practiceScore/SCENARIOS.length*100)+'%';
   document.getElementById('xpv').textContent=S.practiceScore+' / '+SCENARIOS.length;
 }
 
 function renderPracticeDone(){
+  S.practiceDone=true;save();
   document.getElementById('pfill').style.width='100%';
-  document.getElementById('practice-content').innerHTML=`
-    <div class="done-card">
-      <div class="done-icon">🎭</div>
-      <div class="done-t" style="color:var(--green)">Практика пройдена!</div>
-      <div class="done-sub"><b>${S.name}</b>, прошёл все 12 сценариев. Набрал <b style="color:var(--red)">${S.practiceScore} из ${SCENARIOS.length}</b>. Финал — экзамен 25 вопросов, нужно 22+!</div>
-      <button class="btn btn-red" onclick="startExam()">НАЧАТЬ ЭКЗАМЕН →</button>
-    </div>`;
+  document.getElementById('practice-content').innerHTML=
+    '<div class="done-card">'+
+    '<div class="done-icon">🎭</div>'+
+    '<div class="done-t" style="color:var(--green)">Практика завершена!</div>'+
+    '<div class="done-sub"><b>'+S.name+'</b>, прошёл все '+SCENARIOS.length+' сценариев.<br>Результат: <b style="color:var(--red)">'+S.practiceScore+' из '+SCENARIOS.length+'</b> очков.<br>Финал — экзамен 25 вопросов. Нужно 22+!</div>'+
+    '<div class="done-actions">'+
+    '<button class="btn btn-red" onclick="startExam()">НАЧАТЬ ЭКЗАМЕН →</button>'+
+    '<button class="btn btn-outline" onclick="startPractice()">↺ Пройти заново</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>'+
+    '</div></div>';
 }
 
-// ─────────── EXAM ───────────
-function startExam(){S.examIdx=0;S.examScore=0;S.examDone=false;save();showPhase(2);renderExamQ();}
+// ═══════════════════════════════════════════
+// EXAM
+// ═══════════════════════════════════════════
+function startExam(){S.examIdx=0;S.examScore=0;S.examDone=false;save();showPhase(3);renderExamQ();}
 
 function renderExamQ(){
-  const tot=EXAM.length,idx=S.examIdx;
+  var tot=EXAM.length,idx=S.examIdx;
   document.getElementById('ec').textContent=Math.min(idx+1,tot);
   document.getElementById('et').textContent=tot;
   document.getElementById('efill').style.width=(idx/tot*100)+'%';
   if(idx>=tot){finishExam();return;}
-  const q=EXAM[idx]; const L=['А','Б','В','Г'];
-  document.getElementById('exam-content').innerHTML=`
-    <div class="card">
-      <div class="card-top"><div class="card-lbl">Вопрос ${idx+1} / ${tot}</div><div class="card-badge">✓ ${S.examScore}</div></div>
-      <div class="card-body">
-        <div class="qtext">${q.q}</div>
-        <div class="opts" id="eopts">
-          ${q.opts.map((o,i)=>`<button class="opt" id="eo${i}" onclick="answerE(${i})"><span class="opt-l">${L[i]}</span><span>${o}</span></button>`).join('')}
-        </div><div id="efb"></div>
-      </div>
-    </div>`;
+  var q=EXAM[idx],L=['А','Б','В','Г'];
+  document.getElementById('exam-content').innerHTML=
+    '<div class="card">'+
+    '<div class="card-top"><div class="card-lbl">Вопрос '+(idx+1)+' / '+tot+'</div><div class="card-badge">✓ '+S.examScore+'</div></div>'+
+    '<div class="card-body"><div class="qtext">'+q.q+'</div>'+
+    '<div class="opts" id="eopts">'+
+    q.opts.map(function(o,i){return '<button class="opt" id="eo'+i+'" onclick="answerE('+i+')"><span class="opt-l">'+L[i]+'</span><span>'+o+'</span></button>';}).join('')+
+    '</div><div id="efb"></div></div></div>';
 }
 
 function answerE(ch){
-  const q=EXAM[S.examIdx],ok=ch===q.c;
-  document.querySelectorAll('#eopts .opt').forEach(b=>b.disabled=true);
+  var q=EXAM[S.examIdx],ok=(ch===q.c);
+  document.querySelectorAll('#eopts .opt').forEach(function(b){b.disabled=true;});
   document.getElementById('eo'+ch).classList.add(ok?'correct':'wrong');
   if(!ok)document.getElementById('eo'+q.c).classList.add('correct');
   flashFx(ok);
   if(ok)S.examScore++;
   S.examIdx++;save();
-  document.getElementById('efb').innerHTML=`<div class="fb ${ok?'ok':'nope'}">${ok?'✅ Верно!':'❌ Неверно. Правильный ответ выделен зелёным.'}</div>
-    <div class="next-r"><button class="btn btn-red" onclick="renderExamQ()">${S.examIdx<EXAM.length?'СЛЕДУЮЩИЙ →':'ЗАВЕРШИТЬ →'}</button></div>`;
+  document.getElementById('efb').innerHTML=
+    '<div class="fb '+(ok?'ok':'nope')+'">'+(ok?'✅ Верно!':'❌ Неверно. Правильный ответ выделен.')+'</div>'+
+    '<div class="next-r"><button class="btn btn-red" onclick="renderExamQ()">'+(S.examIdx<EXAM.length?'СЛЕДУЮЩИЙ →':'ЗАВЕРШИТЬ ЭКЗАМЕН →')+'</button></div>';
 }
 
 function finishExam(){S.examDone=true;save();document.getElementById('efill').style.width='100%';goExamResult();}
 
 function goExamResult(){
-  S.phase=2;updatePS();
-  setScreen('s-learn',false);setScreen('s-practice',false);setScreen('s-exam',true);
-  const pass=S.examScore>=22;
-  document.getElementById('exam-content').innerHTML=`
-    <div class="done-card">
-      <div class="done-icon">${pass?'🎉':'😔'}</div>
-      <div class="done-t ${pass?'':'score-fail'}">${pass?'ЭКЗАМЕН СДАН!':'Экзамен не сдан'}</div>
-      <div class="big-score ${pass?'score-pass':'score-fail'}">${S.examScore}<sup> / 25</sup></div>
-      <div class="done-sub">${pass
-        ?`Поздравляем, <b>${S.name}</b>! Ты набрал ${S.examScore} из 25. Ты готов к работе в Gusto!`
-        :`<b>${S.name}</b>, нужно 22+ ответа. У тебя ${S.examScore}. Вернись к обучению и попробуй снова!`}</div>
-      <div class="done-actions">
-        ${pass?`<button class="btn btn-green" onclick="openDip()">🎓 ПОЛУЧИТЬ ДИПЛОМ</button>`:`<button class="btn btn-red" onclick="retake()">🔄 ПЕРЕСДАТЬ</button>`}
-        <button class="btn btn-outline" onclick="confirmReset()">Начать заново</button>
-      </div>
-    </div>`;
+  showPhase(3);
+  ['s-learn','s-blitz','s-practice','s-checklist','s-home'].forEach(function(id){setScreen(id,false);});
+  setScreen('s-exam',true);
+  var pass=S.examScore>=22;
+  var shareText=buildShareText();
+  document.getElementById('exam-content').innerHTML=
+    '<div class="done-card">'+
+    '<div class="done-icon">'+(pass?'🎉':'😔')+'</div>'+
+    '<div class="done-t '+(pass?'':'score-fail')+'">'+(pass?'ЭКЗАМЕН СДАН!':'Экзамен не сдан')+'</div>'+
+    '<div class="big-score '+(pass?'score-pass':'score-fail')+'">'+S.examScore+'<sup> / 25</sup></div>'+
+    '<div class="done-sub">'+(pass
+      ?'Поздравляем, <b>'+S.name+'</b>! '+S.examScore+'/25. Ты прошёл аттестацию!'
+      :'<b>'+S.name+'</b>, нужно 22+. У тебя '+S.examScore+'. Повтори материал и пересдай!'
+    )+'</div>'+
+    '<div class="done-actions">'+
+    (pass?'<button class="btn btn-green" onclick="openDip()">🎓 ПОЛУЧИТЬ ДИПЛОМ</button>':
+          '<button class="btn btn-red" onclick="retake()">🔄 ПЕРЕСДАТЬ</button>')+
+    '<button class="btn btn-outline" onclick="startChecklist()">📋 Чек-лист смены</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>'+
+    '</div>'+
+    '<div class="share-box" style="margin-top:14px">'+
+    '<div class="share-lbl">📤 Отправить результат руководителю</div>'+
+    '<div class="share-txt" id="share-txt-e">'+shareText+'</div>'+
+    '<div class="share-acts">'+
+    '<button class="btn btn-outline btn-sm" onclick="copyResult(\'share-txt-e\')">📋 Скопировать</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="shareResult()">📤 Поделиться</button>'+
+    '</div></div>'+
+    '</div>';
 }
 
 function retake(){S.examIdx=0;S.examScore=0;S.examDone=false;save();renderExamQ();}
 
-// ─────────── DIPLOMA ───────────
+// ═══════════════════════════════════════════
+// CHECKLIST
+// ═══════════════════════════════════════════
+function startChecklist(){
+  if(!S.checklistState||S.checklistState.length!==CHECKLIST.length){
+    S.checklistState=CHECKLIST.map(function(){return false;});
+  }
+  save();showPhase(4);renderChecklist();
+}
+
+function renderChecklist(){
+  var done=S.checklistState?S.checklistState.filter(Boolean).length:0;
+  var tot=CHECKLIST.length,pct=Math.round(done/tot*100);
+  var r=34,circ=2*Math.PI*r,offset=circ-(pct/100*circ);
+  var allDone=(done===tot);
+  var itemsHtml=(S.checklistState||[]).map(function(checked,i){
+    var item=CHECKLIST[i];
+    return '<div class="cl-item'+(checked?' chk':'')+'" onclick="toggleCL('+i+')" ontouchend="touchCL(event,'+i+')">'+
+      '<div class="cl-cb">'+(checked?'✓':'')+'</div>'+
+      '<div class="cl-txt">'+item.icon+' '+item.text+'</div>'+
+      '</div>';
+  }).join('');
+  var html='<div class="cl-ring"><div class="cl-ring-wrap">'+
+    '<svg width="88" height="88" viewBox="0 0 88 88">'+
+    '<circle cx="44" cy="44" r="'+r+'" fill="none" stroke="var(--g3)" stroke-width="6"/>'+
+    '<circle cx="44" cy="44" r="'+r+'" fill="none" stroke="'+(allDone?'var(--green)':'var(--red)')+'" stroke-width="6" stroke-dasharray="'+circ+'" stroke-dashoffset="'+offset+'" style="transition:stroke-dashoffset .4s ease"/>'+
+    '</svg>'+
+    '<div class="cl-ring-num" style="color:'+(allDone?'var(--green)':'var(--white)')+'">'+done+'<span style="font-size:.56rem;color:var(--muted)">/'+tot+'</span></div>'+
+    '</div></div>'+
+    '<div class="cl-items">'+itemsHtml+'</div>'+
+    (allDone?
+      '<div class="done-card" style="margin-top:14px">'+
+      '<div class="done-icon">🚀</div>'+
+      '<div class="done-t" style="color:var(--green)">К РАБОТЕ ГОТОВ!</div>'+
+      '<div class="done-sub"><b>'+S.name+'</b>, все пункты отмечены. Удачной смены! Помни: улыбка — твой главный инструмент 😊</div>'+
+      '<div class="done-actions">'+
+      '<button class="btn btn-outline" onclick="goHome()">🏠 Мой прогресс</button>'+
+      (S.examScore>=22?'<button class="btn btn-green" onclick="openDip()">🎓 Мой диплом</button>':'')+
+      '</div></div>':
+      '<div class="rule gold" style="margin-top:8px">💡 Отметь каждый пункт перед выходом на смену — это профессиональный ритуал, а не формальность.</div>'+
+      '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>'+
+      '</div>'
+    );
+  document.getElementById('checklist-content').innerHTML=html;
+}
+
+function toggleCL(i){
+  if(!S.checklistState)S.checklistState=CHECKLIST.map(function(){return false;});
+  S.checklistState[i]=!S.checklistState[i];
+  save();renderChecklist();
+}
+function touchCL(e,i){e.preventDefault();toggleCL(i);}
+
+// ═══════════════════════════════════════════
+// DIPLOMA
+// ═══════════════════════════════════════════
 function openDip(){
   document.getElementById('dip-nm').textContent=S.name;
-  document.getElementById('dip-sc').textContent=S.examScore;
-  const d=new Date();
+  document.getElementById('dip-sc-v').textContent=S.examScore;
+  document.getElementById('dip-pr-v').textContent=S.practiceScore;
+  document.getElementById('dip-bl-v').textContent=S.blitzScore;
+  var d=new Date();
   document.getElementById('dip-dt').textContent=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('dipov').classList.add('show');
 }
 function closeDip(){document.getElementById('dipov').classList.remove('show');}
 async function dlDip(){
   try{
-    const c=await html2canvas(document.getElementById('dip'),{backgroundColor:'#080808',scale:2,useCORS:true});
-    const a=document.createElement('a');
-    a.download=`Диплом_Gusto_${S.name}.png`;a.href=c.toDataURL('image/png');a.click();
+    var c=await html2canvas(document.getElementById('dip'),{backgroundColor:'#080808',scale:2,useCORS:true});
+    var a=document.createElement('a');
+    a.download='Диплом_Gusto_'+S.name+'.png';
+    a.href=c.toDataURL('image/png');a.click();
   }catch(e){alert('Не удалось сохранить. Попробуйте снова.');}
 }
 
-// ─────────── UTILS ───────────
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
 function flashFx(ok){
-  const el=document.getElementById('flash');
+  var el=document.getElementById('flash');
   el.className='flash '+(ok?'g':'r')+' show';
-  setTimeout(()=>el.classList.remove('show'),400);
-  setTimeout(()=>el.className='flash',700);
+  setTimeout(function(){el.classList.remove('show');},400);
+  setTimeout(function(){el.className='flash';},700);
 }
 function confirmReset(){
-  if(!confirm('Сбросить весь прогресс?'))return;
-  try{localStorage.removeItem('gst3');}catch(e){}
+  if(!confirm('Сбросить весь прогресс и начать заново?'))return;
+  try{localStorage.removeItem('gsto5');}catch(e){}
   location.reload();
 }
+function calcTotal(){
+  var t=0;
+  t+=S.blitzScore*5;
+  t+=S.practiceScore*8;
+  t+=S.examScore*4;
+  if(S.checklistState&&S.checklistState.filter(Boolean).length===CHECKLIST.length)t+=30;
+  if(S.mqAnswered)Object.values(S.mqAnswered).forEach(function(v){if(v.ok)t+=15;});
+  return t;
+}
+function MAX_POINTS(){return LEARN.length*5+LEARN.length*15+10*5+SCENARIOS.length*8+25*4+30;}
 </script>
 </body>
 </html>
