@@ -470,6 +470,7 @@ header,.pnav{
   <div class="pstep" id="ps3" onclick="navTo(3)"><span class="sn">4</span>Экзамен</div>
   <div class="pstep" id="ps4" onclick="navTo(4)"><span class="sn">5</span>Смена</div>
   <div class="pstep" id="ps5" onclick="navTo(5)"><span class="sn">6</span>Культура</div>
+  <div class="pstep" id="ps6" onclick="navTo(6)" style="display:none"><span class="sn">7</span>Результаты</div>
 </div>
 
 <!-- START -->
@@ -595,6 +596,19 @@ header,.pnav{
     <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
   </div>
   <div id="culture-content"></div>
+</div>
+</div>
+
+<!-- ADMIN RESULTS -->
+<div class="screen" id="s-admin">
+<div class="wrap">
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Раздел: <em>Результаты сотрудников</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
+  <div id="admin-content"></div>
 </div>
 </div>
 
@@ -801,6 +815,7 @@ var blitzTimer=null;
 var BLITZ_TIME=25;
 var STORAGE_PREFIX='gsto5_profile_';
 var STORAGE_LAST='gsto5_last_phone';
+var ADMIN_PHONE_RAW='89156286261';
 var activeProfilePhone='';
 
 function normPhone(v){
@@ -817,6 +832,31 @@ function phoneToLabel(digits){
 function profileKey(phoneDigits){
   var d=normPhone(phoneDigits);
   return d?(STORAGE_PREFIX+d):'gsto5';
+}
+function isAdminAccess(){
+  return normPhone(S.phone||'')===normPhone(ADMIN_PHONE_RAW);
+}
+function getAllProfiles(){
+  var profiles=[];
+  try{
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(!k)continue;
+      if(k.indexOf(STORAGE_PREFIX)!==0 && k!=='gsto5')continue;
+      var raw=localStorage.getItem(k);
+      if(!raw)continue;
+      var obj=JSON.parse(raw);
+      if(!obj || !obj.name)continue;
+      var phone=(k.indexOf(STORAGE_PREFIX)===0)?k.slice(STORAGE_PREFIX.length):(obj.phone||'');
+      obj.phone=normPhone(phone||obj.phone||'');
+      profiles.push(obj);
+    }
+  }catch(e){}
+  profiles.sort(function(a,b){
+    var as=(a.completedAt||a.startedAt||0),bs=(b.completedAt||b.startedAt||0);
+    return bs-as;
+  });
+  return profiles;
 }
 function ensureTiming(){
   if(!S.startedAt)S.startedAt=Date.now();
@@ -1787,7 +1827,8 @@ window.onload=function(){
 };
 
 function restorePhase(){
-  if(S.phase===5){showPhase(5);renderCulture();}
+  if(S.phase===6 && isAdminAccess()){showPhase(6);renderAdminDashboard();}
+  else if(S.phase===5){showPhase(5);renderCulture();}
   else if(S.phase===4){showPhase(4);renderChecklist();}
   else if(S.examDone){showPhase(3);goExamResult();}
   else if(S.phase===3){showPhase(3);renderExamQ();}
@@ -1804,19 +1845,21 @@ function showHdr(){
   document.getElementById('bswitch').style.display='';
   document.getElementById('breset').style.display='';
   document.getElementById('pnav').style.display='flex';
+  document.getElementById('ps6').style.display=isAdminAccess()?'':'none';
 }
 
 function updatePS(){
-  var ids=['ps0','ps1','ps2','ps3','ps4','ps5'];
+  var ids=['ps0','ps1','ps2','ps3','ps4','ps5','ps6'];
   ids.forEach(function(id,i){
     var el=document.getElementById(id);
+    if(!el || (id==='ps6' && !isAdminAccess()))return;
     el.className='pstep';
     if(i===S.phase)el.classList.add('active');
     else if(i<S.phase)el.classList.add('done');
   });
 }
 
-var SCREEN_IDS=['s-learn','s-blitz','s-practice','s-exam','s-checklist','s-culture','s-home'];
+var SCREEN_IDS=['s-learn','s-blitz','s-practice','s-exam','s-checklist','s-culture','s-admin','s-home'];
 
 function showPhase(p){
   S.phase=p; save(); updatePS();
@@ -1844,7 +1887,13 @@ function navTo(p){
     S.phase=p;save();updatePS();
     setScreen('s-culture',true);renderCulture();return;
   }
-  var phaseUnlocked=[true, S.learnIdx>=LEARN.length, S.blitzDone, S.practiceDone||S.blitzDone, true, true];
+  if(p===6){
+    if(!isAdminAccess())return;
+    SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    S.phase=p;save();updatePS();
+    setScreen('s-admin',true);renderAdminDashboard();return;
+  }
+  var phaseUnlocked=[true, S.learnIdx>=LEARN.length, S.blitzDone, S.practiceDone||S.blitzDone, true, true, isAdminAccess()];
   if(!phaseUnlocked[p] && p>0){return;}
   SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
   S.phase=p;save();updatePS();
@@ -1997,6 +2046,7 @@ function renderHome(){
     (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
     '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
     '<button class="btn btn-outline" onclick="navTo(5)">🧭 Культура и ценности</button>'+
+    (isAdminAccess()?'<button class="btn btn-outline" onclick="navTo(6)">📊 Результаты сотрудников</button>':'')+
     '</div>';
 
   html+='<div class="lcard" style="margin-top:16px">'+
@@ -2053,6 +2103,61 @@ function renderHome(){
   '</div>';
 
   document.getElementById('home-content').innerHTML=html;
+}
+
+function renderAdminDashboard(){
+  if(!isAdminAccess()){goHome();return;}
+  var data=getAllProfiles();
+  var rows=data.map(function(p,idx){
+    var total=(function(){
+      var t=0;
+      t+=Math.min(p.learnIdx||0,LEARN.length)*5;
+      t+=(p.blitzScore||0)*5;
+      t+=(p.practiceScore||0)*8;
+      t+=(p.examScore||0)*4;
+      if(p.checklistState&&p.checklistState.filter(Boolean).length===CHECKLIST.length)t+=30;
+      if(p.mqAnswered)Object.keys(p.mqAnswered).forEach(function(k){if(p.mqAnswered[k]&&p.mqAnswered[k].ok)t+=15;});
+      return t;
+    })();
+    var status=(p.examDone?'Завершил':'В процессе');
+    var elapsed=(function(){
+      var st=p.startedAt||0,en=p.completedAt||Date.now();
+      return st?fmtDuration(Math.max(0,Math.round((en-st)/1000))):'—';
+    })();
+    return '<tr style="border-bottom:1px solid var(--g3);background:'+(idx%2?'var(--g1)':'var(--g2)')+'">'+
+      '<td style="padding:8px 10px">'+(idx+1)+'</td>'+
+      '<td style="padding:8px 10px"><b>'+escHtml(p.name||'—')+'</b></td>'+
+      '<td style="padding:8px 10px">'+escHtml(phoneToLabel(p.phone||''))+'</td>'+
+      '<td style="padding:8px 10px">'+(p.examScore||0)+'/25</td>'+
+      '<td style="padding:8px 10px">'+total+'/'+MAX_POINTS()+'</td>'+
+      '<td style="padding:8px 10px">'+elapsed+'</td>'+
+      '<td style="padding:8px 10px">'+escHtml(status)+'</td>'+
+      '</tr>';
+  }).join('');
+  var done=data.filter(function(p){return !!p.examDone;}).length;
+  var avg=Math.round((data.reduce(function(s,p){return s+(p.examScore||0);},0)/(data.length||1))*10)/10;
+  var html='<div class="score-tracker">'+
+    '<div class="st-title">👑 Закрытый раздел руководителя</div>'+
+    '<div class="rule">Доступ открыт только для номера <b>'+escHtml(phoneToLabel(ADMIN_PHONE_RAW))+'</b>.</div>'+
+    '<div class="st-bars">'+
+      '<div class="st-row"><span class="st-lbl">Сотрудников</span><span class="st-val" style="width:auto;color:var(--white)">'+data.length+'</span></div>'+
+      '<div class="st-row"><span class="st-lbl">Завершили</span><span class="st-val" style="width:auto;color:var(--green)">'+done+'</span></div>'+
+      '<div class="st-row"><span class="st-lbl">Средний экзамен</span><span class="st-val" style="width:auto;color:var(--gold)">'+avg+'/25</span></div>'+
+    '</div></div>';
+  html+='<div class="lcard"><div class="lcard-body">'+
+    (data.length?'<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:.79rem">'+
+      '<tr style="background:var(--g3)">'+
+      '<td style="padding:8px 10px;font-weight:700">#</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Сотрудник</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Телефон</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Экзамен</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Общий балл</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Время</td>'+
+      '<td style="padding:8px 10px;font-weight:700">Статус</td>'+
+      '</tr>'+rows+'</table></div>'
+      :'<div class="rule">Пока нет сохранённых профилей сотрудников.</div>')+
+    '</div></div>';
+  document.getElementById('admin-content').innerHTML=html;
 }
 
 function openLearnByKeyword(keyword){
@@ -2417,7 +2522,7 @@ function finishExam(){
 
 function goExamResult(){
   showPhase(3);
-  ['s-learn','s-blitz','s-practice','s-checklist','s-culture','s-home'].forEach(function(id){setScreen(id,false);});
+  ['s-learn','s-blitz','s-practice','s-checklist','s-culture','s-admin','s-home'].forEach(function(id){setScreen(id,false);});
   setScreen('s-exam',true);
   var pass=S.examScore>=23;
   if(pass)setTimeout(function(){launchConfettiBurst(96);},180);
