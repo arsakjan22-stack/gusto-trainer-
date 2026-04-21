@@ -793,6 +793,7 @@ function load(){
 
 function calcTotal(){
   var t=0;
+  t += Math.min(S.learnIdx||0,LEARN.length) * 5;
   t += S.blitzScore * 5;
   t += S.practiceScore * 8;
   t += S.examScore * 4;
@@ -1663,6 +1664,8 @@ function restorePhase(){
 }
 
 function showHdr(){
+  var start=document.getElementById('s-start');
+  if(start)start.classList.remove('active');
   document.getElementById('hname').style.display='';
   document.getElementById('hnm').textContent=S.name;
   document.getElementById('breset').style.display='';
@@ -1748,13 +1751,15 @@ function renderHome(){
   var total=calcTotal();
   var maxP=MAX_POINTS();
   var pct=Math.round(total/maxP*100);
+  var learnDone=Math.min(S.learnIdx||0,LEARN.length);
   var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
   var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
 
   var html='<div class="score-tracker">'+
     '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
     '<div class="st-bars">'+
-    stBar('📖 Обучение',mqDone,LEARN.length,'var(--blue)')+
+    stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
+    stBar('🧠 Мини-квизы',mqDone,LEARN.length,'#7ed6ff')+
     stBar('⚡ Блиц',S.blitzScore,10,'var(--gold)')+
     stBar('🎭 Практика',S.practiceScore,SCENARIOS.length,'var(--green)')+
     stBar('📝 Экзамен',S.examScore,25,'var(--red)')+
@@ -1783,7 +1788,37 @@ function renderHome(){
     '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
     '</div>';
 
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🚨</div><div><div class="lcard-chapter">Важно всегда</div><div class="lcard-title">Штрафы и грубые нарушения</div></div></div>'+
+    '<div class="lcard-body">'+
+      '<div class="rule gold"><b>Памятка на каждый день:</b> эти пункты всегда актуальны для смены, звонков и общения с гостями.</div>'+
+      '<div class="steps">'+
+        '<div class="step"><div class="sbadge" style="background:var(--gold);color:#000">300₽</div><div class="scnt"><div class="stitle">Опоздание 1–10 минут</div><div class="sdesc">Даже короткое опоздание перегружает команду в начале смены.</div></div></div>'+
+        '<div class="step"><div class="sbadge" style="background:#e07000;color:#fff">500₽</div><div class="scnt"><div class="stitle">Опоздание от 10 минут / нарушение скрипта приветствия</div><div class="sdesc">Стандарт звонка обязателен: «Ресторан Gusto, оператор [имя], здравствуйте!»</div></div></div>'+
+        '<div class="step"><div class="sbadge" style="background:var(--red);color:#fff">1000₽</div><div class="scnt"><div class="stitle">Критичные сервисные нарушения</div><div class="sdesc">Не предупредил об опоздании доставки, грубость с гостем, нарушение LAST, несоответствие внешнего вида стандарту.</div></div></div>'+
+      '</div>'+
+      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Несовместимо с работой в Gusto</div><div class="co-d">Хищение, ложь гостю, грубость/крик, агрессия в команде, угрозы здоровью из-за нарушения санитарных норм — основания для немедленного увольнения.</div></div></div>'+
+      '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'система штрафов\')">📋 Открыть раздел штрафов</button>'+
+        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'критические нарушения\')">🚨 Открыть критические нарушения</button>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+
   document.getElementById('home-content').innerHTML=html;
+}
+
+function openLearnByKeyword(keyword){
+  var q=(keyword||'').toLowerCase();
+  var idx=-1;
+  for(var i=0;i<LEARN.length;i++){
+    var t=((LEARN[i]&&LEARN[i].title)||'').toLowerCase();
+    if(t.indexOf(q)!==-1){idx=i;break;}
+  }
+  if(idx<0){navTo(0);return;}
+  S.learnIdx=idx;
+  save();
+  navTo(0);
 }
 
 function stBar(lbl,val,max,color){
@@ -1795,8 +1830,11 @@ function stBar(lbl,val,max,color){
 
 function buildShareText(){
   var d=new Date().toLocaleDateString('ru-RU');
+  var learnDone=Math.min(S.learnIdx||0,LEARN.length);
   return 'Сотрудник: '+S.name+'\nДата: '+d+
     '\nОбучение Gusto — Академия сервиса'+
+    '\n\nОбучение: '+learnDone+'/'+LEARN.length+
+    '\nМини-квизы: '+(S.mqAnswered?Object.keys(S.mqAnswered).length:0)+'/'+LEARN.length+
     '\n\nЭкзамен: '+S.examScore+'/25 — '+(S.examScore>=22?'СДАН ✅':'не сдан ❌')+
     '\nПрактика: '+S.practiceScore+'/'+SCENARIOS.length+
     '\nБлиц-тест: '+S.blitzScore+'/10'+
@@ -1804,17 +1842,45 @@ function buildShareText(){
     '\ngusto.ru';
 }
 
-function copyResult(id){
+function copyResult(id,txtOverride){
   var el=document.getElementById(id||'share-txt-h');
-  if(!el)return;
-  var txt=el.textContent;
-  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){alert('Скопировано!');});}
-  else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Скопировано!');}
+  var txt=txtOverride || (el?el.textContent:buildShareText());
+  if(!txt)return;
+  if(navigator.clipboard && window.isSecureContext && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt)
+      .then(function(){alert('Скопировано!');})
+      .catch(function(){legacyCopyResultText(txt);});
+    return;
+  }
+  legacyCopyResultText(txt);
+}
+
+function legacyCopyResultText(txt){
+  try{
+    var ta=document.createElement('textarea');
+    ta.value=txt;
+    ta.setAttribute('readonly','');
+    ta.style.position='fixed';
+    ta.style.left='-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    var ok=document.execCommand('copy');
+    document.body.removeChild(ta);
+    if(ok) alert('Скопировано!');
+    else alert('Не удалось скопировать автоматически. Скопируй текст вручную из блока результата.');
+  }catch(e){
+    alert('Не удалось скопировать автоматически. Скопируй текст вручную из блока результата.');
+  }
 }
 function shareResult(){
   var txt=buildShareText();
-  if(navigator.share){navigator.share({title:'Результат обучения Gusto',text:txt}).catch(function(){});}
-  else copyResult('share-txt-h');
+  if(navigator.share){
+    navigator.share({title:'Результат обучения Gusto',text:txt})
+      .catch(function(){copyResult(null,txt);});
+  }else{
+    copyResult(null,txt);
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -2172,6 +2238,7 @@ function confirmReset(){
 }
 function calcTotal(){
   var t=0;
+  t+=Math.min(S.learnIdx||0,LEARN.length)*5;
   t+=S.blitzScore*5;
   t+=S.practiceScore*8;
   t+=S.examScore*4;
