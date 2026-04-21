@@ -818,8 +818,13 @@ var STORAGE_PREFIX='gsto5_profile_';
 var STORAGE_LAST='gsto5_last_phone';
 var ADMIN_PHONE_RAW='89156286261';
 var activeProfilePhone='';
-var SUPABASE_URL='PASTE_SUPABASE_URL_HERE';
-var SUPABASE_ANON_KEY='PASTE_SUPABASE_ANON_KEY_HERE';
+// ========================= SUPABASE CONFIG =========================
+// Вставь сюда данные из Supabase Project Settings -> API:
+// 1) Project URL
+// 2) anon public key
+var SUPABASE_URL='https://xksofpzmdhtxfuiekxdg.supabase.co';
+var SUPABASE_ANON_KEY='sb_publishable_-ahuAk80tdO-QT_pdkOQPg_QlZqfH8M';
+// ==================================================================
 var sbClient=null;
 var cloudReady=false;
 var cloudSaveTimer=null;
