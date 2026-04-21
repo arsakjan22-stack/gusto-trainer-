@@ -29,9 +29,20 @@ body{
 @keyframes ptdrift{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-80px) scale(1.5) rotate(720deg);opacity:0}}
 
 header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
-.logo{display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:5px;}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:5px;line-height:1;white-space:nowrap;}
 .logo-icon{animation:spin 10s linear infinite;display:inline-block;font-size:1.4rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
+.logo-word{
+  font-family:'Sora',sans-serif;
+  font-weight:800;
+  letter-spacing:4px;
+  background:linear-gradient(92deg,#ffffff 0%,#ffe9df 35%,#ff6f52 70%,#ff3a2e 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 0 26px rgba(255,58,46,.22);
+}
+.logo-word b{color:#ffffff;-webkit-text-fill-color:#ffffff;}
 .logo em{color:var(--red);font-style:normal;}
 .hdr-r{display:flex;align-items:center;gap:12px;}
 .hdr-name{font-size:.72rem;color:var(--muted);letter-spacing:1px;}
@@ -450,7 +461,7 @@ header,.pnav{
 .msg-meta{display:flex;justify-content:space-between;gap:10px;font-size:.68rem;color:var(--muted);margin-bottom:4px;}
 .msg-meta b{color:var(--white);}
 .msg-text{font-size:.86rem;line-height:1.55;white-space:pre-wrap;word-break:break-word;}
-.msg-actions{display:flex;justify-content:flex-end;margin-top:6px;}
+.msg-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:6px;}
 .chat-composer{display:flex;gap:8px;align-items:flex-end;}
 .chat-input{
   flex:1;min-height:78px;max-height:148px;resize:vertical;
@@ -501,22 +512,57 @@ header,.pnav{
   body{cursor:none;}
 }
 @media(max-width:520px){
+  header{
+    height:auto;
+    min-height:64px;
+    padding:8px 10px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:8px;
+  }
+  .logo{font-size:1.12rem;letter-spacing:2px;gap:6px;}
+  .logo-icon{font-size:1.1rem;}
+  .logo-word{letter-spacing:2px;}
+  .hdr-r{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    width:100%;
+    min-width:0;
+  }
+  .hdr-name{display:none!important;}
+  .btn-xs{
+    font-size:.56rem;
+    letter-spacing:.4px;
+    text-decoration:none;
+    border:1px solid var(--g4);
+    border-radius:8px;
+    padding:6px 5px;
+    white-space:nowrap;
+    text-transform:none;
+    line-height:1.05;
+  }
   .pnav{
     display:grid!important;
     grid-template-columns:repeat(4,minmax(0,1fr));
     overflow:visible;
+    top:74px;
   }
   .pstep{
     min-width:0;
-    padding:10px 6px;
-    font-size:.52rem;
-    line-height:1.2;
+    padding:9px 4px;
+    font-size:.49rem;
+    line-height:1.1;
     white-space:normal;
+    word-break:break-word;
+    text-wrap:balance;
     border-right:1px solid var(--g3);
     border-bottom:1px solid var(--g3);
     flex-direction:column;
-    gap:3px;
-    letter-spacing:.7px;
+    gap:4px;
+    letter-spacing:.2px;
+    min-height:52px;
   }
   .pstep:nth-child(4n){border-right:none;}
   .pstep .sn{margin:0 auto;}
@@ -528,6 +574,13 @@ header,.pnav{
   .nform{flex-direction:column;}
   .results-grid{grid-template-columns:1fr 1fr;}
   .msg-bubble{max-width:92%;}
+  .msg-actions .btn-sm{padding:7px 10px;font-size:.56rem;letter-spacing:.6px;}
+  .chat-composer{display:block;}
+  .chat-input{width:100%;min-height:86px;max-height:180px;margin-bottom:8px;}
+  .chat-search{width:100%;}
+  .chat-toolbar{flex-direction:column;align-items:stretch;}
+  .chat-toolbar .btn{width:100%;justify-content:center;}
+  .chat-composer .btn{width:100%;justify-content:center;}
   #dip{padding:28px 20px;}
   .dip-logo{font-size:1.5rem;letter-spacing:4px;}
   .dip-name{font-size:1.35rem;}
@@ -549,7 +602,7 @@ header,.pnav{
 <div class="flash" id="flash"></div>
 
 <header>
-  <div class="logo"><span class="logo-icon">🍕</span>GUST<em>O</em></div>
+  <div class="logo"><span class="logo-icon">🍕</span><span class="logo-word"><b>GU</b>STO</span></div>
   <div class="hdr-r">
     <div class="hdr-name" id="hname" style="display:none">Привет, <b id="hnm"></b></div>
     <button class="btn-xs" id="bswitch" style="display:none" onclick="switchProfile()">Сменить аккаунт</button>
@@ -573,7 +626,7 @@ header,.pnav{
 <div class="screen active" id="s-start">
 <div class="wrap">
 <div class="start-hero">
-  <div class="kicker">🍕 Gusto · Академия сервиса · Рязань</div>
+  <div class="kicker">🍕 Gusto · Академия сервиса</div>
   <h1 class="sh1">СТАНЬ МАСТЕРОМ<span class="l2">СЕРВИСА</span></h1>
   <p class="ssub">Полный курс обучения бармена-диспетчера пиццерии Gusto. 6 разделов · 8 тем · 15 сценариев · именной диплом.</p>
   <div class="jgrid">
@@ -740,7 +793,7 @@ header,.pnav{
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto;width:100%">
     <div id="dip">
       <div class="dip-logo">GUST<em>O</em> 🍕</div>
-      <div class="dip-tag">gusto.ru · Академия сервиса · Рязань</div>
+      <div class="dip-tag">gusto.ru · Академия сервиса</div>
       <div class="dip-div"></div>
       <div class="dip-cert">НАСТОЯЩИЙ СЕРТИФИКАТ ПОДТВЕРЖДАЕТ, ЧТО</div>
       <div class="dip-name" id="dip-nm"></div>
