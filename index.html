@@ -2583,160 +2583,60 @@ async function startGame(){
 // HOME DASHBOARD
 // ═══════════════════════════════════════════
 function renderHome(){
+  var host=document.getElementById('home-content');
+  if(!host)return;
   try{
-  var total=calcTotal();
-  var maxP=MAX_POINTS();
-  var pct=Math.round(total/maxP*100);
-  var learnDone=Math.min(S.learnIdx||0,LEARN.length);
-  var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
-  var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
-  var recentMistakes=(S.mistakes||[]).slice(0,8);
-  var spent=fmtDuration(elapsedSec());
-  var role=S.role||'Сотрудник';
-  var modesHtml='<div class="mode-pills">'+
-    '<span class="mode-pill"><b>Режим 1:</b> Обучение</span>'+
-    '<span class="mode-pill"><b>Режим 2:</b> Оценка</span>'+
-    '<span class="mode-pill"><b>Режим 3:</b> Командный контур</span>'+
-  '</div>';
-  var cmp=competencySnapshot();
-  var cmpHtml='<div class="cmpx">'+cmp.map(function(c){
-    return '<div class="cmpx-item"><div class="cmpx-title">'+escHtml(c.title)+'</div><div class="cmpx-score" style="color:'+(c.score>=70?'var(--green)':c.score>=50?'var(--gold)':'var(--red)')+'">'+c.score+'%</div><div class="cmpx-sub">'+escHtml(competencyLevel(c.score))+' · '+escHtml(c.hint)+'</div></div>';
-  }).join('')+'</div>';
-  var improvePlan=(function(){
-    var arr=cmp.slice().sort(function(a,b){return a.score-b.score;}).slice(0,2);
-    return arr.map(function(c){
+    ensureStateShape();
+    var total=calcTotal();
+    var maxP=MAX_POINTS();
+    var pct=Math.round(total/maxP*100);
+    var learnDone=Math.min(S.learnIdx||0,LEARN.length);
+    var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
+    var clState=Array.isArray(S.checklistState)?S.checklistState:[];
+    var clDone=clState.filter(Boolean).length;
+    var role=S.role||'Сотрудник';
+    var spent=fmtDuration(elapsedSec());
+    var cmp=competencySnapshot();
+    var weakest=cmp.slice().sort(function(a,b){return a.score-b.score;}).slice(0,2);
+    var improveButtons=weakest.map(function(c){
       var key='сервис';
       if(c.title==='Скорость')key='блиц';
       else if(c.title==='Скрипт')key='скрипт';
       else if(c.title==='Командность')key='критические нарушения';
       return '<button class="btn btn-outline btn-sm" onclick="openLearnByKeywordSafe(\''+encodeURIComponent(key)+'\')">Прокачать: '+escHtml(c.title)+'</button>';
     }).join('');
-  })();
+    var cmpHtml=cmp.map(function(c){
+      var color=c.score>=70?'var(--green)':c.score>=50?'var(--gold)':'var(--red)';
+      return '<div class="cmpx-item"><div class="cmpx-title">'+escHtml(c.title)+'</div><div class="cmpx-score" style="color:'+color+'">'+c.score+'%</div><div class="cmpx-sub">'+escHtml(competencyLevel(c.score))+' · '+escHtml(c.hint)+'</div></div>';
+    }).join('');
+    var recentMistakes=(Array.isArray(S.mistakes)?S.mistakes:[]).slice(0,3).map(function(m){
+      return '<div class="rule"><b>'+escHtml(shortTxt(m.q||'Вопрос',90))+'</b><br><span style="color:#ff9a9a">Твой ответ:</span> '+escHtml(shortTxt(m.userAnswer||'—',70))+'<br><span style="color:#80ffcc">Правильно:</span> '+escHtml(shortTxt(m.rightAnswer||'—',70))+'</div>';
+    }).join('');
 
-  var html='<div class="lcard" style="margin-bottom:14px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">👤</div><div><div class="lcard-chapter">Личный кабинет</div><div class="lcard-title">'+escHtml(S.name||'Сотрудник')+'</div></div></div>'+
-    '<div class="lcard-body"><div class="rule">Роль: <b>'+escHtml(role)+'</b> · Телефон: <b>'+escHtml(phoneToLabel(S.phone||''))+'</b> · Город: <b>'+escHtml(S.city||'—')+'</b> · Время в обучении: <b>'+spent+'</b>'+(S.completedAt?' · Статус: <b style="color:var(--green)">завершено</b>':' · Статус: <b style="color:var(--gold)">в процессе</b>')+'</div>'+modesHtml+'</div>'+
-  '</div>';
-
-  html+='<div class="score-tracker">'+
-    '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
-    '<div class="st-bars">'+
-    stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
-    stBar('🧠 Мини-квизы',mqDone,LEARN.length,'#7ed6ff')+
-    stBar('⚡ Блиц',S.blitzScore,10,'var(--gold)')+
-    stBar('🎭 Практика',S.practiceScore,SCENARIOS.length,'var(--green)')+
-    stBar('📝 Экзамен',S.examScore,25,'var(--red)')+
-    stBar('📋 Смена',clDone,CHECKLIST.length,'#c060ff')+
+    var html='';
+    html+='<div class="lcard" style="margin-bottom:12px"><div class="lcard-body">'+
+      '<div class="rule">Роль: <b>'+escHtml(role)+'</b> · Телефон: <b>'+escHtml(phoneToLabel(S.phone||''))+'</b> · Город: <b>'+escHtml(S.city||'—')+'</b> · Время: <b>'+spent+'</b></div>'+
+      '<div class="mode-pills"><span class="mode-pill"><b>Режим 1:</b> Обучение</span><span class="mode-pill"><b>Режим 2:</b> Оценка</span><span class="mode-pill"><b>Режим 3:</b> Команда</span></div>'+
     '</div></div>';
-
-  html+='<div class="lcard" style="margin-top:14px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧠</div><div><div class="lcard-chapter">Компетенции</div><div class="lcard-title">Карта мастерства</div></div></div>'+
-    '<div class="lcard-body"><div class="rule">Оценка по модели 70-20-10: теория, практика и поведение в смене.</div>'+cmpHtml+
-    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+improvePlan+'</div></div>'+
-  '</div>';
-
-  html+='<div class="results-grid">'+
-    '<div class="res-box"><div class="res-num" style="color:var(--gold)">'+S.blitzScore+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="res-lbl">Блиц-тест</div></div>'+
-    '<div class="res-box"><div class="res-num" style="color:var(--green)">'+S.practiceScore+'<span style="font-size:1rem;color:var(--muted)">/'+SCENARIOS.length+'</span></div><div class="res-lbl">Практика</div></div>'+
-    '<div class="res-box"><div class="res-num" style="color:var(--red)">'+S.examScore+'<span style="font-size:1rem;color:var(--muted)">/25</span></div><div class="res-lbl">Экзамен</div></div>'+
+    html+='<div class="score-tracker"><div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' ('+pct+'%)</div><div class="st-bars">'+
+      stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
+      stBar('🧠 Мини-квизы',mqDone,LEARN.length,'#7ed6ff')+
+      stBar('⚡ Блиц',S.blitzScore||0,10,'var(--gold)')+
+      stBar('🎭 Практика',S.practiceScore||0,SCENARIOS.length,'var(--green)')+
+      stBar('📝 Экзамен',S.examScore||0,25,'var(--red)')+
+      stBar('📋 Смена',clDone,CHECKLIST.length,'#c060ff')+
+    '</div></div>';
+    html+='<div class="lcard" style="margin-top:12px"><div class="lcard-body"><div class="rule">Карта компетенций (модель 70-20-10)</div><div class="cmpx">'+cmpHtml+'</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+improveButtons+'</div></div></div>';
+    html+='<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn btn-red" onclick="navTo(0)">📖 Обучение</button>'+
+      '<button class="btn btn-outline" onclick="navTo(6)">🏆 Рейтинг</button>'+
+      '<button class="btn btn-outline" onclick="navTo(7)">💬 Команда</button>'+
+      '<button class="btn btn-outline" onclick="navTo(8)">✉️ Основателю</button>'+
     '</div>';
-
-  html+='<div style="margin-top:8px"><div class="share-box">'+
-    '<div class="share-lbl">📤 Отправить руководителю</div>'+
-    '<div class="share-txt" id="share-txt-h">'+buildShareText()+'</div>'+
-    '<div class="share-acts">'+
-    '<button class="btn btn-outline btn-sm" onclick="copyResult(\'share-txt-h\')">📋 Скопировать</button>'+
-    '<button class="btn btn-outline btn-sm" onclick="shareResult()">📤 Поделиться</button>'+
-    '</div></div></div>';
-
-  html+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">'+
-    '<button class="btn btn-red" onclick="navTo(0)">📖 Режим: обучение</button>'+
-    (S.blitzDone?'<button class="btn btn-outline" onclick="navTo(1)">⚡ Повторить блиц</button>':'')+
-    (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
-    (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
-    '<button class="btn btn-outline" onclick="navTo(4)">📋 Режим: смена</button>'+
-    '<button class="btn btn-outline" onclick="navTo(6)">🏆 Режим: рейтинг</button>'+
-    '<button class="btn btn-outline" onclick="navTo(7)">💬 Режим: команда</button>'+
-    '<button class="btn btn-outline" onclick="navTo(8)">✉️ Основателю</button>'+
-    '</div>';
-
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🚨</div><div><div class="lcard-chapter">Важно всегда</div><div class="lcard-title">Штрафы и грубые нарушения</div></div></div>'+
-    '<div class="lcard-body">'+
-      '<div class="rule gold"><b>Памятка на каждый день:</b> используем формат «стандарт → риск → правильное действие», чтобы не просто избегать ошибок, а управлять качеством сервиса.</div>'+
-      '<div class="steps">'+
-        '<div class="step"><div class="sbadge" style="background:var(--gold);color:#000">300₽</div><div class="scnt"><div class="stitle">Опоздание 1–10 минут</div><div class="sdesc"><b>Стандарт:</b> приход заранее. <b>Риск:</b> перегруз старта смены. <b>Действие:</b> предупреди и передай план подхвата.</div></div></div>'+
-        '<div class="step"><div class="sbadge" style="background:#e07000;color:#fff">500₽</div><div class="scnt"><div class="stitle">Опоздание от 10 минут / нарушение приветствия</div><div class="sdesc"><b>Стандарт:</b> «Ресторан Gusto, оператор [имя], здравствуйте!». <b>Риск:</b> падение доверия гостя. <b>Действие:</b> вернись в скрипт и закрепи в тренировке.</div></div></div>'+
-        '<div class="step"><div class="sbadge" style="background:var(--red);color:#fff">1000₽</div><div class="scnt"><div class="stitle">Критичные сервисные нарушения</div><div class="sdesc"><b>Стандарт:</b> прозрачная коммуникация и LAST. <b>Риск:</b> потеря гостя и репутации. <b>Действие:</b> эскалация менеджеру и немедленное исправление.</div></div></div>'+
-      '</div>'+
-      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Несовместимо с работой в Gusto</div><div class="co-d">Хищение, ложь гостю, грубость/крик, агрессия в команде, угрозы здоровью из-за нарушения санитарных норм — основания для немедленного увольнения.</div></div></div>'+
-      '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
-        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'система штрафов\')">📋 Открыть раздел штрафов</button>'+
-        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'критические нарушения\')">🚨 Открыть критические нарушения</button>'+
-      '</div>'+
-    '</div>'+
-  '</div>';
-
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🛠</div><div><div class="lcard-chapter">Персонально</div><div class="lcard-title">Работа над ошибками</div></div></div>'+
-    '<div class="lcard-body">'+
-      (recentMistakes.length
-        ?'<div class="rule">Показываем последние ошибки и даём короткий путь восстановления навыка: разбор → повтор темы → закрепление.</div>'+
-         '<div class="steps">'+
-         recentMistakes.map(function(m){
-            return '<div class="step"><div class="sbadge" style="background:var(--g3);color:var(--white)">'+escHtml(m.stage||'Тест')+'</div><div class="scnt">'+
-             '<div class="stitle">'+escHtml(shortTxt(m.q||'Вопрос',120))+'</div>'+
-             '<div class="sdesc"><b style="color:#ff9a9a">Твой ответ:</b> '+escHtml(shortTxt(m.userAnswer||'—',90))+'<br>'+
-             '<b style="color:#80ffcc">Как правильно:</b> '+escHtml(shortTxt(m.rightAnswer||'—',90))+'<br>'+
-             '<span style="color:var(--muted)">'+escHtml(shortTxt(m.explain||'',180))+'</span></div></div></div>';
-          }).join('')+
-         '</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline btn-sm" onclick="clearMistakes()">Очистить список ошибок</button><button class="btn btn-outline btn-sm" onclick="navTo(1)">Повторить блиц</button><button class="btn btn-outline btn-sm" onclick="navTo(2)">Повторить практику</button></div>'
-        :'<div class="rule green">Пока ошибок не зафиксировано. Отличная работа! Когда появятся неверные ответы, тут будет персональный разбор.</div>')+
-    '</div>'+
-  '</div>';
-
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div></div>'+
-    '<div class="lcard-body">'+
-      '<div class="rule gold"><b>Бонусная карта:</b> копите бонусы, оплачивайте ими до 50% заказа и участвуйте в акциях. <b>1 бонус = 1 ₽.</b></div>'+
-      '<div class="rule"><b>Вход:</b> бонусы и статусы начисляются только для авторизованного клиента по его номеру.</div>'+
-      '<div class="ls"><div class="ls-title">Гибкая накопительная система (за последние 30 дней)</div>'+
-      '<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;border:1px solid var(--g3);font-size:.8rem">'+
-        '<tr style="background:var(--g3)"><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Процент накоплений</td><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Диапазон сумм</td></tr>'+
-        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--blue);font-weight:700">2%</td><td style="padding:8px 12px">0 ₽ – 2 999 ₽</td></tr>'+
-        '<tr style="border-bottom:1px solid var(--g3);background:var(--g1)"><td style="padding:8px 12px;color:var(--green);font-weight:700">3%</td><td style="padding:8px 12px">3 000 ₽ – 4 999 ₽</td></tr>'+
-        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--gold);font-weight:700">5%</td><td style="padding:8px 12px">5 000 ₽ – 7 999 ₽</td></tr>'+
-        '<tr style="background:var(--g1)"><td style="padding:8px 12px;color:var(--red);font-weight:900">7%</td><td style="padding:8px 12px">8 000 ₽ и выше</td></tr>'+
-      '</table></div></div>'+
-      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
-      '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
-    '</div>'+
-  '</div>';
-
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div></div>'+
-    '<div class="lcard-body">'+
-      '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
-      '<div class="steps">'+
-        '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Гость и команда — всегда в тоне уважения, без грубости и формального отношения.</div></div></div>'+
-        '<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">Ответственность</div><div class="sdesc">Ошибку не прячем — быстро исправляем, предупреждаем риски и доводим до результата.</div></div></div>'+
-        '<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">Честность</div><div class="sdesc">Никаких ложных обещаний и махинаций. Доверие гостя дороже одной продажи.</div></div></div>'+
-        '<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">Командность</div><div class="sdesc">Сильный сотрудник усиливает смену: помогает, подхватывает, не оставляет коллегу одного.</div></div></div>'+
-        '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — шаг в мастерство: анализируем ошибки и поднимаем стандарт сервиса.</div></div></div>'+
-      '</div>'+
-      '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
-    '</div>'+
-  '</div>';
-
-  document.getElementById('home-content').innerHTML=html;
+    html+='<div class="lcard" style="margin-top:12px"><div class="lcard-body"><div class="rule gold"><b>Работа над ошибками</b> — короткий персональный разбор.</div>'+(recentMistakes||'<div class="rule green">Пока ошибок нет. Отличная динамика.</div>')+'</div></div>';
+    host.innerHTML=html;
   }catch(e){
-    document.getElementById('home-content').innerHTML=
-      '<div class="lcard"><div class="lcard-body"><div class="rule">Не удалось отрисовать расширенную главную. Переключили безопасный режим отображения.</div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'+
-      '<button class="btn btn-red" onclick="navTo(0)">К обучению</button>'+
-      '<button class="btn btn-outline" onclick="navTo(6)">Рейтинг</button>'+
-      '<button class="btn btn-outline" onclick="navTo(7)">Чат</button>'+
-      '</div></div></div>';
+    host.innerHTML='<div class="lcard"><div class="lcard-body"><div class="rule">Главная временно в безопасном режиме.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-red" onclick="navTo(0)">К обучению</button><button class="btn btn-outline" onclick="navTo(6)">Рейтинг</button><button class="btn btn-outline" onclick="navTo(7)">Чат</button></div></div></div>';
   }
 }
 
