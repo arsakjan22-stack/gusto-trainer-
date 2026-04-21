@@ -68,7 +68,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-
 .jcard .ji{font-size:1.5rem;margin-bottom:8px;display:block;}
 .jcard h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.74rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
 .jcard p{font-size:.72rem;color:var(--muted);line-height:1.5;}
-.nform{display:flex;gap:10px;max-width:440px;margin:0 auto;}
+.nform{display:flex;gap:10px;max-width:760px;margin:0 auto;}
 .ninp{flex:1;background:var(--g2);border:none;border-bottom:2px solid var(--red);color:var(--white);padding:13px 16px;font-family:'Manrope',sans-serif;font-size:1rem;outline:none;}
 .ninp::placeholder{color:var(--muted);}
 
@@ -458,6 +458,7 @@ header,.pnav{
   <div class="logo"><span class="logo-icon">🍕</span>GUST<em>O</em></div>
   <div class="hdr-r">
     <div class="hdr-name" id="hname" style="display:none">Привет, <b id="hnm"></b></div>
+    <button class="btn-xs" id="bswitch" style="display:none" onclick="switchProfile()">Сменить аккаунт</button>
     <button class="btn-xs" id="breset" style="display:none" onclick="confirmReset()">↺ Сбросить</button>
   </div>
 </header>
@@ -468,6 +469,7 @@ header,.pnav{
   <div class="pstep" id="ps2" onclick="navTo(2)"><span class="sn">3</span>Практика</div>
   <div class="pstep" id="ps3" onclick="navTo(3)"><span class="sn">4</span>Экзамен</div>
   <div class="pstep" id="ps4" onclick="navTo(4)"><span class="sn">5</span>Смена</div>
+  <div class="pstep" id="ps5" onclick="navTo(5)"><span class="sn">6</span>Культура</div>
 </div>
 
 <!-- START -->
@@ -476,7 +478,7 @@ header,.pnav{
 <div class="start-hero">
   <div class="kicker">🍕 Gusto · Академия сервиса · Рязань</div>
   <h1 class="sh1">СТАНЬ МАСТЕРОМ<span class="l2">СЕРВИСА</span></h1>
-  <p class="ssub">Полный курс обучения бармена-диспетчера пиццерии Gusto. 5 фаз · 8 тем · 15 сценариев · именной диплом.</p>
+  <p class="ssub">Полный курс обучения бармена-диспетчера пиццерии Gusto. 6 разделов · 8 тем · 15 сценариев · именной диплом.</p>
   <div class="jgrid">
     <div class="jcard" data-n="01"><span class="ji">📖</span><h3>Обучение</h3><p>8 тем с примерами, сравнениями и мини-квизами</p></div>
     <div class="jcard" data-n="02"><span class="ji">⚡</span><h3>Блиц</h3><p>10 вопросов с таймером — проверь знания перед практикой</p></div>
@@ -484,6 +486,7 @@ header,.pnav{
   </div>
   <div class="nform">
     <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false"/>
+    <input class="ninp" id="pninp" type="tel" placeholder="Номер телефона (без SMS)" maxlength="18" autocorrect="off" autocapitalize="off" autocomplete="tel" spellcheck="false"/>
     <button class="btn btn-red" id="btn-start" type="button">НАЧАТЬ →</button>
   </div>
 </div>
@@ -552,7 +555,7 @@ header,.pnav{
     <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
   </div>
   <div class="pbar-wrap">
-    <div class="pbar-meta"><span class="pbar-lbl">Вопрос</span><span class="pbar-cnt"><b id="ec">1</b> / <b id="et">26</b></span></div>
+    <div class="pbar-meta"><span class="pbar-lbl">Вопрос</span><span class="pbar-cnt"><b id="ec">1</b> / <b id="et">25</b></span></div>
     <div class="pbar-track"><div class="pbar-fill" id="efill" style="width:0%"></div></div>
   </div>
   <div id="exam-content"></div>
@@ -582,6 +585,19 @@ header,.pnav{
 </div>
 </div>
 
+<!-- COMPANY CULTURE -->
+<div class="screen" id="s-culture">
+<div class="wrap">
+  <div class="back-nav">
+    <div class="back-nav-left">
+      <div class="shead" style="margin:0"><h2>Культура: <em>ДНК Gusto</em></h2></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>
+  </div>
+  <div id="culture-content"></div>
+</div>
+</div>
+
 <!-- DIPLOMA -->
 <div id="dipov">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto;width:100%">
@@ -594,12 +610,14 @@ header,.pnav{
       <div class="dip-stars">★ ★ ★</div>
       <div class="dip-body">успешно прошёл(а) полный курс обучения<br>и квалификационную аттестацию по стандартам<br>пиццерии <b>GUSTO</b></div>
       <div class="dip-sc">Результат: <b id="dip-sc-v"></b>/25 · Практика: <b id="dip-pr-v"></b>/15 · Блиц: <b id="dip-bl-v"></b>/10</div>
+      <div class="dip-sc">Общий балл: <b id="dip-total-v"></b> / <b id="dip-max-v"></b> · Время: <b id="dip-time-v"></b></div>
       <div class="dip-div"></div>
       <div class="dip-sign">ИП Кошкарян &nbsp;·&nbsp; Пиццерия Gusto &nbsp;·&nbsp; gusto.ru</div>
       <div class="dip-sign" id="dip-dt" style="margin-top:4px;"></div>
     </div>
     <div class="dip-acts">
       <button class="btn btn-red" onclick="dlDip()">⬇ Скачать PNG</button>
+      <button class="btn btn-outline" onclick="shareDip()">📤 Передать</button>
       <button class="btn btn-outline" onclick="closeDip()">Закрыть</button>
     </div>
   </div>
@@ -765,22 +783,118 @@ function launchConfettiBurst(count){
 // STATE
 // ═══════════════════════════════════════════
 var S={
-  name:'', phase:0,
+  name:'', phone:'', phase:0,
   learnIdx:0,
   blitzIdx:0, blitzScore:0, blitzQ:[], blitzDone:false,
   practiceIdx:0, practiceScore:0, practiceDone:false,
   examIdx:0, examScore:0, examDone:false,
   checklistState:[],
   mqAnswered:{},
+  mistakes:[],
+  startedAt:0,
+  completedAt:0,
   totalPoints:0
 };
 var MQ_EXP={};
+var MQ_META={};
 var blitzTimer=null;
+var BLITZ_TIME=25;
+var STORAGE_PREFIX='gsto5_profile_';
+var STORAGE_LAST='gsto5_last_phone';
+var activeProfilePhone='';
 
-function save(){try{localStorage.setItem('gsto5',JSON.stringify(S));}catch(e){}}
+function normPhone(v){
+  var digits=String(v||'').replace(/\D/g,'');
+  if(digits.length===11 && digits[0]==='8')digits='7'+digits.slice(1);
+  return digits;
+}
+function phoneToLabel(digits){
+  var d=normPhone(digits);
+  if(!d)return '';
+  if(d.length===11 && d[0]==='7')return '+7 ('+d.slice(1,4)+') '+d.slice(4,7)+'-'+d.slice(7,9)+'-'+d.slice(9,11);
+  return '+'+d;
+}
+function profileKey(phoneDigits){
+  var d=normPhone(phoneDigits);
+  return d?(STORAGE_PREFIX+d):'gsto5';
+}
+function ensureTiming(){
+  if(!S.startedAt)S.startedAt=Date.now();
+}
+function save(){
+  try{
+    var d=normPhone(S.phone||activeProfilePhone);
+    if(d){S.phone=d;activeProfilePhone=d;localStorage.setItem(STORAGE_LAST,d);}
+    ensureTiming();
+    localStorage.setItem(profileKey(d),JSON.stringify(S));
+  }catch(e){}
+}
+function loadByPhone(phoneDigits){
+  var d=normPhone(phoneDigits);
+  if(!d)return false;
+  try{
+    var r=localStorage.getItem(profileKey(d));
+    if(r){
+      S=JSON.parse(r);
+      S.phone=d;
+      activeProfilePhone=d;
+      localStorage.setItem(STORAGE_LAST,d);
+      ensureTiming();
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
 function load(){
-  try{var r=localStorage.getItem('gsto5');if(r){S=JSON.parse(r);return true;}}
-  catch(e){}return false;
+  try{
+    var last=localStorage.getItem(STORAGE_LAST);
+    if(last && loadByPhone(last))return true;
+    var legacy=localStorage.getItem('gsto5');
+    if(legacy){
+      S=JSON.parse(legacy);
+      ensureTiming();
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+function elapsedSec(){
+  if(!S.startedAt)return 0;
+  var end=S.completedAt||Date.now();
+  return Math.max(0,Math.round((end-S.startedAt)/1000));
+}
+function fmtDuration(totalSec){
+  var s=Math.max(0,totalSec||0);
+  var h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  if(h>0)return h+' ч '+m+' мин';
+  if(m>0)return m+' мин '+sec+' сек';
+  return sec+' сек';
+}
+
+function logMistake(stage,q,userAnswer,rightAnswer,explain,key){
+  if(!S.mistakes)S.mistakes=[];
+  var item={
+    stage:stage||'Тест',
+    q:q||'Вопрос',
+    userAnswer:userAnswer||'—',
+    rightAnswer:rightAnswer||'—',
+    explain:explain||'Повтори тему и попробуй ещё раз.',
+    ts:Date.now()
+  };
+  if(key){
+    for(var i=0;i<S.mistakes.length;i++){
+      if(S.mistakes[i] && S.mistakes[i].key===key){
+        item.key=key;
+        S.mistakes[i]=item;
+        save();
+        return;
+      }
+    }
+    item.key=key;
+  }
+  S.mistakes.unshift(item);
+  if(S.mistakes.length>30)S.mistakes=S.mistakes.slice(0,30);
+  save();
 }
 
 // SCORE SYSTEM
@@ -812,6 +926,7 @@ function MAX_POINTS(){ return 8*5 + 8*15 + 10*5 + 15*8 + 25*4 + 30; } // 40+120+
 // ═══════════════════════════════════════════
 function renderMQ(id, q, opts, correct, exp){
   MQ_EXP[id]=exp;
+  MQ_META[id]={q:q,opts:opts,correct:correct,exp:exp};
   var done=S.mqAnswered&&S.mqAnswered[id];
   var L=['А','Б','В','Г'];
   var html='<div class="mquiz" id="mq-'+id+'"><div class="mquiz-q">🤔 Проверь себя: '+q+'</div><div class="mquiz-opts" id="mqo-'+id+'">';
@@ -828,6 +943,18 @@ function answerMQ(id,chose,correct){
   if(!S.mqAnswered) S.mqAnswered={};
   var ok=(chose===correct);
   S.mqAnswered[id]={chose:chose,ok:ok};
+  if(!ok){
+    var meta=MQ_META[id]||{};
+    var opts=meta.opts||[];
+    logMistake(
+      'Мини-квиз',
+      meta.q||('Вопрос '+id),
+      opts[chose]||'Неверный вариант',
+      opts[correct]||'Правильный вариант',
+      meta.exp||'Повтори тему и попробуй ещё раз.',
+      'mq:'+id
+    );
+  }
   save();
   var c=document.getElementById('mqo-'+id);
   if(!c) return;
@@ -1639,15 +1766,20 @@ var CHECKLIST=[
 // ═══════════════════════════════════════════
 window.onload=function(){
   var inp=document.getElementById('ninp');
+  var pinp=document.getElementById('pninp');
   var btn=document.getElementById('btn-start');
   function onStart(e){e.preventDefault();startGame();}
   btn.addEventListener('click',onStart);
   btn.addEventListener('touchend',onStart);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){inp.blur();startGame();}});
+  pinp.addEventListener('keydown',function(e){if(e.key==='Enter'){pinp.blur();startGame();}});
   if(load()&&S.name){
     if(!S.mqAnswered) S.mqAnswered={};
     if(!S.checklistState) S.checklistState=[];
     if(!S.blitzQ) S.blitzQ=[];
+    if(!S.mistakes) S.mistakes=[];
+    if(pinp && S.phone)pinp.value=phoneToLabel(S.phone);
+    if(inp && S.name)inp.value=S.name;
     showHdr();
     restorePhase();
   }
@@ -1655,7 +1787,8 @@ window.onload=function(){
 };
 
 function restorePhase(){
-  if(S.phase===4){showPhase(4);renderChecklist();}
+  if(S.phase===5){showPhase(5);renderCulture();}
+  else if(S.phase===4){showPhase(4);renderChecklist();}
   else if(S.examDone){showPhase(3);goExamResult();}
   else if(S.phase===3){showPhase(3);renderExamQ();}
   else if(S.phase===2){showPhase(2);renderPractice();}
@@ -1667,13 +1800,14 @@ function showHdr(){
   var start=document.getElementById('s-start');
   if(start)start.classList.remove('active');
   document.getElementById('hname').style.display='';
-  document.getElementById('hnm').textContent=S.name;
+  document.getElementById('hnm').textContent=S.name+(S.phone?' · '+phoneToLabel(S.phone):'');
+  document.getElementById('bswitch').style.display='';
   document.getElementById('breset').style.display='';
   document.getElementById('pnav').style.display='flex';
 }
 
 function updatePS(){
-  var ids=['ps0','ps1','ps2','ps3','ps4'];
+  var ids=['ps0','ps1','ps2','ps3','ps4','ps5'];
   ids.forEach(function(id,i){
     var el=document.getElementById(id);
     el.className='pstep';
@@ -1682,7 +1816,7 @@ function updatePS(){
   });
 }
 
-var SCREEN_IDS=['s-learn','s-blitz','s-practice','s-exam','s-checklist','s-home'];
+var SCREEN_IDS=['s-learn','s-blitz','s-practice','s-exam','s-checklist','s-culture','s-home'];
 
 function showPhase(p){
   S.phase=p; save(); updatePS();
@@ -1705,7 +1839,12 @@ function navTo(p){
     S.phase=p;save();updatePS();
     setScreen('s-checklist',true);startChecklist();return;
   }
-  var phaseUnlocked=[true, S.learnIdx>=LEARN.length, S.blitzDone, S.practiceDone||S.blitzDone, true];
+  if(p===5){
+    SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    S.phase=p;save();updatePS();
+    setScreen('s-culture',true);renderCulture();return;
+  }
+  var phaseUnlocked=[true, S.learnIdx>=LEARN.length, S.blitzDone, S.practiceDone||S.blitzDone, true, true];
   if(!phaseUnlocked[p] && p>0){return;}
   SCREEN_IDS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
   S.phase=p;save();updatePS();
@@ -1724,24 +1863,88 @@ function goHome(){
   renderHome();
 }
 
+function switchProfile(){
+  SCREEN_IDS.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.classList.remove('active');
+  });
+  activeProfilePhone='';
+  var ninp=document.getElementById('ninp');
+  var pinp=document.getElementById('pninp');
+  if(ninp)ninp.value='';
+  if(pinp)pinp.value='';
+  var start=document.getElementById('s-start');
+  if(start)start.classList.add('active');
+  document.getElementById('hname').style.display='none';
+  document.getElementById('bswitch').style.display='none';
+  document.getElementById('breset').style.display='none';
+  document.getElementById('pnav').style.display='none';
+}
+
+function renderCulture(){
+  var html=
+    '<div class="lcard">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">Раздел компании</div><div class="lcard-title">Культура и ценности Gusto</div></div></div>'+
+    '<div class="lcard-body">'+
+      '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
+      '<div class="ls"><div class="ls-title">Кто мы</div><p class="lt">Gusto — команда людей, которые одинаково серьёзно относятся к вкусу, скорости и отношению к гостю. Мы растём не за счёт случайных продаж, а за счёт доверия, которое возвращает гостей снова и снова.</p></div>'+
+      '<div class="ls"><div class="ls-title">Наши 5 опор</div>'+
+        '<div class="steps">'+
+          '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Каждый гость, коллега и курьер говорит с нами на одном языке: человеческом. Без высокомерия, без грубости, без «это не моя зона».</div></div></div>'+
+          '<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">Ответственность</div><div class="sdesc">Ошибка — это не повод искать виноватого, это повод быстро исправить и не повторить. Мы держим слово и доводим до результата.</div></div></div>'+
+          '<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">Честность</div><div class="sdesc">Мы не обещаем того, чего не можем сделать, и не скрываем важную информацию. Честность экономит конфликт и укрепляет репутацию.</div></div></div>'+
+          '<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">Командность</div><div class="sdesc">Сильный сотрудник — это тот, рядом с кем сильнее становится вся смена. Мы поддерживаем, страхуем и усиливаем друг друга.</div></div></div>'+
+          '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — тренировка мастерства. Мы анализируем ошибки, учимся быстрее и поднимаем личную планку сервиса.</div></div></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
+      '<div class="callout"><div class="co-icon">🚀</div><div><div class="co-t">Стандарт лидера смены</div><div class="co-d">Лидер в Gusto — это не должность, а поведение: пришёл заранее, держит спокойствие под нагрузкой, закрывает риски до конфликта и оставляет после себя порядок.</div></div></div>'+
+      '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn btn-red" onclick="navTo(0)">К обучению</button>'+
+        '<button class="btn btn-outline" onclick="goHome()">В личный кабинет</button>'+
+      '</div>'+
+    '</div></div>';
+  document.getElementById('culture-content').innerHTML=html;
+}
+
 function startGame(){
   var inp=document.getElementById('ninp');
+  var pinp=document.getElementById('pninp');
   if(inp)inp.blur();
+  if(pinp)pinp.blur();
   var v=inp?inp.value.trim():'';
+  var phoneRaw=pinp?pinp.value.trim():'';
+  var phone=normPhone(phoneRaw);
+  if(phone.length<10){
+    pinp.style.borderBottomColor='#f04040';
+    pinp.placeholder='Укажи корректный номер';
+    setTimeout(function(){pinp.style.borderBottomColor='';pinp.placeholder='Номер телефона (без SMS)';},1500);
+    return;
+  }
+  var existing=loadByPhone(phone);
+  if(existing && !v)v=S.name||'';
   if(!v){
     inp.style.borderBottomColor='#f04040';
     inp.placeholder='Введи имя!';
     setTimeout(function(){inp.style.borderBottomColor='';inp.placeholder='Введи своё имя...';},1500);
     return;
   }
-  S={name:v,phase:0,learnIdx:0,
-     blitzIdx:0,blitzScore:0,blitzQ:[],blitzDone:false,
-     practiceIdx:0,practiceScore:0,practiceDone:false,
-     examIdx:0,examScore:0,examDone:false,
-     checklistState:[],mqAnswered:{},totalPoints:0};
+  if(!existing){
+    S={name:v,phone:phone,phase:0,learnIdx:0,
+       blitzIdx:0,blitzScore:0,blitzQ:[],blitzDone:false,
+       practiceIdx:0,practiceScore:0,practiceDone:false,
+       examIdx:0,examScore:0,examDone:false,
+       checklistState:[],mqAnswered:{},mistakes:[],startedAt:Date.now(),completedAt:0,totalPoints:0};
+  }else{
+    S.name=v;
+    S.phone=phone;
+  }
+  if(pinp)pinp.value=phoneToLabel(phone);
   save();
   document.getElementById('s-start').classList.remove('active');
-  showHdr();showPhase(0);renderLearn();
+  showHdr();
+  if(existing)restorePhase();
+  else{showPhase(0);renderLearn();}
 }
 
 // ═══════════════════════════════════════════
@@ -1754,8 +1957,15 @@ function renderHome(){
   var learnDone=Math.min(S.learnIdx||0,LEARN.length);
   var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
   var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
+  var recentMistakes=(S.mistakes||[]).slice(0,8);
+  var spent=fmtDuration(elapsedSec());
 
-  var html='<div class="score-tracker">'+
+  var html='<div class="lcard" style="margin-bottom:14px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">👤</div><div><div class="lcard-chapter">Личный кабинет</div><div class="lcard-title">'+escHtml(S.name||'Сотрудник')+'</div></div></div>'+
+    '<div class="lcard-body"><div class="rule">Телефон: <b>'+escHtml(phoneToLabel(S.phone||''))+'</b> · Время в обучении: <b>'+spent+'</b>'+(S.completedAt?' · Статус: <b style="color:var(--green)">завершено</b>':' · Статус: <b style="color:var(--gold)">в процессе</b>')+'</div></div>'+
+  '</div>';
+
+  html+='<div class="score-tracker">'+
     '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
     '<div class="st-bars">'+
     stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
@@ -1786,6 +1996,7 @@ function renderHome(){
     (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
     (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
     '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
+    '<button class="btn btn-outline" onclick="navTo(5)">🧭 Культура и ценности</button>'+
     '</div>';
 
   html+='<div class="lcard" style="margin-top:16px">'+
@@ -1805,6 +2016,42 @@ function renderHome(){
     '</div>'+
   '</div>';
 
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🛠</div><div><div class="lcard-chapter">Персонально</div><div class="lcard-title">Работа над ошибками</div></div></div>'+
+    '<div class="lcard-body">'+
+      (recentMistakes.length
+        ?'<div class="rule">Показываем последние ошибки, чтобы можно было быстро подтянуть слабые места перед сменой.</div>'+
+         '<div class="steps">'+
+         recentMistakes.map(function(m){
+           return '<div class="step"><div class="sbadge" style="background:var(--g3);color:var(--white)">'+escHtml(m.stage||'Тест')+'</div><div class="scnt">'+
+             '<div class="stitle">'+escHtml(shortTxt(m.q||'Вопрос',120))+'</div>'+
+             '<div class="sdesc"><b style="color:#ff9a9a">Твой ответ:</b> '+escHtml(shortTxt(m.userAnswer||'—',90))+'<br>'+
+             '<b style="color:#80ffcc">Как правильно:</b> '+escHtml(shortTxt(m.rightAnswer||'—',90))+'<br>'+
+             '<span style="color:var(--muted)">'+escHtml(shortTxt(m.explain||'',180))+'</span></div></div></div>';
+         }).join('')+
+         '</div><div style="margin-top:10px"><button class="btn btn-outline btn-sm" onclick="clearMistakes()">Очистить список ошибок</button></div>'
+        :'<div class="rule green">Пока ошибок не зафиксировано. Отличная работа! Когда появятся неверные ответы, тут будет персональный разбор.</div>')+
+    '</div>'+
+  '</div>';
+
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div></div>'+
+    '<div class="lcard-body">'+
+      '<div class="rule gold"><b>Бонусная карта:</b> копите бонусы, оплачивайте ими до 50% заказа и участвуйте в акциях. <b>1 бонус = 1 ₽.</b></div>'+
+      '<div class="rule"><b>Вход:</b> бонусы и статусы начисляются только для авторизованного клиента по его номеру.</div>'+
+      '<div class="ls"><div class="ls-title">Гибкая накопительная система (за последние 30 дней)</div>'+
+      '<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;border:1px solid var(--g3);font-size:.8rem">'+
+        '<tr style="background:var(--g3)"><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Процент накоплений</td><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Диапазон сумм</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--blue);font-weight:700">2%</td><td style="padding:8px 12px">0 ₽ – 2 999 ₽</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g1)"><td style="padding:8px 12px;color:var(--green);font-weight:700">3%</td><td style="padding:8px 12px">3 000 ₽ – 4 999 ₽</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--gold);font-weight:700">5%</td><td style="padding:8px 12px">5 000 ₽ – 7 999 ₽</td></tr>'+
+        '<tr style="background:var(--g1)"><td style="padding:8px 12px;color:var(--red);font-weight:900">7%</td><td style="padding:8px 12px">8 000 ₽ и выше</td></tr>'+
+      '</table></div></div>'+
+      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
+      '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
+    '</div>'+
+  '</div>';
+
   document.getElementById('home-content').innerHTML=html;
 }
 
@@ -1821,6 +2068,27 @@ function openLearnByKeyword(keyword){
   navTo(0);
 }
 
+function clearMistakes(){
+  S.mistakes=[];
+  save();
+  renderHome();
+}
+
+function escHtml(s){
+  return String(s||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function shortTxt(s,maxLen){
+  var t=String(s||'').replace(/\s+/g,' ').trim();
+  if(!maxLen || t.length<=maxLen)return t;
+  return t.slice(0,maxLen-1)+'…';
+}
+
 function stBar(lbl,val,max,color){
   var pct=max?Math.round(val/max*100):0;
   return '<div class="st-row"><span class="st-lbl">'+lbl+'</span>'+
@@ -1831,13 +2099,16 @@ function stBar(lbl,val,max,color){
 function buildShareText(){
   var d=new Date().toLocaleDateString('ru-RU');
   var learnDone=Math.min(S.learnIdx||0,LEARN.length);
+  var phoneLbl=phoneToLabel(S.phone||'');
   return 'Сотрудник: '+S.name+'\nДата: '+d+
+    (phoneLbl?'\nТелефон: '+phoneLbl:'')+
     '\nОбучение Gusto — Академия сервиса'+
     '\n\nОбучение: '+learnDone+'/'+LEARN.length+
     '\nМини-квизы: '+(S.mqAnswered?Object.keys(S.mqAnswered).length:0)+'/'+LEARN.length+
     '\n\nЭкзамен: '+S.examScore+'/25 — '+(S.examScore>=22?'СДАН ✅':'не сдан ❌')+
     '\nПрактика: '+S.practiceScore+'/'+SCENARIOS.length+
     '\nБлиц-тест: '+S.blitzScore+'/10'+
+    '\nВремя прохождения: '+fmtDuration(elapsedSec())+
     '\nОбщий балл: '+calcTotal()+'/'+MAX_POINTS()+' ('+Math.round(calcTotal()/MAX_POINTS()*100)+'%)'+
     '\ngusto.ru';
 }
@@ -1927,7 +2198,7 @@ function renderLearnDone(){
     '<div class="done-card">'+
     '<div class="done-icon">📚</div>'+
     '<div class="done-t" style="color:var(--green)">Все 8 тем изучены!</div>'+
-    '<div class="done-sub">Отлично, <b>'+S.name+'</b>! Теперь блиц-тест — 10 быстрых вопросов с таймером для закрепления.</div>'+
+    '<div class="done-sub">Отлично, <b>'+S.name+'</b>! Теперь блиц-тест — 10 быстрых вопросов, по '+BLITZ_TIME+' секунд на каждый.</div>'+
     '<div class="done-actions">'+
     '<button class="btn btn-red" onclick="startBlitz()">БЛИЦ-ТЕСТ →</button>'+
     '<button class="btn btn-outline" onclick="prevLearn()">← Вернуться</button>'+
@@ -1956,16 +2227,16 @@ function renderBlitz(){
   document.getElementById('blitz-content').innerHTML=
     '<div class="blitz-timer-wrap"><span class="xp-l">Время</span>'+
     '<div class="blitz-tbar"><div class="blitz-tfill" id="btfill" style="width:100%"></div></div>'+
-    '<span class="blitz-tval" id="btval">15</span></div>'+
+    '<span class="blitz-tval" id="btval">'+BLITZ_TIME+'</span></div>'+
     '<div class="card"><div class="card-top"><div class="card-lbl">Вопрос '+(idx+1)+' / '+tot+'</div><div class="card-badge">⚡ '+S.blitzScore+'</div></div>'+
     '<div class="card-body"><div class="qtext">'+q.q+'</div>'+
     '<div class="opts" id="bopts">'+optsHtml+'</div><div id="bfb"></div></div></div>';
-  var timeLeft=15;
+  var timeLeft=BLITZ_TIME;
   blitzTimer=setInterval(function(){
     timeLeft--;
     var tv=document.getElementById('btval'),bar=document.getElementById('btfill');
     if(tv)tv.textContent=timeLeft;
-    if(bar){bar.style.width=(timeLeft/15*100)+'%';if(timeLeft<=5)bar.style.background='var(--red)';}
+    if(bar){bar.style.width=(timeLeft/BLITZ_TIME*100)+'%';if(timeLeft<=Math.ceil(BLITZ_TIME/3))bar.style.background='var(--red)';}
     if(timeLeft<=0){clearInterval(blitzTimer);blitzTimer=null;answerBlitz(-1);}
   },1000);
 }
@@ -1978,6 +2249,16 @@ function answerBlitz(ch){
   document.getElementById('bo'+q.c).classList.add('correct');
   flashFx(ok);
   if(ok)S.blitzScore++;
+  if(!ok){
+    logMistake(
+      'Блиц',
+      q.q,
+      ch===-1?'Время вышло':(q.opts[ch]||'Неверный вариант'),
+      q.opts[q.c]||'Правильный вариант',
+      'В блице важно отвечать быстро и точно. Повтори этот вопрос.',
+      'blitz:'+q.q
+    );
+  }
   S.blitzIdx++;save();
   var msg=ch===-1?'⏱ Время вышло! ':ok?'✅ Верно! ':'❌ Неверно. ';
   document.getElementById('bfb').innerHTML=
@@ -2048,6 +2329,16 @@ function answerP(ch){
   if(!ok)document.getElementById('o'+sc.correct).classList.add('correct');
   flashFx(ok);
   if(ok)S.practiceScore++;
+  if(!ok){
+    logMistake(
+      'Практика',
+      sc.q,
+      sc.opts[ch]||'Неверный вариант',
+      sc.opts[sc.correct]||'Правильный вариант',
+      sc.why||'Разбери сценарий и закрепи правильный алгоритм.',
+      'practice:'+S.practiceIdx
+    );
+  }
   S.practiceIdx++;save();
   document.getElementById('pfb').innerHTML=
     '<div class="fb '+(ok?'ok':'nope')+'">'+(ok?'✅ <b>Верно!</b>':'❌ <b>Неверно.</b>')+' '+sc.why+'</div>'+
@@ -2100,17 +2391,33 @@ function answerE(ch){
   if(!ok)document.getElementById('eo'+q.c).classList.add('correct');
   flashFx(ok);
   if(ok)S.examScore++;
+  if(!ok){
+    logMistake(
+      'Экзамен',
+      q.q,
+      q.opts[ch]||'Неверный вариант',
+      q.opts[q.c]||'Правильный вариант',
+      'Это экзаменационный стандарт. Разбери формулировку и запомни ответ.',
+      'exam:'+S.examIdx
+    );
+  }
   S.examIdx++;save();
   document.getElementById('efb').innerHTML=
     '<div class="fb '+(ok?'ok':'nope')+'">'+(ok?'✅ Верно!':'❌ Неверно. Правильный ответ выделен.')+'</div>'+
     '<div class="next-r"><button class="btn btn-red" onclick="renderExamQ()">'+(S.examIdx<EXAM.length?'СЛЕДУЮЩИЙ →':'ЗАВЕРШИТЬ ЭКЗАМЕН →')+'</button></div>';
 }
 
-function finishExam(){S.examDone=true;save();document.getElementById('efill').style.width='100%';goExamResult();}
+function finishExam(){
+  S.examDone=true;
+  if(!S.completedAt)S.completedAt=Date.now();
+  save();
+  document.getElementById('efill').style.width='100%';
+  goExamResult();
+}
 
 function goExamResult(){
   showPhase(3);
-  ['s-learn','s-blitz','s-practice','s-checklist','s-home'].forEach(function(id){setScreen(id,false);});
+  ['s-learn','s-blitz','s-practice','s-checklist','s-culture','s-home'].forEach(function(id){setScreen(id,false);});
   setScreen('s-exam',true);
   var pass=S.examScore>=23;
   if(pass)setTimeout(function(){launchConfettiBurst(96);},180);
@@ -2140,7 +2447,7 @@ function goExamResult(){
     '</div>';
 }
 
-function retake(){S.examIdx=0;S.examScore=0;S.examDone=false;save();renderExamQ();}
+function retake(){S.examIdx=0;S.examScore=0;S.examDone=false;S.completedAt=0;save();renderExamQ();}
 
 // ═══════════════════════════════════════════
 // CHECKLIST
@@ -2204,18 +2511,75 @@ function openDip(){
   document.getElementById('dip-sc-v').textContent=S.examScore;
   document.getElementById('dip-pr-v').textContent=S.practiceScore;
   document.getElementById('dip-bl-v').textContent=S.blitzScore;
+  document.getElementById('dip-total-v').textContent=calcTotal();
+  document.getElementById('dip-max-v').textContent=MAX_POINTS();
+  document.getElementById('dip-time-v').textContent=fmtDuration(elapsedSec());
   var d=new Date();
   document.getElementById('dip-dt').textContent=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
   document.getElementById('dipov').classList.add('show');
 }
 function closeDip(){document.getElementById('dipov').classList.remove('show');}
+async function buildDipCanvas(){
+  return html2canvas(document.getElementById('dip'),{
+    backgroundColor:'#080808',
+    scale:2,
+    useCORS:true,
+    allowTaint:true,
+    logging:false
+  });
+}
 async function dlDip(){
   try{
-    var c=await html2canvas(document.getElementById('dip'),{backgroundColor:'#080808',scale:2,useCORS:true});
+    var c=await buildDipCanvas();
+    var fileName='Диплом_Gusto_'+(S.name||'Сотрудник')+'.png';
     var a=document.createElement('a');
-    a.download='Диплом_Gusto_'+S.name+'.png';
-    a.href=c.toDataURL('image/png');a.click();
+    a.download=fileName;
+    if(c.toBlob){
+      c.toBlob(function(blob){
+        if(!blob){
+          a.href=c.toDataURL('image/png');
+          document.body.appendChild(a);a.click();a.remove();
+          return;
+        }
+        var url=URL.createObjectURL(blob);
+        a.href=url;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function(){URL.revokeObjectURL(url);},1500);
+      },'image/png');
+    }else{
+      a.href=c.toDataURL('image/png');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
   }catch(e){alert('Не удалось сохранить. Попробуйте снова.');}
+}
+async function shareDip(){
+  try{
+    var c=await buildDipCanvas();
+    if(c.toBlob){
+      c.toBlob(async function(blob){
+        if(!blob){alert('Не удалось подготовить диплом для передачи.');return;}
+        try{
+          var f=new File([blob],'Диплом_Gusto_'+(S.name||'Сотрудник')+'.png',{type:'image/png'});
+          if(navigator.share && navigator.canShare && navigator.canShare({files:[f]})){
+            await navigator.share({title:'Диплом Gusto',text:'Мой диплом Gusto',files:[f]});
+          }else{
+            copyResult(null,buildShareText());
+            alert('Передача файла недоступна в этом браузере. Результат скопирован, PNG можно скачать кнопкой рядом.');
+          }
+        }catch(e2){
+          copyResult(null,buildShareText());
+        }
+      },'image/png');
+    }else{
+      copyResult(null,buildShareText());
+    }
+  }catch(e){
+    copyResult(null,buildShareText());
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -2233,7 +2597,10 @@ function flashFx(ok){
 }
 function confirmReset(){
   if(!confirm('Сбросить весь прогресс и начать заново?'))return;
-  try{localStorage.removeItem('gsto5');}catch(e){}
+  try{
+    if(S.phone||activeProfilePhone)localStorage.removeItem(profileKey(S.phone||activeProfilePhone));
+    else localStorage.removeItem('gsto5');
+  }catch(e){}
   location.reload();
 }
 function calcTotal(){
