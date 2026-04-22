@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#07080d">
 <title>GUSTO — Академия сервиса</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer crossorigin="anonymous"></script>
 <style>
 :root{--black:#07080d;--red:#ff3a2e;--red2:#d81207;--white:#f8faff;--g1:#10131c;--g2:#151a26;--g3:#232a3a;--g4:#30394f;--muted:#8c95aa;--green:#00e093;--gbg:#022118;--rbg:#230b0a;--gold:#ffbb38;--blue:#4a9eff;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -608,7 +608,7 @@ header,.pnav{
 }
 </style>
 </head>
-<body>
+<body style="background:#07080d;color:#f8faff;">
 <div id="particles"></div>
 <div class="fx-orb" id="fx-orb-1"></div>
 <div class="fx-orb" id="fx-orb-2"></div>
@@ -1111,8 +1111,9 @@ function isAdminAccess(){
 }
 function initCloud(){
   try{
-    if(window.supabase && SUPABASE_URL.indexOf('PASTE_')!==0 && SUPABASE_ANON_KEY.indexOf('PASTE_')!==0){
-      sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    var sb=window.supabase||window.Supabase;
+    if(sb && SUPABASE_URL.indexOf('PASTE_')!==0 && SUPABASE_ANON_KEY.indexOf('PASTE_')!==0){
+      sbClient=sb.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
       cloudReady=true;
       return true;
     }
@@ -2319,6 +2320,7 @@ var CHECKLIST=[
 // INIT
 // ═══════════════════════════════════════════
 window.onload=function(){(async function(){
+  try{
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var cinp=document.getElementById('cinp');
@@ -2349,6 +2351,15 @@ window.onload=function(){(async function(){
     restorePhase();
   }
   initNeoVisuals();
+  }catch(err){
+    // fallback: показываем стартовый экран даже при ошибке инициализации
+    try{
+      var s=document.getElementById('s-start');
+      if(s && !s.classList.contains('active'))s.classList.add('active');
+      var b=document.getElementById('btn-start');
+      if(b){b.onclick=function(){startGame();};}}catch(e2){}
+    if(window.console)console.error('Init error:',err);
+  }
 })();};  
 
 function restorePhase(){
