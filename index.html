@@ -1034,7 +1034,16 @@ var sbClient=null;
 var cloudReady=false;
 var cloudSaveTimer=null;
 
-function normPhone(v){
+// ── Safe storage: работает даже если localStorage недоступен (content://, приватный режим) ──
+var _memStore={};
+var _storageOk=(function(){try{window.localStorage.setItem('__t','1');window.localStorage.removeItem('__t');return true;}catch(e){return false;}})();
+var LS={
+  getItem:function(k){if(_storageOk){try{return window.localStorage.getItem(k);}catch(e){}}return _memStore[k]!==undefined?String(_memStore[k]):null;},
+  setItem:function(k,v){_memStore[k]=String(v);if(_storageOk){try{window.localStorage.setItem(k,v);}catch(e){}}},
+  removeItem:function(k){delete _memStore[k];if(_storageOk){try{window.localStorage.removeItem(k);}catch(e){}}},
+  _len:function(){if(_storageOk){try{return window.localStorage.length;}catch(e){}}return Object.keys(_memStore).length;},
+  _key:function(i){if(_storageOk){try{return window.localStorage.key(i);}catch(e){}}return Object.keys(_memStore)[i]||null;}
+};
   var digits=String(v||'').replace(/\D/g,'');
   if(digits.length===11 && digits[0]==='8')digits='7'+digits.slice(1);
   return digits;
@@ -1056,7 +1065,7 @@ function getProfileSnapshotByPhone(phoneDigits){
     return {name:String(S.name||'').trim(),city:normCity(S.city||'')};
   }
   try{
-    var raw=localStorage.getItem(profileKey(d));
+    var raw=LS.getItem(profileKey(d));
     if(!raw)return null;
     var p=JSON.parse(raw)||{};
     return {name:String(p.name||'').trim(),city:normCity(p.city||'')};
@@ -1150,14 +1159,14 @@ function dtLabel(iso){
 }
 function loadLocalList(key){
   try{
-    var raw=localStorage.getItem(key);
+    var raw=LS.getItem(key);
     if(!raw)return [];
     var arr=JSON.parse(raw);
     return Array.isArray(arr)?arr:[];
   }catch(e){return [];}
 }
 function saveLocalList(key,list){
-  try{localStorage.setItem(key,JSON.stringify(list||[]));}catch(e){}
+  try{LS.setItem(key,JSON.stringify(list||[]));}catch(e){}
 }
 async function listTeamChat(){
   if(cloudReady){
@@ -1312,11 +1321,11 @@ async function cloudListProfiles(){
 function getAllProfilesLocal(){
   var profiles=[];
   try{
-    for(var i=0;i<localStorage.length;i++){
-      var k=localStorage.key(i);
+    for(var i=0;i<LS._len();i++){
+      var k=LS._key(i);
       if(!k)continue;
       if(k.indexOf(STORAGE_PREFIX)!==0 && k!=='gsto5')continue;
-      var raw=localStorage.getItem(k);
+      var raw=LS.getItem(k);
       if(!raw)continue;
       var obj=JSON.parse(raw);
       if(!obj || !obj.name)continue;
@@ -1360,10 +1369,10 @@ function ensureTiming(){
 function save(){
   try{
     var d=normPhone(S.phone||activeProfilePhone);
-    if(d){S.phone=d;activeProfilePhone=d;localStorage.setItem(STORAGE_LAST,d);}
+    if(d){S.phone=d;activeProfilePhone=d;LS.setItem(STORAGE_LAST,d);}
     ensureStateShape();
     ensureTiming();
-    localStorage.setItem(profileKey(d),JSON.stringify(S));
+    LS.setItem(profileKey(d),JSON.stringify(S));
     if(cloudReady && d){
       if(cloudSaveTimer)clearTimeout(cloudSaveTimer);
       var snapshot=JSON.parse(JSON.stringify(S));
@@ -1376,12 +1385,12 @@ async function loadByPhone(phoneDigits){
   if(!d)return false;
   var foundLocal=false;
   try{
-    var r=localStorage.getItem(profileKey(d));
+    var r=LS.getItem(profileKey(d));
     if(r){
       S=JSON.parse(r);
       S.phone=d;
       activeProfilePhone=d;
-      localStorage.setItem(STORAGE_LAST,d);
+      LS.setItem(STORAGE_LAST,d);
       ensureStateShape();
       foundLocal=true;
     }
@@ -1393,8 +1402,8 @@ async function loadByPhone(phoneDigits){
       S.phone=d;
       activeProfilePhone=d;
       ensureStateShape();
-      localStorage.setItem(profileKey(d),JSON.stringify(S));
-      localStorage.setItem(STORAGE_LAST,d);
+      LS.setItem(profileKey(d),JSON.stringify(S));
+      LS.setItem(STORAGE_LAST,d);
       return true;
     }
   }
@@ -1402,9 +1411,9 @@ async function loadByPhone(phoneDigits){
 }
 async function load(){
   try{
-    var last=localStorage.getItem(STORAGE_LAST);
+    var last=LS.getItem(STORAGE_LAST);
     if(last && await loadByPhone(last))return true;
-    var legacy=localStorage.getItem('gsto5');
+    var legacy=LS.getItem('gsto5');
     if(legacy){
       S=JSON.parse(legacy);
       ensureStateShape();
@@ -2341,7 +2350,9 @@ window.onload=function(){(async function(){
   cinp.addEventListener('keydown',function(e){if(e.key==='Enter'){cinp.blur();startGame();}});
   if(rinp)rinp.addEventListener('keydown',function(e){if(e.key==='Enter'){rinp.blur();startGame();}});
   initCloud();
-  if(await load()&&S.name){
+  var loaded=false;
+  try{ loaded=await load(); }catch(e){}
+  if(loaded && S.name && S.name.trim()){
     ensureStateShape();
     if(pinp && S.phone)pinp.value=phoneToLabel(S.phone);
     if(inp && S.name)inp.value=S.name;
@@ -2349,6 +2360,10 @@ window.onload=function(){(async function(){
     if(rinp)rinp.value=S.role||'Сотрудник';
     showHdr();
     restorePhase();
+  } else {
+    // нет данных или localStorage недоступен — показываем стартовый экран
+    var startEl=document.getElementById('s-start');
+    if(startEl && !startEl.classList.contains('active'))startEl.classList.add('active');
   }
   initNeoVisuals();
   }catch(err){
@@ -3115,7 +3130,7 @@ async function removeEmployeeProfile(phoneDigits){
     return;
   }
   if(!confirm('Удалить сотрудника из рейтинга и базы?'))return;
-  try{ localStorage.removeItem(profileKey(d)); }catch(e){}
+  try{ LS.removeItem(profileKey(d)); }catch(e){}
   if(cloudReady){
     try{ await sbClient.from('profiles').delete().eq('phone',d); }catch(e){}
   }
@@ -3659,8 +3674,8 @@ function flashFx(ok){
 function confirmReset(){
   if(!confirm('Сбросить весь прогресс и начать заново?'))return;
   try{
-    if(S.phone||activeProfilePhone)localStorage.removeItem(profileKey(S.phone||activeProfilePhone));
-    else localStorage.removeItem('gsto5');
+    if(S.phone||activeProfilePhone)LS.removeItem(profileKey(S.phone||activeProfilePhone));
+    else LS.removeItem('gsto5');
   }catch(e){}
   location.reload();
 }
