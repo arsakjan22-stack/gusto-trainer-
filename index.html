@@ -2541,14 +2541,6 @@ function renderHome(){
     '<div class="res-box"><div class="res-num" style="color:var(--red)">'+S.examScore+'<span style="font-size:1rem;color:var(--muted)">/25</span></div><div class="res-lbl">Экзамен</div></div>'+
     '</div>';
 
-  html+='<div style="margin-top:8px"><div class="share-box">'+
-    '<div class="share-lbl">📤 Отправить руководителю</div>'+
-    '<div class="share-txt" id="share-txt-h">'+buildShareText()+'</div>'+
-    '<div class="share-acts">'+
-    '<button class="btn btn-outline btn-sm" onclick="copyResult(\'share-txt-h\')">📋 Скопировать</button>'+
-    '<button class="btn btn-outline btn-sm" onclick="shareResult()">📤 Поделиться</button>'+
-    '</div></div></div>';
-
   html+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">'+
     '<button class="btn btn-red" onclick="navTo(0)">📖 К обучению</button>'+
     (S.blitzDone?'<button class="btn btn-outline" onclick="navTo(1)">⚡ Повторить блиц</button>':'')+
@@ -2595,9 +2587,9 @@ function renderHome(){
     '</div>'+
   '</div>';
 
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div></div>'+
-    '<div class="lcard-body">'+
+  html+='<details class="lcard" style="margin-top:16px"><summary class="lcard-hdr" style="cursor:pointer;list-style:none">'+
+    '<div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div>'+
+    '</summary><div class="lcard-body">'+
       '<div class="rule gold"><b>Бонусная карта:</b> копите бонусы, оплачивайте ими до 50% заказа и участвуйте в акциях. <b>1 бонус = 1 ₽.</b></div>'+
       '<div class="rule"><b>Вход:</b> бонусы и статусы начисляются только для авторизованного клиента по его номеру.</div>'+
       '<div class="ls"><div class="ls-title">Гибкая накопительная система (за последние 30 дней)</div>'+
@@ -2610,12 +2602,11 @@ function renderHome(){
       '</table></div></div>'+
       '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
       '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
-    '</div>'+
-  '</div>';
+    '</div></details>';
 
-  html+='<div class="lcard" style="margin-top:16px">'+
-    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div></div>'+
-    '<div class="lcard-body">'+
+  html+='<details class="lcard" style="margin-top:16px"><summary class="lcard-hdr" style="cursor:pointer;list-style:none">'+
+    '<div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div>'+
+    '</summary><div class="lcard-body">'+
       '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
       '<div class="steps">'+
         '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Гость и команда — всегда в тоне уважения, без грубости и формального отношения.</div></div></div>'+
@@ -2625,8 +2616,7 @@ function renderHome(){
         '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — шаг в мастерство: анализируем ошибки и поднимаем стандарт сервиса.</div></div></div>'+
       '</div>'+
       '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
-    '</div>'+
-  '</div>';
+    '</div></details>';
 
   document.getElementById('home-content').innerHTML=html;
 }
