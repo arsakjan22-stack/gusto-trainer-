@@ -2,20 +2,16 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#07080d">
 <title>GUSTO — Академия сервиса</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--black:#07080d;--red:#ff3a2e;--red2:#d81207;--white:#f8faff;--g1:#10131c;--g2:#151a26;--g3:#232a3a;--g4:#30394f;--muted:#8c95aa;--green:#00e093;--gbg:#022118;--rbg:#230b0a;--gold:#ffbb38;--blue:#4a9eff;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-input,button,textarea,select{font:inherit}
-*:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 body{
   background:
     radial-gradient(circle at 14% 18%, rgba(255,76,59,.18) 0%, rgba(255,76,59,0) 45%),
@@ -25,16 +21,14 @@ body{
   color:var(--white);
   font-family:'Manrope',sans-serif;
   min-height:100vh;
-  min-height:-webkit-fill-available;
   overflow-x:hidden;
-  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .pt{position:absolute;border-radius:50%;opacity:0;animation:ptdrift linear infinite;}
 @keyframes ptdrift{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-80px) scale(1.5) rotate(720deg);opacity:0}}
 
-header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;padding-left:max(20px, env(safe-area-inset-left));padding-right:max(20px, env(safe-area-inset-right));}
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
 .logo{display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:5px;line-height:1;white-space:nowrap;}
 .logo-icon{animation:spin 10s linear infinite;display:inline-block;font-size:1.4rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -180,7 +174,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-
 .pill.red{border-color:var(--red);color:var(--red);background:var(--rbg);}
 .pill.green{border-color:var(--green);color:var(--green);background:var(--gbg);}
 .pill.gold{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.08);}
-.pill.blue{border-color:var(--blue);color:var(--blue);background:rgba(74,158,255,.09);}
 .dlg{background:var(--black);border:1px solid var(--g3);padding:14px 18px;margin:12px 0;}
 .dlg .dm{margin-bottom:9px;padding-left:12px;border-left:2px solid transparent;font-size:.82rem;line-height:1.65;}
 .dlg .dm:last-child{margin-bottom:0;}
@@ -476,14 +469,6 @@ header,.pnav{
 }
 .chat-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .chat-search{flex:1;min-width:180px;}
-.mode-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
-.mode-pill{padding:6px 10px;border:1px solid var(--g4);border-radius:999px;font-size:.7rem;color:var(--muted);background:var(--g2);}
-.mode-pill b{color:var(--white);}
-.cmpx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0;}
-.cmpx-item{background:var(--g2);border:1px solid var(--g3);padding:10px;border-radius:10px;}
-.cmpx-title{font-size:.7rem;color:var(--muted);margin-bottom:6px;letter-spacing:.6px;text-transform:uppercase;}
-.cmpx-score{font-weight:800;font-size:1rem;}
-.cmpx-sub{font-size:.72rem;color:var(--muted);margin-top:4px;}
 .reply-box{
   border:1px solid rgba(255,255,255,.12);
   border-left:3px solid var(--gold);
@@ -562,7 +547,7 @@ header,.pnav{
     display:grid!important;
     grid-template-columns:repeat(4,minmax(0,1fr));
     overflow:visible;
-    top:64px;
+    top:74px;
   }
   .pstep{
     min-width:0;
@@ -596,7 +581,6 @@ header,.pnav{
   .chat-toolbar{flex-direction:column;align-items:stretch;}
   .chat-toolbar .btn{width:100%;justify-content:center;}
   .chat-composer .btn{width:100%;justify-content:center;}
-  .cmpx{grid-template-columns:1fr;}
   #dip{padding:28px 20px;}
   .dip-logo{font-size:1.5rem;letter-spacing:4px;}
   .dip-name{font-size:1.35rem;}
@@ -608,7 +592,7 @@ header,.pnav{
 }
 </style>
 </head>
-<body style="background:#07080d;color:#f8faff;">
+<body>
 <div id="particles"></div>
 <div class="fx-orb" id="fx-orb-1"></div>
 <div class="fx-orb" id="fx-orb-2"></div>
@@ -651,14 +635,9 @@ header,.pnav{
     <div class="jcard" data-n="03"><span class="ji">🎭</span><h3>Практика</h3><p>15 реальных сценариев с живыми диалогами</p></div>
   </div>
   <div class="nform">
-    <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false" inputmode="text"/>
-    <input class="ninp" id="pninp" type="tel" placeholder="Номер телефона (без SMS)" maxlength="18" autocorrect="off" autocapitalize="off" autocomplete="tel" spellcheck="false" inputmode="tel"/>
-    <input class="ninp" id="cinp" type="text" placeholder="Ваш город" maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="address-level2" spellcheck="false" inputmode="text"/>
-    <select class="ninp" id="rinp" aria-label="Роль сотрудника">
-      <option value="Сотрудник">Роль: Сотрудник</option>
-      <option value="Старший смены">Роль: Старший смены</option>
-      <option value="Руководитель">Роль: Руководитель</option>
-    </select>
+    <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false"/>
+    <input class="ninp" id="pninp" type="tel" placeholder="Номер телефона (без SMS)" maxlength="18" autocorrect="off" autocapitalize="off" autocomplete="tel" spellcheck="false"/>
+    <input class="ninp" id="cinp" type="text" placeholder="Ваш город" maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="address-level2" spellcheck="false"/>
     <button class="btn btn-red" id="btn-start" type="button">НАЧАТЬ →</button>
   </div>
 </div>
@@ -994,7 +973,7 @@ function launchConfettiBurst(count){
 // STATE
 // ═══════════════════════════════════════════
 var S={
-  name:'', phone:'', city:'', role:'Сотрудник', phase:0,
+  name:'', phone:'', city:'', phase:0,
   learnIdx:0,
   blitzIdx:0, blitzScore:0, blitzQ:[], blitzDone:false,
   practiceIdx:0, practiceScore:0, practiceDone:false,
@@ -1009,19 +988,17 @@ var S={
 var MQ_EXP={};
 var MQ_META={};
 var blitzTimer=null;
-var BLITZ_TIME=35;
+var BLITZ_TIME=25;
 var STORAGE_PREFIX='gsto5_profile_';
 var STORAGE_LAST='gsto5_last_phone';
 var ADMIN_PHONE_RAW='89156286261';
 var activeProfilePhone='';
 var LEADERBOARD_SORT='total';
-var LEADERBOARD_PERIOD='all';
 var CHAT_LOCAL_KEY='gsto5_team_chat_local';
 var FOUNDER_LOCAL_KEY='gsto5_founder_requests_local';
 var CHAT_REPLY_TO='';
 var CHAT_SEARCH_QUERY='';
 var CHAT_ONLY_PINNED=false;
-var CHAT_CHANNEL='all';
 var CHAT_EMOJIS=['🔥','👏','💡','❤️','⚡'];
 // ========================= SUPABASE CONFIG =========================
 // Вставь сюда данные из Supabase Project Settings -> API:
@@ -1034,16 +1011,7 @@ var sbClient=null;
 var cloudReady=false;
 var cloudSaveTimer=null;
 
-// ── Safe storage: работает даже если localStorage недоступен (content://, приватный режим) ──
-var _memStore={};
-var _storageOk=(function(){try{window.localStorage.setItem('__t','1');window.localStorage.removeItem('__t');return true;}catch(e){return false;}})();
-var LS={
-  getItem:function(k){if(_storageOk){try{return window.localStorage.getItem(k);}catch(e){}}return _memStore[k]!==undefined?String(_memStore[k]):null;},
-  setItem:function(k,v){_memStore[k]=String(v);if(_storageOk){try{window.localStorage.setItem(k,v);}catch(e){}}},
-  removeItem:function(k){delete _memStore[k];if(_storageOk){try{window.localStorage.removeItem(k);}catch(e){}}},
-  _len:function(){if(_storageOk){try{return window.localStorage.length;}catch(e){}}return Object.keys(_memStore).length;},
-  _key:function(i){if(_storageOk){try{return window.localStorage.key(i);}catch(e){}}return Object.keys(_memStore)[i]||null;}
-};
+function normPhone(v){
   var digits=String(v||'').replace(/\D/g,'');
   if(digits.length===11 && digits[0]==='8')digits='7'+digits.slice(1);
   return digits;
@@ -1065,7 +1033,7 @@ function getProfileSnapshotByPhone(phoneDigits){
     return {name:String(S.name||'').trim(),city:normCity(S.city||'')};
   }
   try{
-    var raw=LS.getItem(profileKey(d));
+    var raw=localStorage.getItem(profileKey(d));
     if(!raw)return null;
     var p=JSON.parse(raw)||{};
     return {name:String(p.name||'').trim(),city:normCity(p.city||'')};
@@ -1120,9 +1088,8 @@ function isAdminAccess(){
 }
 function initCloud(){
   try{
-    var sb=window.supabase||window.Supabase;
-    if(sb && SUPABASE_URL.indexOf('PASTE_')!==0 && SUPABASE_ANON_KEY.indexOf('PASTE_')!==0){
-      sbClient=sb.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    if(window.supabase && SUPABASE_URL.indexOf('PASTE_')!==0 && SUPABASE_ANON_KEY.indexOf('PASTE_')!==0){
+      sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
       cloudReady=true;
       return true;
     }
@@ -1145,7 +1112,6 @@ function ensureStateShape(){
   if(typeof S.examScore!=='number')S.examScore=0;
   if(typeof S.phase!=='number')S.phase=0;
   if(!S.city)S.city='';
-  if(!S.role)S.role='Сотрудник';
   if(typeof S.blitzDone!=='boolean')S.blitzDone=false;
   if(typeof S.practiceDone!=='boolean')S.practiceDone=false;
   if(typeof S.examDone!=='boolean')S.examDone=false;
@@ -1159,14 +1125,14 @@ function dtLabel(iso){
 }
 function loadLocalList(key){
   try{
-    var raw=LS.getItem(key);
+    var raw=localStorage.getItem(key);
     if(!raw)return [];
     var arr=JSON.parse(raw);
     return Array.isArray(arr)?arr:[];
   }catch(e){return [];}
 }
 function saveLocalList(key,list){
-  try{LS.setItem(key,JSON.stringify(list||[]));}catch(e){}
+  try{localStorage.setItem(key,JSON.stringify(list||[]));}catch(e){}
 }
 async function listTeamChat(){
   if(cloudReady){
@@ -1182,7 +1148,6 @@ async function postTeamChat(text,replyToId){
     phone:normPhone(S.phone||''),
     name:S.name||'Сотрудник',
     city:S.city||'',
-    channel:CHAT_CHANNEL==='all'?'general':CHAT_CHANNEL,
     text:text,
     reply_to:replyToId||null,
     pinned:false,
@@ -1199,7 +1164,6 @@ async function postTeamChat(text,replyToId){
         phone:payload.phone,
         name:payload.name,
         city:payload.city,
-        channel:payload.channel,
         text:payload.text,
         created_at:payload.created_at
       };
@@ -1321,11 +1285,11 @@ async function cloudListProfiles(){
 function getAllProfilesLocal(){
   var profiles=[];
   try{
-    for(var i=0;i<LS._len();i++){
-      var k=LS._key(i);
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
       if(!k)continue;
       if(k.indexOf(STORAGE_PREFIX)!==0 && k!=='gsto5')continue;
-      var raw=LS.getItem(k);
+      var raw=localStorage.getItem(k);
       if(!raw)continue;
       var obj=JSON.parse(raw);
       if(!obj || !obj.name)continue;
@@ -1369,10 +1333,10 @@ function ensureTiming(){
 function save(){
   try{
     var d=normPhone(S.phone||activeProfilePhone);
-    if(d){S.phone=d;activeProfilePhone=d;LS.setItem(STORAGE_LAST,d);}
+    if(d){S.phone=d;activeProfilePhone=d;localStorage.setItem(STORAGE_LAST,d);}
     ensureStateShape();
     ensureTiming();
-    LS.setItem(profileKey(d),JSON.stringify(S));
+    localStorage.setItem(profileKey(d),JSON.stringify(S));
     if(cloudReady && d){
       if(cloudSaveTimer)clearTimeout(cloudSaveTimer);
       var snapshot=JSON.parse(JSON.stringify(S));
@@ -1385,12 +1349,12 @@ async function loadByPhone(phoneDigits){
   if(!d)return false;
   var foundLocal=false;
   try{
-    var r=LS.getItem(profileKey(d));
+    var r=localStorage.getItem(profileKey(d));
     if(r){
       S=JSON.parse(r);
       S.phone=d;
       activeProfilePhone=d;
-      LS.setItem(STORAGE_LAST,d);
+      localStorage.setItem(STORAGE_LAST,d);
       ensureStateShape();
       foundLocal=true;
     }
@@ -1402,8 +1366,8 @@ async function loadByPhone(phoneDigits){
       S.phone=d;
       activeProfilePhone=d;
       ensureStateShape();
-      LS.setItem(profileKey(d),JSON.stringify(S));
-      LS.setItem(STORAGE_LAST,d);
+      localStorage.setItem(profileKey(d),JSON.stringify(S));
+      localStorage.setItem(STORAGE_LAST,d);
       return true;
     }
   }
@@ -1411,9 +1375,9 @@ async function loadByPhone(phoneDigits){
 }
 async function load(){
   try{
-    var last=LS.getItem(STORAGE_LAST);
+    var last=localStorage.getItem(STORAGE_LAST);
     if(last && await loadByPhone(last))return true;
-    var legacy=LS.getItem('gsto5');
+    var legacy=localStorage.getItem('gsto5');
     if(legacy){
       S=JSON.parse(legacy);
       ensureStateShape();
@@ -2328,54 +2292,28 @@ var CHECKLIST=[
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
-window.onload=function(){(async function(){
-  try{
+window.onload=async function(){
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var cinp=document.getElementById('cinp');
-  var rinp=document.getElementById('rinp');
   var btn=document.getElementById('btn-start');
-  var _startLock=false;
-  async function onStart(e){
-    e.preventDefault();
-    if(_startLock)return;
-    _startLock=true;
-    await startGame();
-    setTimeout(function(){_startLock=false;},800);
-  }
+  async function onStart(e){e.preventDefault();await startGame();}
   btn.addEventListener('click',onStart);
   btn.addEventListener('touchend',onStart);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){inp.blur();startGame();}});
   pinp.addEventListener('keydown',function(e){if(e.key==='Enter'){pinp.blur();startGame();}});
   cinp.addEventListener('keydown',function(e){if(e.key==='Enter'){cinp.blur();startGame();}});
-  if(rinp)rinp.addEventListener('keydown',function(e){if(e.key==='Enter'){rinp.blur();startGame();}});
   initCloud();
-  var loaded=false;
-  try{ loaded=await load(); }catch(e){}
-  if(loaded && S.name && S.name.trim()){
+  if(await load()&&S.name){
     ensureStateShape();
     if(pinp && S.phone)pinp.value=phoneToLabel(S.phone);
     if(inp && S.name)inp.value=S.name;
     if(cinp && S.city)cinp.value=S.city;
-    if(rinp)rinp.value=S.role||'Сотрудник';
     showHdr();
     restorePhase();
-  } else {
-    // нет данных или localStorage недоступен — показываем стартовый экран
-    var startEl=document.getElementById('s-start');
-    if(startEl && !startEl.classList.contains('active'))startEl.classList.add('active');
   }
   initNeoVisuals();
-  }catch(err){
-    // fallback: показываем стартовый экран даже при ошибке инициализации
-    try{
-      var s=document.getElementById('s-start');
-      if(s && !s.classList.contains('active'))s.classList.add('active');
-      var b=document.getElementById('btn-start');
-      if(b){b.onclick=function(){startGame();};}}catch(e2){}
-    if(window.console)console.error('Init error:',err);
-  }
-})();};  
+};
 
 function restorePhase(){
   if(S.phase===6){showPhase(6);renderAdminDashboard();}
@@ -2394,7 +2332,7 @@ function showHdr(){
   var start=document.getElementById('s-start');
   if(start)start.classList.remove('active');
   document.getElementById('hname').style.display='';
-  document.getElementById('hnm').textContent=S.name+(S.role?' · '+S.role:'')+(S.phone?' · '+phoneToLabel(S.phone):'');
+  document.getElementById('hnm').textContent=S.name+(S.phone?' · '+phoneToLabel(S.phone):'');
   document.getElementById('bswitch').style.display='';
   document.getElementById('breset').style.display='';
   document.getElementById('pnav').style.display='';
@@ -2468,64 +2406,6 @@ function goHome(){
   });
   setScreen('s-home',true);
   renderHome();
-  forceHomeTop();
-}
-function forceHomeTop(){
-  try{window.scrollTo(0,0);}catch(e){}
-  try{document.documentElement.scrollTop=0;document.body.scrollTop=0;}catch(e){}
-  requestAnimationFrame(function(){
-    try{window.scrollTo(0,0);}catch(e){}
-    var wrap=document.querySelector('#s-home .wrap');
-    if(wrap && wrap.scrollIntoView){
-      try{wrap.scrollIntoView({block:'start',inline:'nearest'});}catch(e){try{wrap.scrollIntoView(true);}catch(x){}}
-    }
-    try{document.documentElement.scrollTop=0;document.body.scrollTop=0;}catch(e){}
-  });
-  setTimeout(function(){
-    try{window.scrollTo(0,0);}catch(e){}
-    try{document.documentElement.scrollTop=0;document.body.scrollTop=0;}catch(e){}
-  },60);
-}
-
-function phoneMaskedLabel(digits){
-  var lbl=phoneToLabel(digits||'');
-  if(!lbl)return '—';
-  return lbl.replace(/\d(?=\d{2})/g,'•');
-}
-function profileInPeriod(p,period){
-  if(period==='all')return true;
-  var days=period==='7d'?7:30;
-  var ts=p.completedAt||p.startedAt||0;
-  if(!ts)return false;
-  var age=Date.now()-Number(ts||0);
-  return age<=days*24*60*60*1000;
-}
-function competencySnapshot(){
-  var learnDone=Math.min(S.learnIdx||0,LEARN.length);
-  var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
-  var scenTotal=Math.max(1,SCENARIOS.length||1);
-  var checklistTotal=Math.max(1,CHECKLIST.length||1);
-  var service=Math.round(((learnDone/LEARN.length)*50+(mqDone/LEARN.length)*50));
-  var speed=Math.round(((S.blitzScore/10)*65+Math.max(0,100-Math.min(100,Math.round(elapsedSec()/180)))*35));
-  var scripts=Math.round((S.examScore/25)*100);
-  var teamwork=Math.round(((S.practiceScore/scenTotal)*70+((S.checklistState||[]).filter(Boolean).length/checklistTotal)*30));
-  return [
-    {title:'Сервис',score:service,hint:'Теория + мини-квизы'},
-    {title:'Скорость',score:Math.max(0,Math.min(100,speed)),hint:'Блиц + темп'},
-    {title:'Скрипт',score:scripts,hint:'Экзамен и стандарты'},
-    {title:'Командность',score:teamwork,hint:'Практика + смена'}
-  ];
-}
-function competencyLevel(score){
-  if(score>=85)return 'Эксперт';
-  if(score>=70)return 'Уверенный';
-  if(score>=50)return 'Развивающийся';
-  return 'Старт';
-}
-function openLearnByKeywordSafe(enc){
-  var key='';
-  try{key=decodeURIComponent(String(enc||''));}catch(e){key=String(enc||'');}
-  openLearnByKeyword(key);
 }
 
 function switchProfile(){
@@ -2537,11 +2417,9 @@ function switchProfile(){
   var ninp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var cinp=document.getElementById('cinp');
-  var rinp=document.getElementById('rinp');
   if(ninp)ninp.value='';
   if(pinp)pinp.value='';
   if(cinp)cinp.value='';
-  if(rinp)rinp.value='Сотрудник';
   var start=document.getElementById('s-start');
   if(start)start.classList.add('active');
   document.getElementById('hname').style.display='none';
@@ -2580,15 +2458,12 @@ async function startGame(){
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var cinp=document.getElementById('cinp');
-  var rinp=document.getElementById('rinp');
   if(inp)inp.blur();
   if(pinp)pinp.blur();
   if(cinp)cinp.blur();
-  if(rinp)rinp.blur();
   var v=inp?inp.value.trim():'';
   var phoneRaw=pinp?pinp.value.trim():'';
   var city=normCity(cinp?cinp.value:'');
-  var role=String((rinp&&rinp.value)||'Сотрудник').trim()||'Сотрудник';
   var phone=normPhone(phoneRaw);
   if(phone.length<10){
     pinp.style.borderBottomColor='#f04040';
@@ -2616,16 +2491,14 @@ async function startGame(){
        blitzIdx:0,blitzScore:0,blitzQ:[],blitzDone:false,
        practiceIdx:0,practiceScore:0,practiceDone:false,
        examIdx:0,examScore:0,examDone:false,
-       checklistState:[],mqAnswered:{},mistakes:[],startedAt:Date.now(),completedAt:0,totalPoints:0,role:role};
+       checklistState:[],mqAnswered:{},mistakes:[],startedAt:Date.now(),completedAt:0,totalPoints:0};
   }else{
     S.name=v;
     S.phone=phone;
     S.city=city;
-    S.role=role;
   }
   if(pinp)pinp.value=phoneToLabel(phone);
   if(cinp)cinp.value=city;
-  if(rinp)rinp.value=role;
   save();
   document.getElementById('s-start').classList.remove('active');
   showHdr();
@@ -2637,157 +2510,122 @@ async function startGame(){
 // HOME DASHBOARD
 // ═══════════════════════════════════════════
 function renderHome(){
-  var host=document.getElementById('home-content');
-  if(!host)return;
-  try{
-    ensureStateShape();
-    var total=calcTotal();
-    var maxP=MAX_POINTS();
-    var pct=Math.round(total/maxP*100);
-    var learnDone=Math.min(S.learnIdx||0,LEARN.length);
-    var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
-    var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
-    var recentMistakes=(S.mistakes||[]).slice(0,8);
-    var spent=fmtDuration(elapsedSec());
-    var role=S.role||'Сотрудник';
-    var modesHtml='<div class="mode-pills">'+
-      '<span class="mode-pill"><b>Режим 1:</b> Обучение</span>'+
-      '<span class="mode-pill"><b>Режим 2:</b> Оценка</span>'+
-      '<span class="mode-pill"><b>Режим 3:</b> Командный контур</span>'+
-    '</div>';
-    var cmp=competencySnapshot();
-    var cmpHtml='<div class="cmpx">'+cmp.map(function(c){
-      return '<div class="cmpx-item"><div class="cmpx-title">'+escHtml(c.title)+'</div><div class="cmpx-score" style="color:'+(c.score>=70?'var(--green)':c.score>=50?'var(--gold)':'var(--red)')+'">'+c.score+'%</div><div class="cmpx-sub">'+escHtml(competencyLevel(c.score))+' · '+escHtml(c.hint)+'</div></div>';
-    }).join('')+'</div>';
-    var improvePlan=(function(){
-      var arr=cmp.slice().sort(function(a,b){return a.score-b.score;}).slice(0,2);
-      return arr.map(function(c){
-        var key='сервис';
-        if(c.title==='Скорость')key='блиц';
-        else if(c.title==='Скрипт')key='скрипт';
-        else if(c.title==='Командность')key='критические нарушения';
-        return '<button class="btn btn-outline btn-sm" onclick="openLearnByKeywordSafe(\''+encodeURIComponent(key)+'\')">Прокачать: '+escHtml(c.title)+'</button>';
-      }).join('');
-    })();
+  var total=calcTotal();
+  var maxP=MAX_POINTS();
+  var pct=Math.round(total/maxP*100);
+  var learnDone=Math.min(S.learnIdx||0,LEARN.length);
+  var mqDone=S.mqAnswered?Object.keys(S.mqAnswered).length:0;
+  var clDone=S.checklistState?S.checklistState.filter(Boolean).length:0;
+  var recentMistakes=(S.mistakes||[]).slice(0,8);
+  var spent=fmtDuration(elapsedSec());
 
-    var html='<div class="lcard" style="margin-bottom:14px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">👤</div><div><div class="lcard-chapter">Личный кабинет</div><div class="lcard-title">'+escHtml(S.name||'Сотрудник')+'</div></div></div>'+
-      '<div class="lcard-body"><div class="rule">Роль: <b>'+escHtml(role)+'</b> · Телефон: <b>'+escHtml(phoneToLabel(S.phone||''))+'</b> · Город: <b>'+escHtml(S.city||'—')+'</b> · Время в обучении: <b>'+spent+'</b>'+(S.completedAt?' · Статус: <b style="color:var(--green)">завершено</b>':' · Статус: <b style="color:var(--gold)">в процессе</b>')+'</div>'+modesHtml+'</div>'+
+  var html='<div class="lcard" style="margin-bottom:14px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">👤</div><div><div class="lcard-chapter">Личный кабинет</div><div class="lcard-title">'+escHtml(S.name||'Сотрудник')+'</div></div></div>'+
+    '<div class="lcard-body"><div class="rule">Телефон: <b>'+escHtml(phoneToLabel(S.phone||''))+'</b> · Город: <b>'+escHtml(S.city||'—')+'</b> · Время в обучении: <b>'+spent+'</b>'+(S.completedAt?' · Статус: <b style="color:var(--green)">завершено</b>':' · Статус: <b style="color:var(--gold)">в процессе</b>')+'</div></div>'+
+  '</div>';
+
+  html+='<div class="score-tracker">'+
+    '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
+    '<div class="st-bars">'+
+    stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
+    stBar('🧠 Мини-квизы',mqDone,LEARN.length,'#7ed6ff')+
+    stBar('⚡ Блиц',S.blitzScore,10,'var(--gold)')+
+    stBar('🎭 Практика',S.practiceScore,SCENARIOS.length,'var(--green)')+
+    stBar('📝 Экзамен',S.examScore,25,'var(--red)')+
+    stBar('📋 Смена',clDone,CHECKLIST.length,'#c060ff')+
+    '</div></div>';
+
+  html+='<div class="results-grid">'+
+    '<div class="res-box"><div class="res-num" style="color:var(--gold)">'+S.blitzScore+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="res-lbl">Блиц-тест</div></div>'+
+    '<div class="res-box"><div class="res-num" style="color:var(--green)">'+S.practiceScore+'<span style="font-size:1rem;color:var(--muted)">/'+SCENARIOS.length+'</span></div><div class="res-lbl">Практика</div></div>'+
+    '<div class="res-box"><div class="res-num" style="color:var(--red)">'+S.examScore+'<span style="font-size:1rem;color:var(--muted)">/25</span></div><div class="res-lbl">Экзамен</div></div>'+
     '</div>';
 
-    html+='<div class="score-tracker">'+
-      '<div class="st-title">⭐ ОБЩИЙ РЕЗУЛЬТАТ — '+total+' / '+maxP+' очков ('+pct+'%)</div>'+
-      '<div class="st-bars">'+
-      stBar('📖 Обучение',learnDone,LEARN.length,'var(--blue)')+
-      stBar('🧠 Мини-квизы',mqDone,LEARN.length,'#7ed6ff')+
-      stBar('⚡ Блиц',S.blitzScore,10,'var(--gold)')+
-      stBar('🎭 Практика',S.practiceScore,SCENARIOS.length,'var(--green)')+
-      stBar('📝 Экзамен',S.examScore,25,'var(--red)')+
-      stBar('📋 Смена',clDone,CHECKLIST.length,'#c060ff')+
-      '</div></div>';
-
-    html+='<div class="lcard" style="margin-top:14px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧠</div><div><div class="lcard-chapter">Компетенции</div><div class="lcard-title">Карта мастерства</div></div></div>'+
-      '<div class="lcard-body"><div class="rule">Оценка по модели 70-20-10: теория, практика и поведение в смене.</div>'+cmpHtml+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+improvePlan+'</div></div>'+
+  html+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">'+
+    '<button class="btn btn-red" onclick="navTo(0)">📖 К обучению</button>'+
+    (S.blitzDone?'<button class="btn btn-outline" onclick="navTo(1)">⚡ Повторить блиц</button>':'')+
+    (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
+    (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
+    '<button class="btn btn-outline" onclick="navTo(4)">📋 Чек-лист смены</button>'+
+    '<button class="btn btn-outline" onclick="navTo(6)">🏆 Турнир результатов</button>'+
+    '<button class="btn btn-outline" onclick="navTo(7)">💬 Чат команды</button>'+
+    '<button class="btn btn-outline" onclick="navTo(8)">✉️ Основателю</button>'+
     '</div>';
 
-    html+='<div class="results-grid">'+
-      '<div class="res-box"><div class="res-num" style="color:var(--gold)">'+S.blitzScore+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="res-lbl">Блиц-тест</div></div>'+
-      '<div class="res-box"><div class="res-num" style="color:var(--green)">'+S.practiceScore+'<span style="font-size:1rem;color:var(--muted)">/'+SCENARIOS.length+'</span></div><div class="res-lbl">Практика</div></div>'+
-      '<div class="res-box"><div class="res-num" style="color:var(--red)">'+S.examScore+'<span style="font-size:1rem;color:var(--muted)">/25</span></div><div class="res-lbl">Экзамен</div></div>'+
-      '</div>';
-
-    html+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">'+
-      '<button class="btn btn-red" onclick="navTo(0)">📖 Режим: обучение</button>'+
-      (S.blitzDone?'<button class="btn btn-outline" onclick="navTo(1)">⚡ Повторить блиц</button>':'')+
-      (S.practiceDone?'<button class="btn btn-outline" onclick="navTo(2)">🎭 Повторить практику</button>':'')+
-      (S.examDone?'<button class="btn btn-outline" onclick="navTo(3)">📝 Результат экзамена</button>':'')+
-      '<button class="btn btn-outline" onclick="navTo(4)">📋 Режим: смена</button>'+
-      '<button class="btn btn-outline" onclick="navTo(6)">🏆 Режим: рейтинг</button>'+
-      '<button class="btn btn-outline" onclick="navTo(7)">💬 Режим: команда</button>'+
-      '<button class="btn btn-outline" onclick="navTo(8)">✉️ Основателю</button>'+
-      '</div>';
-
-    html+='<div class="lcard" style="margin-top:16px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">🚨</div><div><div class="lcard-chapter">Важно всегда</div><div class="lcard-title">Штрафы и грубые нарушения</div></div></div>'+
-      '<div class="lcard-body">'+
-        '<div class="rule gold"><b>Памятка на каждый день:</b> используем формат «стандарт → риск → правильное действие», чтобы не просто избегать ошибок, а управлять качеством сервиса.</div>'+
-        '<div class="steps">'+
-          '<div class="step"><div class="sbadge" style="background:var(--gold);color:#000">300₽</div><div class="scnt"><div class="stitle">Опоздание 1–10 минут</div><div class="sdesc"><b>Стандарт:</b> приход заранее. <b>Риск:</b> перегруз старта смены. <b>Действие:</b> предупреди и передай план подхвата.</div></div></div>'+
-          '<div class="step"><div class="sbadge" style="background:#e07000;color:#fff">500₽</div><div class="scnt"><div class="stitle">Опоздание от 10 минут / нарушение приветствия</div><div class="sdesc"><b>Стандарт:</b> «Ресторан Gusto, оператор [имя], здравствуйте!». <b>Риск:</b> падение доверия гостя. <b>Действие:</b> вернись в скрипт и закрепи в тренировке.</div></div></div>'+
-          '<div class="step"><div class="sbadge" style="background:var(--red);color:#fff">1000₽</div><div class="scnt"><div class="stitle">Критичные сервисные нарушения</div><div class="sdesc"><b>Стандарт:</b> прозрачная коммуникация и LAST. <b>Риск:</b> потеря гостя и репутации. <b>Действие:</b> эскалация менеджеру и немедленное исправление.</div></div></div>'+
-        '</div>'+
-        '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Несовместимо с работой в Gusto</div><div class="co-d">Хищение, ложь гостю, грубость/крик, агрессия в команде, угрозы здоровью из-за нарушения санитарных норм — основания для немедленного увольнения.</div></div></div>'+
-        '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
-          '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'система штрафов\')">📋 Открыть раздел штрафов</button>'+
-          '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'критические нарушения\')">🚨 Открыть критические нарушения</button>'+
-        '</div>'+
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🚨</div><div><div class="lcard-chapter">Важно всегда</div><div class="lcard-title">Штрафы и грубые нарушения</div></div></div>'+
+    '<div class="lcard-body">'+
+      '<div class="rule gold"><b>Памятка на каждый день:</b> эти пункты всегда актуальны для смены, звонков и общения с гостями.</div>'+
+      '<div class="steps">'+
+        '<div class="step"><div class="sbadge" style="background:var(--gold);color:#000">300₽</div><div class="scnt"><div class="stitle">Опоздание 1–10 минут</div><div class="sdesc">Даже короткое опоздание перегружает команду в начале смены.</div></div></div>'+
+        '<div class="step"><div class="sbadge" style="background:#e07000;color:#fff">500₽</div><div class="scnt"><div class="stitle">Опоздание от 10 минут / нарушение скрипта приветствия</div><div class="sdesc">Стандарт звонка обязателен: «Ресторан Gusto, оператор [имя], здравствуйте!»</div></div></div>'+
+        '<div class="step"><div class="sbadge" style="background:var(--red);color:#fff">1000₽</div><div class="scnt"><div class="stitle">Критичные сервисные нарушения</div><div class="sdesc">Не предупредил об опоздании доставки, грубость с гостем, нарушение LAST, несоответствие внешнего вида стандарту.</div></div></div>'+
       '</div>'+
-    '</div>';
-
-    html+='<div class="lcard" style="margin-top:16px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">🛠</div><div><div class="lcard-chapter">Персонально</div><div class="lcard-title">Работа над ошибками</div></div></div>'+
-      '<div class="lcard-body">'+
-        (recentMistakes.length
-          ?'<div class="rule">Показываем последние ошибки и даём короткий путь восстановления навыка: разбор → повтор темы → закрепление.</div>'+
-           '<div class="steps">'+
-           recentMistakes.map(function(m){
-              return '<div class="step"><div class="sbadge" style="background:var(--g3);color:var(--white)">'+escHtml(m.stage||'Тест')+'</div><div class="scnt">'+
-                '<div class="stitle">'+escHtml(shortTxt(m.q||'Вопрос',120))+'</div>'+
-                '<div class="sdesc"><b style="color:#ff9a9a">Твой ответ:</b> '+escHtml(shortTxt(m.userAnswer||'—',90))+'<br>'+
-                '<b style="color:#80ffcc">Как правильно:</b> '+escHtml(shortTxt(m.rightAnswer||'—',90))+'<br>'+
-                '<span style="color:var(--muted)">'+escHtml(shortTxt(m.explain||'',180))+'</span></div></div></div>';
-            }).join('')+
-            '</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-outline btn-sm" onclick="clearMistakes()">Очистить список ошибок</button><button class="btn btn-outline btn-sm" onclick="navTo(1)">Повторить блиц</button><button class="btn btn-outline btn-sm" onclick="navTo(2)">Повторить практику</button></div>'
-          :'<div class="rule green">Пока ошибок не зафиксировано. Отличная работа! Когда появятся неверные ответы, тут будет персональный разбор.</div>')+
+      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Несовместимо с работой в Gusto</div><div class="co-d">Хищение, ложь гостю, грубость/крик, агрессия в команде, угрозы здоровью из-за нарушения санитарных норм — основания для немедленного увольнения.</div></div></div>'+
+      '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'система штрафов\')">📋 Открыть раздел штрафов</button>'+
+        '<button class="btn btn-outline btn-sm" onclick="openLearnByKeyword(\'критические нарушения\')">🚨 Открыть критические нарушения</button>'+
       '</div>'+
-    '</div>';
+    '</div>'+
+  '</div>';
 
-    html+='<div class="lcard" style="margin-top:16px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div></div>'+
-      '<div class="lcard-body">'+
-        '<div class="rule gold"><b>Бонусная карта:</b> копите бонусы, оплачивайте ими до 50% заказа и участвуйте в акциях. <b>1 бонус = 1 ₽.</b></div>'+
-        '<div class="rule"><b>Вход:</b> бонусы и статусы начисляются только для авторизованного клиента по его номеру.</div>'+
-        '<div class="ls"><div class="ls-title">Гибкая накопительная система (за последние 30 дней)</div>'+
-        '<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;border:1px solid var(--g3);font-size:.8rem">'+
-          '<tr style="background:var(--g3)"><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Процент накоплений</td><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Диапазон сумм</td></tr>'+
-          '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--blue);font-weight:700">2%</td><td style="padding:8px 12px">0 ₽ – 2 999 ₽</td></tr>'+
-          '<tr style="border-bottom:1px solid var(--g3);background:var(--g1)"><td style="padding:8px 12px;color:var(--green);font-weight:700">3%</td><td style="padding:8px 12px">3 000 ₽ – 4 999 ₽</td></tr>'+
-          '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--gold);font-weight:700">5%</td><td style="padding:8px 12px">5 000 ₽ – 7 999 ₽</td></tr>'+
-          '<tr style="background:var(--g1)"><td style="padding:8px 12px;color:var(--red);font-weight:900">7%</td><td style="padding:8px 12px">8 000 ₽ и выше</td></tr>'+
-        '</table></div></div>'+
-        '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
-        '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
+  html+='<div class="lcard" style="margin-top:16px">'+
+    '<div class="lcard-hdr"><div class="lcard-hdr-icon">🛠</div><div><div class="lcard-chapter">Персонально</div><div class="lcard-title">Работа над ошибками</div></div></div>'+
+    '<div class="lcard-body">'+
+      (recentMistakes.length
+        ?'<div class="rule">Показываем последние ошибки, чтобы можно было быстро подтянуть слабые места перед сменой.</div>'+
+         '<div class="steps">'+
+         recentMistakes.map(function(m){
+           return '<div class="step"><div class="sbadge" style="background:var(--g3);color:var(--white)">'+escHtml(m.stage||'Тест')+'</div><div class="scnt">'+
+             '<div class="stitle">'+escHtml(shortTxt(m.q||'Вопрос',120))+'</div>'+
+             '<div class="sdesc"><b style="color:#ff9a9a">Твой ответ:</b> '+escHtml(shortTxt(m.userAnswer||'—',90))+'<br>'+
+             '<b style="color:#80ffcc">Как правильно:</b> '+escHtml(shortTxt(m.rightAnswer||'—',90))+'<br>'+
+             '<span style="color:var(--muted)">'+escHtml(shortTxt(m.explain||'',180))+'</span></div></div></div>';
+         }).join('')+
+         '</div><div style="margin-top:10px"><button class="btn btn-outline btn-sm" onclick="clearMistakes()">Очистить список ошибок</button></div>'
+        :'<div class="rule green">Пока ошибок не зафиксировано. Отличная работа! Когда появятся неверные ответы, тут будет персональный разбор.</div>')+
+    '</div>'+
+  '</div>';
+
+  html+='<details class="lcard" style="margin-top:16px"><summary class="lcard-hdr" style="cursor:pointer;list-style:none">'+
+    '<div class="lcard-hdr-icon">💳</div><div><div class="lcard-chapter">Важно в продажах</div><div class="lcard-title">Бонусная система и анти-махинации</div></div>'+
+    '</summary><div class="lcard-body">'+
+      '<div class="rule gold"><b>Бонусная карта:</b> копите бонусы, оплачивайте ими до 50% заказа и участвуйте в акциях. <b>1 бонус = 1 ₽.</b></div>'+
+      '<div class="rule"><b>Вход:</b> бонусы и статусы начисляются только для авторизованного клиента по его номеру.</div>'+
+      '<div class="ls"><div class="ls-title">Гибкая накопительная система (за последние 30 дней)</div>'+
+      '<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;border:1px solid var(--g3);font-size:.8rem">'+
+        '<tr style="background:var(--g3)"><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Процент накоплений</td><td style="padding:8px 12px;font-family:Montserrat,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:1px">Диапазон сумм</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--blue);font-weight:700">2%</td><td style="padding:8px 12px">0 ₽ – 2 999 ₽</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g1)"><td style="padding:8px 12px;color:var(--green);font-weight:700">3%</td><td style="padding:8px 12px">3 000 ₽ – 4 999 ₽</td></tr>'+
+        '<tr style="border-bottom:1px solid var(--g3);background:var(--g2)"><td style="padding:8px 12px;color:var(--gold);font-weight:700">5%</td><td style="padding:8px 12px">5 000 ₽ – 7 999 ₽</td></tr>'+
+        '<tr style="background:var(--g1)"><td style="padding:8px 12px;color:var(--red);font-weight:900">7%</td><td style="padding:8px 12px">8 000 ₽ и выше</td></tr>'+
+      '</table></div></div>'+
+      '<div class="callout"><div class="co-icon">⛔</div><div><div class="co-t">Махинации с бонусами запрещены</div><div class="co-d"><b>Нельзя вводить свой номер телефона вместо номера клиента</b> при оформлении заказа. Бонусы начисляются только владельцу заказа. Подмена номера — грубое нарушение, рассматривается как мошенничество и может привести к немедленному увольнению.</div></div></div>'+
+      '<div class="rule">Если клиент не авторизован в бонусной программе, предложи зарегистрироваться корректно, без подмены данных, и объясни выгоду по накоплениям.</div>'+
+    '</div></details>';
+
+  html+='<details class="lcard" style="margin-top:16px"><summary class="lcard-hdr" style="cursor:pointer;list-style:none">'+
+    '<div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div>'+
+    '</summary><div class="lcard-body">'+
+      '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
+      '<div class="steps">'+
+        '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Гость и команда — всегда в тоне уважения, без грубости и формального отношения.</div></div></div>'+
+        '<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">Ответственность</div><div class="sdesc">Ошибку не прячем — быстро исправляем, предупреждаем риски и доводим до результата.</div></div></div>'+
+        '<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">Честность</div><div class="sdesc">Никаких ложных обещаний и махинаций. Доверие гостя дороже одной продажи.</div></div></div>'+
+        '<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">Командность</div><div class="sdesc">Сильный сотрудник усиливает смену: помогает, подхватывает, не оставляет коллегу одного.</div></div></div>'+
+        '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — шаг в мастерство: анализируем ошибки и поднимаем стандарт сервиса.</div></div></div>'+
       '</div>'+
-    '</div>';
+      '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
+    '</div></details>';
 
-    html+='<div class="lcard" style="margin-top:16px">'+
-      '<div class="lcard-hdr"><div class="lcard-hdr-icon">🧭</div><div><div class="lcard-chapter">ДНК компании</div><div class="lcard-title">Культура и ценности Gusto</div></div></div>'+
-      '<div class="lcard-body">'+
-        '<div class="hquote">«Мы не просто готовим пиццу. Мы создаём момент, в который человек чувствует: здесь о нём помнят, его уважают и ему рады.»</div>'+
-        '<div class="steps">'+
-          '<div class="step"><div class="sbadge">1</div><div class="scnt"><div class="stitle">Уважение</div><div class="sdesc">Гость и команда — всегда в тоне уважения, без грубости и формального отношения.</div></div></div>'+
-          '<div class="step"><div class="sbadge">2</div><div class="scnt"><div class="stitle">Ответственность</div><div class="sdesc">Ошибку не прячем — быстро исправляем, предупреждаем риски и доводим до результата.</div></div></div>'+
-          '<div class="step"><div class="sbadge">3</div><div class="scnt"><div class="stitle">Честность</div><div class="sdesc">Никаких ложных обещаний и махинаций. Доверие гостя дороже одной продажи.</div></div></div>'+
-          '<div class="step"><div class="sbadge">4</div><div class="scnt"><div class="stitle">Командность</div><div class="sdesc">Сильный сотрудник усиливает смену: помогает, подхватывает, не оставляет коллегу одного.</div></div></div>'+
-          '<div class="step"><div class="sbadge">5</div><div class="scnt"><div class="stitle">Развитие</div><div class="sdesc">Каждая смена — шаг в мастерство: анализируем ошибки и поднимаем стандарт сервиса.</div></div></div>'+
-        '</div>'+
-        '<div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div>'+
-      '</div>'+
-    '</div>';
-
-    host.innerHTML=html;
-  }catch(e){
-    host.innerHTML='<div class="lcard"><div class="lcard-body"><div class="rule">Главная временно в безопасном режиме.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-red" onclick="navTo(0)">К обучению</button><button class="btn btn-outline" onclick="navTo(6)">Рейтинг</button><button class="btn btn-outline" onclick="navTo(7)">Чат</button></div></div></div>';
-  }
+  document.getElementById('home-content').innerHTML=html;
 }
 
 function renderAdminDashboard(){
   document.getElementById('admin-content').innerHTML='<div class="rule">Загружаю результаты сотрудников...</div>';
   getAllProfiles().then(function(data){
     var adminMode=isAdminAccess();
-    var list=(data||[]).slice().filter(function(p){return profileInPeriod(p,LEADERBOARD_PERIOD);});
+    var list=(data||[]).slice();
     var rankScore=function(p){
       if(LEADERBOARD_SORT==='exam')return (p.examScore||0);
       if(LEADERBOARD_SORT==='speed'){
@@ -2818,9 +2656,9 @@ function renderAdminDashboard(){
       var pct=Math.round((total/(MAX_POINTS()||1))*100);
       return '<tr style="border-bottom:1px solid var(--g3);background:'+(idx%2?'var(--g1)':'var(--g2)')+'">'+
         '<td style="padding:8px 10px">'+medal+' '+(idx+1)+'</td>'+
-        '<td style="padding:8px 10px"><b>'+escHtml(p.name||'—')+'</b><br><span style="font-size:.65rem;color:var(--muted)">'+escHtml(p.role||'Сотрудник')+'</span></td>'+
+        '<td style="padding:8px 10px"><b>'+escHtml(p.name||'—')+'</b></td>'+
         '<td style="padding:8px 10px">'+escHtml(normCity(p.city||'—'))+'</td>'+
-        '<td style="padding:8px 10px">'+escHtml(adminMode?phoneToLabel(p.phone||''):phoneMaskedLabel(p.phone||''))+'</td>'+
+        '<td style="padding:8px 10px">'+escHtml(phoneToLabel(p.phone||''))+'</td>'+
         '<td style="padding:8px 10px">'+(p.examScore||0)+'/25</td>'+
         '<td style="padding:8px 10px">'+total+'/'+MAX_POINTS()+' ('+pct+'%)</td>'+
         '<td style="padding:8px 10px">'+elapsed+'</td>'+
@@ -2853,12 +2691,6 @@ function renderAdminDashboard(){
       '<button class="btn btn-outline btn-sm" onclick="setLeaderboardSort(\'exam\')">По экзамену</button>'+
       '<button class="btn btn-outline btn-sm" onclick="setLeaderboardSort(\'speed\')">По скорости</button>'+
       '</div>';
-    html+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">'+
-      '<button class="btn btn-outline btn-sm" onclick="setLeaderboardPeriod(\'7d\')">Сезон 7 дней</button>'+
-      '<button class="btn btn-outline btn-sm" onclick="setLeaderboardPeriod(\'30d\')">Сезон 30 дней</button>'+
-      '<button class="btn btn-outline btn-sm" onclick="setLeaderboardPeriod(\'all\')">За всё время</button>'+
-      '<span class="pill blue">Период: '+(LEADERBOARD_PERIOD==='7d'?'7 дней':LEADERBOARD_PERIOD==='30d'?'30 дней':'всё время')+'</span>'+
-      '</div>';
     html+='<div class="lcard"><div class="lcard-body">'+
       (list.length?'<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:.79rem">'+
         '<tr style="background:var(--g3)">'+
@@ -2884,10 +2716,6 @@ function setLeaderboardSort(mode){
   LEADERBOARD_SORT=mode||'total';
   renderAdminDashboard();
 }
-function setLeaderboardPeriod(mode){
-  LEADERBOARD_PERIOD=mode||'all';
-  renderAdminDashboard();
-}
 
 function renderTeamChat(){
   document.getElementById('chat-content').innerHTML='<div class="rule">Загружаю сообщения...</div>';
@@ -2896,10 +2724,7 @@ function renderTeamChat(){
     var byId={};
     all.forEach(function(m){byId[String(m.id||'')]=m;});
     var q=String(CHAT_SEARCH_QUERY||'').toLowerCase().trim();
-    var channelMap={general:'Обучение',ops:'Операционка',ideas:'Идеи'};
     var filtered=all.filter(function(m){
-      var mChannel=String(m.channel||'general');
-      if(CHAT_CHANNEL!=='all' && mChannel!==CHAT_CHANNEL)return false;
       if(!q)return true;
       var sender=resolveSenderName(m).toLowerCase();
       var city=resolveSenderCity(m).toLowerCase();
@@ -2912,7 +2737,6 @@ function renderTeamChat(){
       var mine=normPhone(m.phone||'')===normPhone(S.phone||'');
       var sender=resolveSenderName(m);
       var senderCity=resolveSenderCity(m);
-      var mChannel=String(m.channel||'general');
       var replyId=String(m.reply_to||'');
       var replyMsg=replyId ? byId[replyId] : null;
       var replyHtml=replyMsg?('<div class="reply-snippet"><b>'+escHtml(resolveSenderName(replyMsg))+':</b> '+escHtml(getMsgTextPreview(replyMsg.text||''))+'</div>'):'';
@@ -2927,7 +2751,7 @@ function renderTeamChat(){
       return '<div class="msg-row'+(mine?' mine':'')+'">'+
         '<div class="msg-avatar">'+escHtml(initials(sender))+'</div>'+
         '<div class="msg-bubble">'+
-          '<div class="msg-meta"><span><b>'+escHtml(sender)+'</b> · '+escHtml(senderCity)+' · #'+escHtml(channelMap[mChannel]||mChannel)+(m.pinned?' · 📌':'')+'</span><span>'+escHtml(dtLabel(m.created_at))+'</span></div>'+
+          '<div class="msg-meta"><span><b>'+escHtml(sender)+'</b> · '+escHtml(senderCity)+(m.pinned?' · 📌':'')+'</span><span>'+escHtml(dtLabel(m.created_at))+'</span></div>'+
           replyHtml+
           '<div class="msg-text">'+escHtml(m.text||'')+'</div>'+
           '<div class="reactions">'+reactHtml+'</div>'+
@@ -2951,13 +2775,6 @@ function renderTeamChat(){
           '<button class="btn btn-outline btn-sm" onclick="toggleChatPinnedFilter()">'+(CHAT_ONLY_PINNED?'Все сообщения':'Только закрепы')+'</button>'+
           '<span class="pill">'+filtered.length+' сообщ.</span>'+
         '</div>'+
-        '<div class="chat-toolbar">'+
-          '<button class="btn btn-outline btn-sm" onclick="setChatChannel(\'all\')">Все каналы</button>'+
-          '<button class="btn btn-outline btn-sm" onclick="setChatChannel(\'general\')">#Обучение</button>'+
-          '<button class="btn btn-outline btn-sm" onclick="setChatChannel(\'ops\')">#Операционка</button>'+
-          '<button class="btn btn-outline btn-sm" onclick="setChatChannel(\'ideas\')">#Идеи</button>'+
-          '<span class="pill blue">Текущий: '+escHtml(CHAT_CHANNEL==='all'?'все':(channelMap[CHAT_CHANNEL]||CHAT_CHANNEL))+'</span>'+
-        '</div>'+
         (pinnedList.length?'<div class="rule">📌 Закрепленные: '+pinnedList.length+'</div>':'')+
         '<div class="chat-stream" id="chat-stream">'+(items||'<div class="rule">Ничего не найдено. Попробуй другой запрос.</div>')+'</div>'+
         '<div class="lcard"><div class="lcard-body">'+
@@ -2977,10 +2794,6 @@ function renderTeamChat(){
 }
 function setChatSearch(v){
   CHAT_SEARCH_QUERY=String(v||'');
-  renderTeamChat();
-}
-function setChatChannel(channel){
-  CHAT_CHANNEL=String(channel||'all');
   renderTeamChat();
 }
 function toggleChatPinnedFilter(){
@@ -3048,33 +2861,6 @@ async function deleteChatMessage(id){
   renderTeamChat();
 }
 
-function founderStatusLabel(st){
-  if(st==='answered')return 'Отвечено';
-  if(st==='in_progress')return 'В работе';
-  return 'Новое';
-}
-function founderAgeLabel(iso){
-  var t=iso?new Date(iso).getTime():Date.now();
-  var diff=Math.max(0,Date.now()-t);
-  var h=Math.round(diff/3600000);
-  if(h<1)return 'только что';
-  if(h<24)return h+' ч назад';
-  var d=Math.round(h/24);
-  return d+' дн назад';
-}
-function applyFounderTemplate(kind){
-  var subj=document.getElementById('founder-subject');
-  var msg=document.getElementById('founder-msg');
-  var templates={
-    issue:{s:'Проблема в смене',m:'Опиши проблему: что произошло, где, когда, какой риск для гостя и что уже сделано.'},
-    idea:{s:'Идея улучшения',m:'Предложение: что улучшить, как это повлияет на скорость/качество, какие ресурсы нужны.'},
-    growth:{s:'Запрос на развитие',m:'Что хочу прокачать: навык, почему это важно, какой формат обучения нужен.'}
-  };
-  var t=templates[kind]||templates.issue;
-  if(subj)subj.value=t.s;
-  if(msg)msg.value=t.m;
-}
-
 function renderFounderPanel(){
   document.getElementById('founder-content').innerHTML='<div class="rule">Загружаю обращения...</div>';
   listFounderRequests().then(function(list){
@@ -3087,9 +2873,9 @@ function renderFounderPanel(){
       return '<div class="lcard" style="margin-bottom:8px"><div class="lcard-body" style="padding:12px 14px">'+
         '<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px">'+
           '<div style="font-size:.73rem;color:var(--muted)"><b style="color:var(--white)">'+escHtml(sender)+'</b> · '+escHtml(senderCity)+'</div>'+
-          '<div class="pill '+(r.status==='answered'?'green':r.status==='in_progress'?'gold':'red')+'">'+escHtml(founderStatusLabel(r.status||'new'))+'</div>'+
+          '<div class="pill '+(r.status==='answered'?'green':r.status==='in_progress'?'gold':'red')+'">'+escHtml(r.status||'new')+'</div>'+
         '</div>'+
-        '<div style="font-size:.68rem;color:var(--muted);margin-bottom:6px">'+escHtml(dtLabel(r.created_at))+' · '+escHtml(founderAgeLabel(r.created_at))+'</div>'+
+        '<div style="font-size:.68rem;color:var(--muted);margin-bottom:6px">'+escHtml(dtLabel(r.created_at))+'</div>'+
         '<div style="font-size:.8rem;font-weight:700;margin-bottom:4px">'+escHtml(r.subject||'Без темы')+'</div>'+
         '<div style="font-size:.88rem;line-height:1.6">'+escHtml(r.message||'')+'</div>'+
         (isAdminAccess()?'<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
@@ -3099,13 +2885,8 @@ function renderFounderPanel(){
           '</div>':'')+
       '</div></div>';
     }).join('');
-    var html='<div class="rule">Канал обращений к Основателю. SLA: новое ≤ 24ч, в работе ≤ 72ч, отвечено — с итогом и действием.</div>'+
+    var html='<div class="rule">Канал обращений к Основателю. Коротко и по сути: проблема, идея, предложение улучшений.</div>'+
       '<div class="lcard" style="margin-bottom:10px"><div class="lcard-body">'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">'+
-      '<button class="btn btn-outline btn-sm" onclick="applyFounderTemplate(\'issue\')">Шаблон: проблема</button>'+
-      '<button class="btn btn-outline btn-sm" onclick="applyFounderTemplate(\'idea\')">Шаблон: идея</button>'+
-      '<button class="btn btn-outline btn-sm" onclick="applyFounderTemplate(\'growth\')">Шаблон: развитие</button>'+
-      '</div>'+
       '<input id="founder-subject" class="ninp" type="text" placeholder="Тема обращения" style="margin-bottom:8px"/>'+
       '<textarea id="founder-msg" class="ninp" style="min-height:96px;border:1px solid var(--g4);border-bottom:1px solid var(--g4)" placeholder="Напиши обращение..."></textarea>'+
       '<div style="margin-top:10px;display:flex;justify-content:flex-end"><button class="btn btn-red" onclick="sendFounderRequest()">Отправить обращение</button></div>'+
@@ -3147,7 +2928,7 @@ async function removeEmployeeProfile(phoneDigits){
     return;
   }
   if(!confirm('Удалить сотрудника из рейтинга и базы?'))return;
-  try{ LS.removeItem(profileKey(d)); }catch(e){}
+  try{ localStorage.removeItem(profileKey(d)); }catch(e){}
   if(cloudReady){
     try{ await sbClient.from('profiles').delete().eq('phone',d); }catch(e){}
   }
@@ -3200,7 +2981,6 @@ function buildShareText(){
   var learnDone=Math.min(S.learnIdx||0,LEARN.length);
   var phoneLbl=phoneToLabel(S.phone||'');
   return 'Сотрудник: '+S.name+'\nДата: '+d+
-    (S.role?'\nРоль: '+S.role:'')+
     (phoneLbl?'\nТелефон: '+phoneLbl:'')+
     (S.city?'\nГород: '+S.city:'')+
     '\nОбучение Gusto — Академия сервиса'+
@@ -3522,6 +3302,7 @@ function goExamResult(){
   setScreen('s-exam',true);
   var pass=S.examScore>=23;
   if(pass)setTimeout(function(){launchConfettiBurst(96);},180);
+  var shareText=buildShareText();
   document.getElementById('exam-content').innerHTML=
     '<div class="done-card">'+
     '<div class="done-icon">'+(pass?'🎉':'😔')+'</div>'+
@@ -3537,6 +3318,13 @@ function goExamResult(){
     '<button class="btn btn-outline" onclick="startChecklist()">📋 Чек-лист смены</button>'+
     '<button class="btn btn-outline btn-sm" onclick="goHome()">🏠 Главная</button>'+
     '</div>'+
+    '<div class="share-box" style="margin-top:14px">'+
+    '<div class="share-lbl">📤 Отправить результат руководителю</div>'+
+    '<div class="share-txt" id="share-txt-e">'+shareText+'</div>'+
+    '<div class="share-acts">'+
+    '<button class="btn btn-outline btn-sm" onclick="copyResult(\'share-txt-e\')">📋 Скопировать</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="shareResult()">📤 Поделиться</button>'+
+    '</div></div>'+
     '</div>';
 }
 
@@ -3691,8 +3479,8 @@ function flashFx(ok){
 function confirmReset(){
   if(!confirm('Сбросить весь прогресс и начать заново?'))return;
   try{
-    if(S.phone||activeProfilePhone)LS.removeItem(profileKey(S.phone||activeProfilePhone));
-    else LS.removeItem('gsto5');
+    if(S.phone||activeProfilePhone)localStorage.removeItem(profileKey(S.phone||activeProfilePhone));
+    else localStorage.removeItem('gsto5');
   }catch(e){}
   location.reload();
 }
