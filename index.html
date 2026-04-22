@@ -1019,6 +1019,9 @@ var CHAT_SEARCH_QUERY='';
 var CHAT_ONLY_PINNED=false;
 var CHAT_CHANNEL='all';
 var CHAT_EMOJIS=['🔥','👏','💡','❤️','⚡'];
+var HOME_MOBILE_FULL=(function(){
+  try{return localStorage.getItem('gsto5_home_mobile_full')==='1';}catch(e){return false;}
+})();
 // ========================= SUPABASE CONFIG =========================
 // Вставь сюда данные из Supabase Project Settings -> API:
 // 1) Project URL
@@ -2473,6 +2476,29 @@ function openLearnByKeywordSafe(enc){
   try{key=decodeURIComponent(String(enc||''));}catch(e){key=String(enc||'');}
   openLearnByKeyword(key);
 }
+function isMobileCompact(){
+  try{return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;}catch(e){return (window.innerWidth||999)>0 && (window.innerWidth||999)<=760;}
+}
+function setHomeMobileMode(fullMode){
+  HOME_MOBILE_FULL=!!fullMode;
+  try{localStorage.setItem('gsto5_home_mobile_full',HOME_MOBILE_FULL?'1':'0');}catch(e){}
+  renderHome();
+}
+function renderHomeLite(host,total,maxP,pct,spent){
+  var html='<div class="lcard" style="margin-bottom:12px"><div class="lcard-body">'+
+    '<div class="rule"><b>'+escHtml(S.name||'Сотрудник')+'</b> · '+escHtml(S.role||'Сотрудник')+' · '+escHtml(S.city||'—')+'</div>'+
+    '<div class="rule">Общий результат: <b>'+total+' / '+maxP+' ('+pct+'%)</b> · Время: <b>'+spent+'</b></div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn btn-red btn-sm" onclick="setHomeMobileMode(true)">Полная версия</button>'+
+      '<button class="btn btn-outline btn-sm" onclick="navTo(0)">Обучение</button>'+
+      '<button class="btn btn-outline btn-sm" onclick="navTo(6)">Рейтинг</button>'+
+      '<button class="btn btn-outline btn-sm" onclick="navTo(7)">Чат</button>'+
+    '</div>'+
+  '</div></div>';
+  html+='<details class="lcard" style="margin-bottom:10px"><summary class="lcard-body" style="cursor:pointer"><b>💳 Бонусная система</b></summary><div class="lcard-body" style="padding-top:0"><div class="rule gold">1 бонус = 1 ₽, списание до 50% заказа.</div><div class="rule">2%: 0–2 999 ₽ · 3%: 3 000–4 999 ₽ · 5%: 5 000–7 999 ₽ · 7%: от 8 000 ₽.</div></div></details>';
+  html+='<details class="lcard"><summary class="lcard-body" style="cursor:pointer"><b>🧭 Ценности компании</b></summary><div class="lcard-body" style="padding-top:0"><div class="rule">Уважение · Ответственность · Честность · Командность · Развитие.</div><div class="rule green"><b>Формула Gusto:</b> скорость + качество + уважение = лояльность гостя.</div><button class="btn btn-outline btn-sm" onclick="navTo(5)">Открыть раздел культуры</button></div></details>';
+  host.innerHTML=html;
+}
 
 function switchProfile(){
   SCREEN_IDS.forEach(function(id){
@@ -2596,6 +2622,10 @@ function renderHome(){
     var recentMistakes=(S.mistakes||[]).slice(0,8);
     var spent=fmtDuration(elapsedSec());
     var role=S.role||'Сотрудник';
+    if(isMobileCompact() && !HOME_MOBILE_FULL){
+      renderHomeLite(host,total,maxP,pct,spent);
+      return;
+    }
     var modesHtml='<div class="mode-pills">'+
       '<span class="mode-pill"><b>Режим 1:</b> Обучение</span>'+
       '<span class="mode-pill"><b>Режим 2:</b> Оценка</span>'+
@@ -2661,6 +2691,7 @@ function renderHome(){
       '<button class="btn btn-outline" onclick="navTo(6)">🏆 Режим: рейтинг</button>'+
       '<button class="btn btn-outline" onclick="navTo(7)">💬 Режим: команда</button>'+
       '<button class="btn btn-outline" onclick="navTo(8)">✉️ Основателю</button>'+
+      (isMobileCompact()?'<button class="btn btn-outline" onclick="setHomeMobileMode(false)">Lite-режим</button>':'')+
       '</div>';
 
     html+='<div class="lcard" style="margin-top:16px">'+
