@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#07080d">
 <title>GUSTO — Академия сервиса</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -23,14 +25,16 @@ body{
   color:var(--white);
   font-family:'Manrope',sans-serif;
   min-height:100vh;
+  min-height:-webkit-fill-available;
   overflow-x:hidden;
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .pt{position:absolute;border-radius:50%;opacity:0;animation:ptdrift linear infinite;}
 @keyframes ptdrift{0%{transform:translateY(110vh) scale(0);opacity:0}10%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-80px) scale(1.5) rotate(720deg);opacity:0}}
 
-header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--g3);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;padding-left:max(20px, env(safe-area-inset-left));padding-right:max(20px, env(safe-area-inset-right));}
 .logo{display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:5px;line-height:1;white-space:nowrap;}
 .logo-icon{animation:spin 10s linear infinite;display:inline-block;font-size:1.4rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -558,7 +562,7 @@ header,.pnav{
     display:grid!important;
     grid-template-columns:repeat(4,minmax(0,1fr));
     overflow:visible;
-    top:74px;
+    top:64px;
   }
   .pstep{
     min-width:0;
@@ -647,9 +651,9 @@ header,.pnav{
     <div class="jcard" data-n="03"><span class="ji">🎭</span><h3>Практика</h3><p>15 реальных сценариев с живыми диалогами</p></div>
   </div>
   <div class="nform">
-    <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false"/>
-    <input class="ninp" id="pninp" type="tel" placeholder="Номер телефона (без SMS)" maxlength="18" autocorrect="off" autocapitalize="off" autocomplete="tel" spellcheck="false"/>
-    <input class="ninp" id="cinp" type="text" placeholder="Ваш город" maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="address-level2" spellcheck="false"/>
+    <input class="ninp" id="ninp" type="text" placeholder="Введи своё имя..." maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="name" spellcheck="false" inputmode="text"/>
+    <input class="ninp" id="pninp" type="tel" placeholder="Номер телефона (без SMS)" maxlength="18" autocorrect="off" autocapitalize="off" autocomplete="tel" spellcheck="false" inputmode="tel"/>
+    <input class="ninp" id="cinp" type="text" placeholder="Ваш город" maxlength="40" autocorrect="off" autocapitalize="words" autocomplete="address-level2" spellcheck="false" inputmode="text"/>
     <select class="ninp" id="rinp" aria-label="Роль сотрудника">
       <option value="Сотрудник">Роль: Сотрудник</option>
       <option value="Старший смены">Роль: Старший смены</option>
@@ -2314,13 +2318,20 @@ var CHECKLIST=[
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
-window.onload=async function(){
+window.onload=function(){(async function(){
   var inp=document.getElementById('ninp');
   var pinp=document.getElementById('pninp');
   var cinp=document.getElementById('cinp');
   var rinp=document.getElementById('rinp');
   var btn=document.getElementById('btn-start');
-  async function onStart(e){e.preventDefault();await startGame();}
+  var _startLock=false;
+  async function onStart(e){
+    e.preventDefault();
+    if(_startLock)return;
+    _startLock=true;
+    await startGame();
+    setTimeout(function(){_startLock=false;},800);
+  }
   btn.addEventListener('click',onStart);
   btn.addEventListener('touchend',onStart);
   inp.addEventListener('keydown',function(e){if(e.key==='Enter'){inp.blur();startGame();}});
@@ -2338,7 +2349,7 @@ window.onload=async function(){
     restorePhase();
   }
   initNeoVisuals();
-};
+})();};  
 
 function restorePhase(){
   if(S.phase===6){showPhase(6);renderAdminDashboard();}
